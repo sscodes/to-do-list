@@ -1,0 +1,12 @@
+.App {
+  background-color: rgb(217, 216, 216);
+  min-height: 100vh;
+}
+
+.Home {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
