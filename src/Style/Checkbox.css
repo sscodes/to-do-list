@@ -1,0 +1,5 @@
+input#default-checkbox {
+  height: 4vh;
+  width: 4vh;
+  border-color: rgb(0, 0, 0);
+}
