@@ -15,12 +15,16 @@ const Task = (props) => {
           <h6>{props.deadline}</h6>
           <Row>
             <Col>
-              <Row className='mt-4 border border-2 rounded border-dark-subtle'>
+              <Row className='mt-4 border border-2 rounded border-dark-subtle bg-success text-white'>
                 <Col xs={5} className='d-flex flex-row-reverse'>
-                  <Form.Check type='checkbox' id='default-checkbox' />
+                  <Form.Check
+                    type='checkbox'
+                    id='default-checkbox'
+                    checked={props.done ? true : false}
+                  />
                 </Col>
                 <Col xs={7} className='mt-2'>
-                  <h4>Mark as done</h4>
+                  <h4>Mark as {props.done ? `pending` : `done`}</h4>
                 </Col>
               </Row>
             </Col>

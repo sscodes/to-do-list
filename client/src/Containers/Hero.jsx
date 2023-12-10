@@ -23,7 +23,7 @@ const Hero = () => {
         <Row className='py-4'>
           <Col>
             <Link
-              to='/all-tasks'
+              to='/pending-tasks'
               className='d-grid gap-2'
               style={{ textDecoration: 'none' }}
             >
