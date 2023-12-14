@@ -21,6 +21,7 @@ const readTasks = asyncHandler(async (req, res) => {
   res.status(200).json(tasks);
 });
 
+//Just updating done status
 const updateTasks = asyncHandler(async (req, res) => {
   const task = await Task.findById(req.params.id);
 

@@ -14,6 +14,10 @@ const taskSchema = mongoose.Schema(
       type: Date,
       required: [true, 'Add Deadline Date'],
     },
+    done: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
