@@ -2,6 +2,11 @@ const mongoose = require('mongoose');
 
 const taskSchema = mongoose.Schema(
   {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      // required: true,
+      ref: 'User',
+    },
     taskName: {
       type: String,
       required: [true, 'Add Task Name'],
