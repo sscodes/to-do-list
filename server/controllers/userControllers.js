@@ -31,13 +31,11 @@ const createUser = asyncHandler(async (req, res) => {
   });
 
   if (user) {
-    res
-      .status(201)
-      .json({
-        name: user.name,
-        email: user.email,
-        token: generateToken(user._id),
-      });
+    res.status(201).json({
+      name: user.name,
+      email: user.email,
+      token: generateToken(user._id),
+    });
   } else {
     res.status(400);
     throw new Error('Invalid request.');
