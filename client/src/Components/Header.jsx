@@ -7,7 +7,11 @@ import { useSelector } from 'react-redux';
 const Header = () => {
   const [name, setName] = useState('');
   const [modal, setModal] = useState('');
-  const user = useSelector((state) => state?.user?.user);
+  const user = useSelector((state) =>
+    Object.getOwnPropertyNames(state?.user?.user).length === 0
+      ? state?.auth?.user
+      : state?.user?.user
+  );
   useEffect(() => {
     setName(user.name);
   }, [user.name]);

@@ -2,13 +2,16 @@ import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { logoutUser } from '../actions/authActions';
 
 const Profile = (props) => {
   const [name, setName] = useState('');
   const dispatch = useDispatch();
-  const user = useSelector((state) => state?.user?.user);
+  const user = useSelector((state) =>
+    Object.getOwnPropertyNames(state?.user?.user).length === 0
+      ? state?.auth?.user
+      : state?.user?.user
+  );
   useEffect(() => {
     setName(user.name);
   }, [user.name]);
@@ -37,11 +40,9 @@ const Profile = (props) => {
         </p>
       </Modal.Body>
       <Modal.Footer>
-        <Link to={'/'}>
-          <Button onClick={logout} variant='dark'>
-            Logout
-          </Button>
-        </Link>
+        <Button onClick={logout} variant='dark'>
+          Logout
+        </Button>
         <Button onClick={deleteUser} variant='danger'>
           Delete User
         </Button>
@@ -51,22 +52,3 @@ const Profile = (props) => {
 };
 
 export default Profile;
-
-// function App() {
-//   const [modalShow, setModalShow] = React.useState(false);
-
-//   return (
-//     <>
-//       <Button variant='primary' onClick={() => setModalShow(true)}>
-//         Launch vertically centered modal
-//       </Button>
-
-//       <MyVerticallyCenteredModal
-//         show={modalShow}
-//         onHide={() => setModalShow(false)}
-//       />
-//     </>
-//   );
-// }
-
-// render(<App />);

@@ -16,6 +16,7 @@ export const createUser = (user) => (dispatch) => {
       } else return res.json();
     })
     .then((user) => {
+      localStorage.setItem('user', JSON.stringify(user));
       dispatch({
         type: userConstants.ADD_USER,
         payload: user,

@@ -15,8 +15,12 @@ const Signup = () => {
   const [message, setMessage] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const dispatch = useDispatch();
-  const authenticated = useSelector((state) => state?.user?.authenticated);
-  
+  const authenticated = useSelector((state) =>
+    state.user.authenticated
+      ? state.user.authenticated
+      : state.auth.authenticated
+  );
+
   useEffect(() => {
     if (password === '' || confirmPassword === '') setMessage(false);
     else if (password !== confirmPassword) setMessage(true);

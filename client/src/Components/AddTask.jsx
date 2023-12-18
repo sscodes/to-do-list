@@ -18,7 +18,6 @@ const AddTask = () => {
       deadline,
       done: false,
     };
-    console.log(task);
     dispatch(createTask(task));
   };
 

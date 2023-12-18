@@ -9,7 +9,17 @@ const Footer = () => {
       data-bs-theme='dark'
       fixed='bottom'
     >
-      <h5>Developed by sscodes</h5>
+      <h5>
+        Developed by{` `}
+        <a
+          href='https://www.linkedin.com/in/sscodes/'
+          target='_blank'
+          rel='noreferrer'
+          style={{ color: 'whitesmoke' }}
+        >
+          sscodes
+        </a>
+      </h5>
     </Navbar>
   );
 };

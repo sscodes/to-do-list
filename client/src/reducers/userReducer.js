@@ -2,9 +2,9 @@ import { toast } from 'react-toastify';
 import { sessionConstants, userConstants } from '../actions/constants';
 
 const inistate = {
-  user: {},
-  error: null,
-  authenticated: false,
+  user: JSON.parse(localStorage.getItem('user')) || {},
+  error: localStorage.getItem('error') || null,
+  authenticated: localStorage.getItem('user') ? true : false,
 };
 
 const notify = (error) =>
@@ -39,8 +39,12 @@ const userReducer = (state = inistate, action) => {
         error: action.payload.error,
       };
     case sessionConstants.LOGOUT_USER:
+      localStorage.clear();
       return {
-        ...inistate,
+        ...state,
+        user: {},
+        error: null,
+        authenticated: false,
       };
     default:
       return state;

@@ -21,7 +21,7 @@ export const userConstants = {
 };
 
 export const sessionConstants = {
-  LOGGIN_USER: 'LOGGIN_USER',
-  LOGGIN_USER_FAIL: 'LOGGIN_USER_FAIL',
+  LOGIN_USER: 'LOGIN_USER',
+  LOGIN_USER_FAIL: 'LOGIN_USER_FAIL',
   LOGOUT_USER: 'LOGOUT_USER',
 };
