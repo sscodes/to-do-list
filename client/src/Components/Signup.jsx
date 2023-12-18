@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { createUser } from '../actions/userActions';
 import ButtonComponent from './ButtonComponent';
@@ -15,20 +15,8 @@ const Signup = () => {
   const [message, setMessage] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const dispatch = useDispatch();
-  const error = useSelector((state) => state?.user?.error?.message);
+  const authenticated = useSelector((state) => state?.user?.authenticated);
   
-  const notify = (error) =>
-    toast.error(error, {
-      position: 'top-center',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'colored',
-    });
-
   useEffect(() => {
     if (password === '' || confirmPassword === '') setMessage(false);
     else if (password !== confirmPassword) setMessage(true);
@@ -49,16 +37,9 @@ const Signup = () => {
       password,
     };
     dispatch(createUser(user));
-    if (error) {
-      notify(error);
-      console.log(error);
-    }
   };
 
-  if (
-    localStorage.getItem('token') &&
-    localStorage.getItem('token').length > 0
-  ) {
+  if (authenticated) {
     return <Navigate to={`/home`} />;
   }
 

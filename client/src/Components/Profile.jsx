@@ -1,15 +1,23 @@
 import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { logoutUser } from '../actions/authActions';
 
 const Profile = (props) => {
   const [name, setName] = useState('');
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state?.user?.user);
   useEffect(() => {
-    setName(localStorage.getItem('name'));
-  }, []);
+    setName(user.name);
+  }, [user.name]);
 
-  const deleteUser = () => {}
+  const logout = () => {
+    dispatch(logoutUser());
+  };
+
+  const deleteUser = () => {};
   return (
     <Modal
       {...props}
@@ -30,7 +38,7 @@ const Profile = (props) => {
       </Modal.Body>
       <Modal.Footer>
         <Link to={'/'}>
-          <Button onClick={() => localStorage.clear()} variant='dark'>
+          <Button onClick={logout} variant='dark'>
             Logout
           </Button>
         </Link>

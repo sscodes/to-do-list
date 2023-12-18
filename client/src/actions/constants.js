@@ -19,3 +19,9 @@ export const userConstants = {
   DELETE_USER: 'DELETE_USER',
   DELETE_USER_FAIL: 'DELETE_USER_FAIL',
 };
+
+export const sessionConstants = {
+  LOGGIN_USER: 'LOGGIN_USER',
+  LOGGIN_USER_FAIL: 'LOGGIN_USER_FAIL',
+  LOGOUT_USER: 'LOGOUT_USER',
+};

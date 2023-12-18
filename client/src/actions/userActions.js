@@ -16,9 +16,6 @@ export const createUser = (user) => (dispatch) => {
       } else return res.json();
     })
     .then((user) => {
-      localStorage.setItem('token', user.token);
-      localStorage.setItem('name', user.name);
-      localStorage.setItem('email', user.email);
       dispatch({
         type: userConstants.ADD_USER,
         payload: user,

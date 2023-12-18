@@ -2,13 +2,15 @@ import { useEffect, useState } from 'react';
 import { Container, Navbar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Profile from './Profile';
+import { useSelector } from 'react-redux';
 
 const Header = () => {
   const [name, setName] = useState('');
   const [modal, setModal] = useState('');
+  const user = useSelector((state) => state?.user?.user);
   useEffect(() => {
-    setName(localStorage.getItem('name'));
-  }, []);
+    setName(user.name);
+  }, [user.name]);
 
   const showProfile = () => {
     setModal(true);
