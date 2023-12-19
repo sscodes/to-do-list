@@ -14,7 +14,7 @@ const PendingTasks = () => {
   const token = useSelector((state) =>
     state.user.user.token ? state.user.user.token : state.auth.user.token
   );
-  const tasks = useSelector((state) => state.task.tasks).filter(
+  const tasks = useSelector((state) => state.tasks.tasks).filter(
     (task) => !task.done
   );
 

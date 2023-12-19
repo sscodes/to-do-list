@@ -6,7 +6,7 @@ import { combineReducers } from 'redux';
 const rootReducer = combineReducers({
     auth: authReducer,
     user: userReducer,
-    task: taskReducer
+    tasks: taskReducer
 });
 
 export default rootReducer;

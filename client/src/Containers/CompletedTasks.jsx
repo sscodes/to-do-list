@@ -6,7 +6,7 @@ import Header from '../Components/Header';
 import Task from '../Components/Task';
 
 const CompletedTasks = () => {
-  const tasks = useSelector((state) => state.task.tasks).filter(
+  const tasks = useSelector((state) => state.tasks.tasks).filter(
     (task) => task.done
   );
   return (
