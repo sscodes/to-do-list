@@ -32,21 +32,33 @@ export const createTask = (task, token) => (dispatch) => {
     });
 };
 
-export const readTask = () => (dispatch) => {
-  //TODO: Replace fake API with real API
-  fetch('https://jsonplaceholder.typicode.com/posts')
-    .then((res) => res.json())
-    .then((tasks) =>
+export const readTask = (token) => (dispatch) => {
+  fetch('http://localhost:7000/api/tasks', {
+    method: 'GET',
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  })
+    .then((res) => {
+      if (!res.ok) {
+        return res.json().then((err) => {
+          throw new Error(err.message);
+        });
+      } else return res.json();
+    })
+    .then((tasks) => {
+      localStorage.setItem('tasks', JSON.stringify(tasks));
       dispatch({
         type: taskConstants.READ_TASKS,
         payload: tasks,
-      })
-    );
-  //TODO: Add error handling
-  // .catch(dispatch({
-  //     type: taskConstants.ADD_TASK_FAIL,
-  //     payload: {
-  //         error: res.data.error
-  //     }
-  // }));
+      });
+    })
+    .catch((error) => {
+      dispatch({
+        type: taskConstants.READ_TASKS_FAIL,
+        payload: {
+          error,
+        },
+      });
+    });
 };

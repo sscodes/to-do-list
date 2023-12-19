@@ -23,7 +23,7 @@ const createTask = asyncHandler(async (req, res) => {
 });
 
 const readTasks = asyncHandler(async (req, res) => {
-  const tasks = await Task.findOne({ user: req.user.id });
+  const tasks = await Task.find({ user: req.user.id });
   if (tasks) {
     res.status(201).json(tasks);
   } else {

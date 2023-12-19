@@ -9,30 +9,16 @@ import Task from '../Components/Task';
 import { readTask } from '../actions/taskActions';
 
 const PendingTasks = () => {
-  const tasks = [
-    {
-      id: 1,
-      title: 'Title 1',
-      details: 'details',
-      deadline: '07-12-23',
-      done: false,
-    },
-    {
-      id: 2,
-      title: 'Title 2',
-      details: 'details',
-      deadline: '07-12-23',
-      done: false,
-    },
-  ];
   const dispatch = useDispatch();
+  const token = useSelector((state) =>
+    state.user.user.token ? state.user.user.token : state.auth.user.token
+  );
+  const tasks = useSelector((state) => state.task.tasks);
 
   useEffect(() => {
-    dispatch(readTask());
+    dispatch(readTask(token));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  let tasks1 = useSelector((state) => state.task.tasks);
 
   return (
     <>
@@ -53,13 +39,13 @@ const PendingTasks = () => {
           <Col>
             {tasks.map((task) => (
               <Task
-                id={task.id}
-                title={task.title}
-                details={task.details}
+                id={task._id}
+                title={task.taskName}
+                details={task.taskDetail}
                 deadline={task.deadline}
                 variant='danger'
                 done={task.done}
-                key={task.id}
+                key={task._id}
               />
             ))}
           </Col>

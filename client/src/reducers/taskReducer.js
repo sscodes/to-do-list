@@ -2,7 +2,7 @@ import { toast } from 'react-toastify';
 import { taskConstants } from '../actions/constants';
 
 const inistate = {
-  tasks: [],
+  tasks: JSON.parse(localStorage.getItem('tasks')) || [],
   task: {},
 };
 
@@ -27,6 +27,12 @@ const taskReducer = (state = inistate, action) => {
       return {
         ...state,
         tasks: action.payload,
+      };
+    case taskConstants.READ_TASKS_FAIL:
+      notifyError(action.payload.error.message);
+      return {
+        ...state,
+        task: {},
       };
     case taskConstants.ADD_TASK:
       notifySuccess('Task added successfully!');
