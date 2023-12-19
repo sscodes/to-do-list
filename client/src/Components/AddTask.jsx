@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Form } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 import { createTask } from '../actions/taskActions';
 import ButtonComponent from './ButtonComponent';
 
@@ -9,16 +10,25 @@ const AddTask = () => {
   const [details, setDetails] = useState('');
   const [deadline, setDeadline] = useState('');
   const dispatch = useDispatch();
+  const user = useSelector((state) =>
+    Object.getOwnPropertyNames(state?.user?.user).length === 0
+      ? state?.auth?.user
+      : state?.user?.user
+  );
+  const token = useSelector((state) =>
+    state.user.user.token ? state.user.user.token : state.auth.user.token
+  );
 
   const submitTask = (e) => {
     e.preventDefault();
     const task = {
-      title,
-      details,
-      deadline,
+      user: user._id,
+      taskName: title,
+      taskDetail: details,
+      deadline: deadline,
       done: false,
     };
-    dispatch(createTask(task));
+    dispatch(createTask(task, token));
   };
 
   return (
@@ -58,6 +68,7 @@ const AddTask = () => {
           />
         </div>
       </Form>
+      <ToastContainer />
     </div>
   );
 };

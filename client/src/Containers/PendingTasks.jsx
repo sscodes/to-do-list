@@ -59,6 +59,7 @@ const PendingTasks = () => {
                 deadline={task.deadline}
                 variant='danger'
                 done={task.done}
+                key={task.id}
               />
             ))}
           </Col>

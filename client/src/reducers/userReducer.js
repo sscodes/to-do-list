@@ -3,7 +3,6 @@ import { sessionConstants, userConstants } from '../actions/constants';
 
 const inistate = {
   user: JSON.parse(localStorage.getItem('user')) || {},
-  error: localStorage.getItem('error') || null,
   authenticated: localStorage.getItem('user') ? true : false,
 };
 
@@ -36,14 +35,14 @@ const userReducer = (state = inistate, action) => {
       notify(action.payload.error.message);
       return {
         ...state,
-        error: action.payload.error,
+        user: {},
+        authenticated: false,
       };
     case sessionConstants.LOGOUT_USER:
       localStorage.clear();
       return {
         ...state,
         user: {},
-        error: null,
         authenticated: false,
       };
     default:
