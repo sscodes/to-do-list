@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import ButtonComponent from '../Components/ButtonComponent';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
@@ -13,7 +14,9 @@ const PendingTasks = () => {
   const token = useSelector((state) =>
     state.user.user.token ? state.user.user.token : state.auth.user.token
   );
-  const tasks = useSelector((state) => state.task.tasks);
+  const tasks = useSelector((state) => state.task.tasks).filter(
+    (task) => !task.done
+  );
 
   useEffect(() => {
     dispatch(readTask(token));
@@ -23,18 +26,7 @@ const PendingTasks = () => {
   return (
     <>
       <Header />
-      <Container className='py-5'>
-        <Row className='pb-5'>
-          <Col className='d-flex justify-content-center'>
-            <Link
-              to='/completed-tasks'
-              className='d-grid gap-2'
-              style={{ textDecoration: 'none' }}
-            >
-              <ButtonComponent variant={'dark'} name={'Show Completed Tasks'} />
-            </Link>
-          </Col>
-        </Row>
+      <Container className='pt-3'>
         <Row>
           <Col>
             {tasks.map((task) => (
@@ -50,8 +42,19 @@ const PendingTasks = () => {
             ))}
           </Col>
         </Row>
+        <Row className='py-3 pb-5'>
+          <Col className='d-flex justify-content-center pb-5'>
+            <Link
+              to='/completed-tasks'
+              style={{ textDecoration: 'none' }}
+            >
+              <ButtonComponent variant={'dark'} name={'Show Completed Tasks'} />
+            </Link>
+          </Col>
+        </Row>
       </Container>
       <Footer />
+      <ToastContainer />
     </>
   );
 };

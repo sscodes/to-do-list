@@ -14,8 +14,9 @@ const createTask = asyncHandler(async (req, res) => {
     deadline: req.body.deadline,
   });
 
+  const tasks = await Task.find({ user: req.user.id });
   if (task) {
-    res.status(201).json(task);
+    res.status(201).json(tasks);
   } else {
     res.status(400);
     throw new Error('Invalid request.');
@@ -32,7 +33,6 @@ const readTasks = asyncHandler(async (req, res) => {
   }
 });
 
-//Just updating done status
 const updateTasks = asyncHandler(async (req, res) => {
   const task = await Task.findById(req.params.id);
 
@@ -54,8 +54,9 @@ const updateTasks = asyncHandler(async (req, res) => {
   const updatedTask = await Task.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
   });
+  const tasks = await Task.find({ user: req.user.id });
   if (updatedTask) {
-    res.status(201).json(updatedTask);
+    res.status(201).json(tasks);
   } else {
     res.status(400);
     throw new Error('Invalid request.');
@@ -81,8 +82,9 @@ const deleteTasks = asyncHandler(async (req, res) => {
   }
 
   const deletedTask = await Task.findByIdAndDelete(req.params.id, req.body);
+  const tasks = await Task.find({ user: req.user.id });
   if (deletedTask) {
-    res.status(201).json(deletedTask);
+    res.status(201).json(tasks);
   } else {
     res.status(400);
     throw new Error('Invalid request.');

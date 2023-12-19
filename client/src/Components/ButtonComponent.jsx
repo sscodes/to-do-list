@@ -1,8 +1,14 @@
 import { Button } from 'react-bootstrap';
 
-const ButtonComponent = ({ variant, name, type, disabled }) => {
+const ButtonComponent = ({ variant, name, type, disabled, onClick }) => {
   return (
-    <Button type={type} variant={variant} disabled={disabled} size='lg'>
+    <Button
+      type={type}
+      variant={variant}
+      disabled={disabled}
+      size='lg'
+      onClick={onClick}
+    >
       {name}
     </Button>
   );

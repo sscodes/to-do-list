@@ -3,12 +3,11 @@ import { taskConstants } from '../actions/constants';
 
 const inistate = {
   tasks: JSON.parse(localStorage.getItem('tasks')) || [],
-  task: {},
 };
 
 const notificationProperties = {
   position: 'top-center',
-  autoClose: 5000,
+  autoClose: 2000,
   hideProgressBar: false,
   closeOnClick: true,
   pauseOnHover: true,
@@ -32,19 +31,43 @@ const taskReducer = (state = inistate, action) => {
       notifyError(action.payload.error.message);
       return {
         ...state,
-        task: {},
+        tasks: [],
       };
     case taskConstants.ADD_TASK:
       notifySuccess('Task added successfully!');
       return {
         ...state,
-        task: action.payload,
+        tasks: action.payload,
       };
     case taskConstants.ADD_TASK_FAIL:
       notifyError(action.payload.error.message);
       return {
         ...state,
-        task: {},
+        tasks: JSON.parse(localStorage.getItem('tasks')),
+      };
+    case taskConstants.UPDATE_TASK:
+      notifySuccess(`Task Marked As ${action.doneType ? 'Done' : 'Pending'}`);
+      return {
+        ...state,
+        tasks: action.payload,
+      };
+    case taskConstants.UPDATE_TASK_FAIL:
+      notifyError(action.payload.error.message);
+      return {
+        ...state,
+        tasks: JSON.parse(localStorage.getItem('tasks')),
+      };
+    case taskConstants.DELETE_TASK:
+      notifySuccess('Task Deleted!');
+      return {
+        ...state,
+        tasks: action.payload,
+      };
+    case taskConstants.DELETE_TASK_FAIL:
+      notifyError(action.payload.error.message);
+      return {
+        ...state,
+        tasks: JSON.parse(localStorage.getItem('tasks')),
       };
     default:
       return state;

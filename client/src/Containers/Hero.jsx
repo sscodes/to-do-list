@@ -21,13 +21,12 @@ const Hero = () => {
           </Col>
         </Row>
         <Row className='py-4'>
-          <Col>
+          <Col className='d-flex justify-content-center'>
             <Link
               to='/pending-tasks'
-              className='d-grid gap-2'
               style={{ textDecoration: 'none' }}
             >
-              <ButtonComponent variant={'dark'} name={'All Tasks'} />
+              <ButtonComponent variant={'dark'} name={'Show Pending Tasks'} />
             </Link>
           </Col>
         </Row>
