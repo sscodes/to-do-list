@@ -3,6 +3,7 @@ const dotenv = require('dotenv').config();
 const { errorHandler } = require('./middlewares/errorMiddleware');
 const colors = require('colors');
 var cors = require('cors');
+const passportSetup = require('./config/passport-setup');
 
 const connectDB = require('./config/db');
 
