@@ -38,11 +38,11 @@ const Signin = () => {
   return (
     <div>
       <div className='text-center'>
-        <h2>Already have an account?</h2>
-        <h2> Sign In!</h2>
+        <h4>Already have an account?</h4>
+        <h4> Sign In!</h4>
       </div>
       <Form onSubmit={signin}>
-        <Form.Group className='mb-3'>
+        <Form.Group className='mb-1'>
           <Form.Label>Email address:</Form.Label>
           <Form.Control
             type='email'
@@ -57,6 +57,15 @@ const Signin = () => {
             placeholder='Enter Password'
             onChange={(e) => setPassword(e.target.value)}
           />
+          <div className='pt-1'>
+            <a
+              href='/'
+              className='text-dark'
+              style={{ textDecoration: 'none' }}
+            >
+              (Forgot Password?)
+            </a>
+          </div>
         </Form.Group>
         <div className='d-grid gap-2'>
           <ButtonComponent

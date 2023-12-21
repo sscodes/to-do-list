@@ -50,10 +50,10 @@ const Signup = () => {
   return (
     <div>
       <div className='text-center'>
-        <h2>New here? Sign Up!</h2>
+        <h4>New here? Sign Up!</h4>
       </div>
       <Form onSubmit={signup}>
-        <Form.Group className='mb-3'>
+        <Form.Group className='mb-1'>
           <Form.Label>Name:</Form.Label>
           <Form.Control
             type='text'
@@ -61,7 +61,7 @@ const Signup = () => {
             onChange={(e) => setName(e.target.value)}
           />
         </Form.Group>
-        <Form.Group className='mb-3'>
+        <Form.Group className='mb-1'>
           <Form.Label>Email address:</Form.Label>
           <Form.Control
             type='email'
@@ -69,7 +69,7 @@ const Signup = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
         </Form.Group>
-        <Form.Group className='mb-3'>
+        <Form.Group className='mb-1'>
           <Form.Label>Password:</Form.Label>
           <Form.Control
             type='password'

@@ -35,19 +35,19 @@ const Header = () => {
               to='/'
               style={{ textDecoration: 'none', color: 'whitesmoke' }}
             >
-              <h1>To-Do-List</h1>
+              <h4>To-Do-List</h4>
             </Link>
           </Navbar.Brand>
           <Navbar.Toggle />
           {name?.length && (
             <Navbar.Collapse className='justify-content-end'>
               <Navbar.Text>
-                <h5>
+                <h6 className='pt-1'>
                   Signed in as:{' '}
                   <u onClick={showProfile} style={{ cursor: 'pointer' }}>
                     {name}
                   </u>
-                </h5>
+                </h6>
               </Navbar.Text>
             </Navbar.Collapse>
           )}

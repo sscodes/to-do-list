@@ -6,7 +6,6 @@ const ButtonComponent = ({ variant, name, type, disabled, onClick }) => {
       type={type}
       variant={variant}
       disabled={disabled}
-      size='lg'
       onClick={onClick}
     >
       {name}

@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import ButtonComponent from '../Components/ButtonComponent';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 import Signin from '../Components/Signin';
@@ -23,22 +22,22 @@ const Home = () => {
   return (
     <>
       <Header />
-      <Container className='pt-2'>
+      <Container>
         <Row className='pt-3 text-center'>
-          <h1>A no-nonsense to-do list app.</h1>
+          <h4>A no-nonsense to-do list app.</h4>
         </Row>
-        <Row className='py-2'>
-          <Col className='mx-2 p-4 border border-dark-subtle border-3 rounded'>
+        <Row className='pb-2'>
+          <Col className='mx-1 p-2 border border-dark-subtle border-3 rounded'>
             <Signup />
           </Col>
-          <Col className='mx-2 p-4 border border-dark-subtle border-3 rounded'>
+          <Col className='mx-1 p-2 border border-dark-subtle border-3 rounded'>
             <Signin />
-          </Col>
-        </Row>
-        <Row className='pt-3 text-center'>
-          <Col className='mx-2 p-4 border border-dark-subtle border-3 rounded'>
-            <a href='http://localhost:7000/api/users/google'>
-              <ButtonComponent name={'Login with Google'} />
+            <a
+              href='http://localhost:7000/api/users/google'
+              className='d-grid gap-2 mt-3 border border-primary rounded bg-primary py-1 border-3 text-white text-center'
+              style={{ textDecoration: 'none' }}
+            >
+              Login with Google
             </a>
           </Col>
         </Row>
