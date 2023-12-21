@@ -37,3 +37,12 @@ export const logoutUser = () => (dispatch) => {
     type: sessionConstants.LOGOUT_USER,
   });
 };
+
+
+export const googleOauth = (user) => (dispatch) => {
+  localStorage.setItem('auth', JSON.stringify(user));
+  dispatch({
+    type: sessionConstants.LOGIN_USER,
+    payload: user,
+  });
+};

@@ -8,11 +8,14 @@ const userSchema = mongoose.Schema(
     },
     email: {
       type: String,
-      required: [true, 'Add email'],
+      // required: [true, 'Add email'],
     },
     password: {
       type: String,
-      required: [true, 'Add password'],
+      // required: [true, 'Add password'],
+    },
+    googleId: {
+      type: String,
     },
   },
   {
