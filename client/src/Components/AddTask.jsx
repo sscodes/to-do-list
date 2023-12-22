@@ -32,19 +32,18 @@ const AddTask = () => {
   };
 
   return (
-    <div className='py-2'>
-      <h2>Add a task:</h2>
+    <div>
+      <h4>Add a task:</h4>
       <Form onSubmit={submitTask}>
-        <Form.Group className='mb-3'>
+        <Form.Group className='mb-1'>
           <Form.Label>Task Title:</Form.Label>
           <Form.Control
-            size='lg'
             type='text'
             placeholder='Add Task'
             onChange={(e) => setTitle(e.target.value)}
           />
         </Form.Group>
-        <Form.Group className='mb-3'>
+        <Form.Group className='mb-1'>
           <Form.Label>Task Description (optional):</Form.Label>
           <Form.Control
             as='textarea'

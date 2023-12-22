@@ -15,7 +15,7 @@ const UpcomingDeadlines = () => {
 
   return (
     <>
-      <h2 className='pb-2'>Upcoming Deadlines:</h2>
+      <h4 className='pb-2'>Upcoming Deadlines:</h4>
       {sortedAlertTasks.map((task) => (
         <Alert key={task._id} variant='danger'>
           {task.taskName}

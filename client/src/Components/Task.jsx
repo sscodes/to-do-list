@@ -31,7 +31,7 @@ const Task = (props) => {
     <Accordion className='py-2'>
       <Accordion.Item eventKey={props.id}>
         <Accordion.Header>
-          <h4>{props.title}</h4>
+          <h5>{props.title}</h5>
         </Accordion.Header>
         <Accordion.Body>
           <p>{props.details}</p>
@@ -39,17 +39,16 @@ const Task = (props) => {
           <h6>{formatDate(props.deadline)}</h6>
           <Row>
             <Col>
-              <Row className='mt-4 border border-2 rounded border-success bg-success text-white'>
-                <Col xs={5} className='d-flex flex-row-reverse'>
+              <Row className='mt-4 border py-1 border-2 rounded border-success bg-success text-white'>
+                <Col xs={5} className='mx-auto'>
                   <Form.Check
                     type='checkbox'
                     id='default-checkbox'
                     defaultChecked={props.done}
                     onChange={changeDoneStatus}
+                    className='d-inline'
                   />
-                </Col>
-                <Col xs={7} className='mt-2'>
-                  <h4>Mark as {props.done ? `pending` : `done`}</h4>
+                  <h5 className='d-inline'>{`     `}Mark as {props.done ? `pending` : `done`}</h5>
                 </Col>
               </Row>
             </Col>

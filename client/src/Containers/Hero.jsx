@@ -11,16 +11,16 @@ const Hero = () => {
   return (
     <>
       <Header />
-      <Container className='py-5'>
+      <Container className='py-3'>
         <Row>
-          <Col className='mx-2 p-4 border border-dark-subtle border-3 rounded'>
+          <Col className='mx-1 p-3 border border-dark-subtle border-3 rounded'>
             <AddTask />
           </Col>
-          <Col className='mx-2 p-4 border border-dark-subtle border-3 rounded'>
+          <Col className='mx-1 p-3 border border-dark-subtle border-3 rounded'>
             <UpcomingDeadlines />
           </Col>
         </Row>
-        <Row className='py-4'>
+        <Row className='py-2'>
           <Col className='d-flex justify-content-center'>
             <Link
               to='/pending-tasks'
