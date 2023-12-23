@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { Pie } from 'react-chartjs-2';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../actions/authActions';
 
@@ -12,6 +13,21 @@ const Profile = (props) => {
       ? state?.auth?.user
       : state?.user?.user
   );
+  const tasks = useSelector((state) => state.tasks?.tasks);
+  const doneTasks = tasks.filter((task) => task.done).length;
+  const pendingTasks = tasks.filter((task) => !task.done).length;
+
+  const userData = {
+    labels: ['done', 'pending'],
+    datasets: [
+      {
+        label: 'Count',
+        data: [doneTasks, pendingTasks],
+        backgroundColor: ['rgb(120,120,120)', 'rgb(24,24,24)'],
+      },
+    ],
+  };
+
   useEffect(() => {
     setName(user.name);
   }, [user.name]);
@@ -22,22 +38,16 @@ const Profile = (props) => {
 
   const deleteUser = () => {};
   return (
-    <Modal
-      {...props}
-      size='xl'
-      aria-labelledby='contained-modal-title-vcenter'
-      centered
-    >
+    <Modal {...props} aria-labelledby='contained-modal-title-vcenter' centered>
       <Modal.Header closeButton>
         <Modal.Title id='contained-modal-title-vcenter'>{name}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <h4>Centered Modal</h4>
-        <p>
-          Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-          dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-          consectetur ac, vestibulum at eros.
-        </p>
+        <div style={{ width: 300 }}>
+          <div>
+            <Pie data={userData} />
+          </div>
+        </div>
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={logout} variant='dark'>
