@@ -20,11 +20,6 @@ const notify = (error) =>
 
 const userReducer = (state = inistate, action) => {
   switch (action.type) {
-    // case userConstants.READ_USER:
-    //   return {
-    //     ...state,
-    //     users: action.payload,
-    //   };
     case userConstants.ADD_USER:
       return {
         ...state,
@@ -37,6 +32,11 @@ const userReducer = (state = inistate, action) => {
         ...state,
         user: {},
         authenticated: false,
+      };
+    case userConstants.DELETE_USER_FAIL:
+      notify(action.payload.error.message);
+      return {
+        ...state,
       };
     case sessionConstants.LOGOUT_USER:
       localStorage.clear();

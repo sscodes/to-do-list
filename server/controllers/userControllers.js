@@ -63,11 +63,6 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 });
 
-const readUser = asyncHandler(async (req, res) => {
-  const { _id, name, email } = await User.findById(req.user.id);
-  res.status(201).json({ _id, name, email });
-});
-
 //TODO: changing password
 // const updateUser = asyncHandler(async (req, res) => {
 //   const user = await User.findById(req.params.id);
@@ -83,23 +78,24 @@ const readUser = asyncHandler(async (req, res) => {
 //   res.status(201).json(updatedUser);
 // });
 
-//TODO: deleting account
-// const deleteUser = asyncHandler(async (req, res) => {
-//   const user = await User.findById(req.params.id);
+const deleteUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user.id);
 
-//   if (!user) {
-//     res.status(400);
-//     throw new Error('User not found');
-//   }
+  if (!user) {
+    res.status(400);
+    throw new Error('User not found');
+  }
 
-//   const deletedUser = await User.findByIdAndDelete(req.params.id, req.body);
-//   res.status(201).json(deletedUser);
-// });
+  const deletedUser = await User.findByIdAndDelete(req.user.id, req.body);
+  if (deletedUser) res.status(201).send('Deleted User Successfully');
+  else {
+    res.status(400);
+    throw new Error('Delete unsuccessful, try again.');
+  }
+});
 
 module.exports = {
   createUser,
   loginUser,
-  readUser,
-  //   updateUser,
-  //   deleteUser,
+  deleteUser,
 };

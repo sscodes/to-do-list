@@ -1,4 +1,4 @@
-import { userConstants } from './constants';
+import { sessionConstants, userConstants } from './constants';
 
 export const createUser = (user) => (dispatch) => {
   fetch('http://localhost:7000/api/users/signup', {
@@ -32,21 +32,32 @@ export const createUser = (user) => (dispatch) => {
     });
 };
 
-export const readUser = () => (dispatch) => {
-  //TODO: Replace fake API with real API
-  fetch('https://jsonplaceholder.typicode.com/posts')
-    .then((res) => res.json())
-    .then((tasks) =>
+export const deleteUser = (token) => (dispatch) => {
+  fetch('http://localhost:7000/api/users/deleteuser', {
+    method: 'DELETE',
+    headers: {
+      'content-type': 'application/json',
+      authorization: `Bearer ${token}`,
+    },
+  })
+    .then((res) => {
+      if (!res.ok) {
+        return res.json().then((err) => {
+          throw new Error(err.message);
+        });
+      }
+    })
+    .then(() => {
       dispatch({
-        type: userConstants.READ_TASKS,
-        payload: tasks,
-      })
-    );
-  //TODO: Add error handling
-  // .catch(dispatch({
-  //     type: userConstants.ADD_TASK_FAIL,
-  //     payload: {
-  //         error: res.data.error
-  //     }
-  // }));
+        type: sessionConstants.LOGOUT_USER,
+      });
+    })
+    .catch((error) => {
+      dispatch({
+        type: userConstants.DELETE_USER_FAIL,
+        payload: {
+          error,
+        },
+      });
+    });
 };
