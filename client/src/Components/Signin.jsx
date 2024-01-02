@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { loginUser } from '../actions/authActions';
 import ButtonComponent from './ButtonComponent';
 import { ToastContainer } from 'react-toastify';
@@ -58,13 +58,12 @@ const Signin = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <div className='pt-1'>
-            <a
-              href='/'
-              className='text-dark'
-              style={{ textDecoration: 'none' }}
+            <Link
+              to='/forgotpassword'
+              style={{ textDecoration: 'none', color: 'black' }}
             >
               (Forgot Password?)
-            </a>
+            </Link>
           </div>
         </Form.Group>
         <div className='d-grid gap-2'>

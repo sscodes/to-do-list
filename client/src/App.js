@@ -5,12 +5,14 @@ import Hero from './Containers/Hero';
 import Home from './Containers/Home';
 import AllTasks from './Containers/PendingTasks';
 import PrivateRoute from './HOC/PrivateRoute';
+import ForgotPasword from './Containers/FogotPassword';
 
 function App() {
   return (
     <div className='App'>
       <Routes>
         <Route path='/' element={<Home />} />
+        <Route path='/forgotpassword' element={<ForgotPasword />} />
         <Route
           path='/home'
           element={
