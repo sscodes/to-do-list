@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import ButtonComponent from './ButtonComponent';
 
-const OTPComponent = ({ setVerified }) => {
+const OTPComponent = ({ setEmailProp }) => {
   const [email, setEmail] = useState('');
   const [emailSent, setEmailSent] = useState(false);
   const [OTP, setOTP] = useState();
@@ -59,7 +59,7 @@ const OTPComponent = ({ setVerified }) => {
   const confirmOTP = (e) => {
     e.preventDefault();
     // eslint-disable-next-line eqeqeq
-    if (localStorage.getItem('otp') == OTP) setVerified(true);
+    if (localStorage.getItem('otp') == OTP) setEmailProp(email);
   };
 
   return (

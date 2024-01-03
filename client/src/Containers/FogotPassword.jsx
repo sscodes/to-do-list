@@ -6,7 +6,7 @@ import Header from '../Components/Header';
 import OTPComponent from '../Components/OTPComponent';
 
 const FogotPassword = () => {
-  const [verified, setVerified] = useState(false);
+  const [email, setEmail] = useState();
   return (
     <>
       <Header />
@@ -17,10 +17,10 @@ const FogotPassword = () => {
         <Row>
           <Col></Col>
           <Col className='p-3 border border-dark-subtle border-3 rounded'>
-            {verified ? (
-              <ForgotPasswordComponent />
+            {email ? (
+              <ForgotPasswordComponent email={email} />
             ) : (
-              <OTPComponent setVerified={setVerified} />
+              <OTPComponent setEmailProp={setEmail} />
             )}
           </Col>
           <Col></Col>

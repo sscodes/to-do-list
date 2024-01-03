@@ -5,6 +5,7 @@ const {
   createUser,
   loginUser,
   deleteUser,
+  updateUser,
 } = require('../controllers/userControllers');
 const { protect } = require('../middlewares/authMiddleware');
 const passport = require('passport');
@@ -16,6 +17,7 @@ const generateToken = (id) => {
 };
 router.post('/signup', createUser);
 router.post('/signin', loginUser);
+router.put('/updatepassword/:email', updateUser);
 router.delete('/deleteuser', protect, deleteUser);
 router.get('/google', passport.authenticate('google', { scope: ['profile'] }));
 router.get(

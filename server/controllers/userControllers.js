@@ -64,17 +64,29 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 const updateUser = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params.id);
+  const user = await User.findOne({ email: req.params.email });
 
   if (!user) {
     res.status(400);
     throw new Error('User not found');
   }
 
-  const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-  });
-  res.status(201).json(updatedUser);
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(req.body.password, salt);
+
+  const updatedUser = await User.findByIdAndUpdate(
+    user._id,
+    { password: hashedPassword },
+    {
+      new: true,
+    }
+  );
+
+  if (updatedUser) res.status(201).json('Password Updated successfully.');
+  else {
+    res.status(400);
+    throw new Error('Update unsuccessful, try again.');
+  }
 });
 
 const deleteUser = asyncHandler(async (req, res) => {
