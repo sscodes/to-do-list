@@ -63,20 +63,19 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 });
 
-//TODO: changing password
-// const updateUser = asyncHandler(async (req, res) => {
-//   const user = await User.findById(req.params.id);
+const updateUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
 
-//   if (!user) {
-//     res.status(400);
-//     throw new Error('User not found');
-//   }
+  if (!user) {
+    res.status(400);
+    throw new Error('User not found');
+  }
 
-//   const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
-//     new: true,
-//   });
-//   res.status(201).json(updatedUser);
-// });
+  const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+  });
+  res.status(201).json(updatedUser);
+});
 
 const deleteUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user.id);
@@ -97,5 +96,6 @@ const deleteUser = asyncHandler(async (req, res) => {
 module.exports = {
   createUser,
   loginUser,
+  updateUser,
   deleteUser,
 };

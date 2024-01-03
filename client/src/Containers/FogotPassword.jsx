@@ -1,9 +1,12 @@
+import { useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import Footer from '../Components/Footer';
-import ForgotPaswordComponent from '../Components/OTPComponent';
+import ForgotPasswordComponent from '../Components/ForgotPasswordComponent';
 import Header from '../Components/Header';
+import OTPComponent from '../Components/OTPComponent';
 
 const FogotPassword = () => {
+  const [verified, setVerified] = useState(false);
   return (
     <>
       <Header />
@@ -14,7 +17,11 @@ const FogotPassword = () => {
         <Row>
           <Col></Col>
           <Col className='p-3 border border-dark-subtle border-3 rounded'>
-            <ForgotPaswordComponent />
+            {verified ? (
+              <ForgotPasswordComponent />
+            ) : (
+              <OTPComponent setVerified={setVerified} />
+            )}
           </Col>
           <Col></Col>
         </Row>
