@@ -6,17 +6,18 @@ const inistate = {
   authenticated: localStorage.getItem('user') ? true : false,
 };
 
-const notify = (error) =>
-  toast.error(error, {
+  const notificationProperties = {
     position: 'top-center',
-    autoClose: 5000,
+    autoClose: 2000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
     draggable: true,
     progress: undefined,
     theme: 'colored',
-  });
+  };
+
+  const notifyError = (error) => toast.error(error, notificationProperties);
 
 const userReducer = (state = inistate, action) => {
   switch (action.type) {
@@ -27,14 +28,21 @@ const userReducer = (state = inistate, action) => {
         authenticated: true,
       };
     case userConstants.ADD_USER_FAIL:
-      notify(action.payload.error.message);
+      notifyError(action.payload.error.message);
+      return {
+        ...state,
+        user: {},
+        authenticated: false,
+      };
+    case userConstants.DELETE_USER:
+      localStorage.clear();
       return {
         ...state,
         user: {},
         authenticated: false,
       };
     case userConstants.DELETE_USER_FAIL:
-      notify(action.payload.error.message);
+      notifyError(action.payload.error.message);
       return {
         ...state,
       };

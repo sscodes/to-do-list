@@ -66,11 +66,6 @@ const loginUser = asyncHandler(async (req, res) => {
 const updateUser = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email: req.params.email });
 
-  if (!user) {
-    res.status(400);
-    throw new Error('User not found');
-  }
-
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
@@ -82,7 +77,8 @@ const updateUser = asyncHandler(async (req, res) => {
     }
   );
 
-  if (updatedUser) res.status(201).json('Password Updated successfully.');
+  if (updatedUser)
+    res.status(201).json({ msg: 'Password updated successfully.' });
   else {
     res.status(400);
     throw new Error('Update unsuccessful, try again.');
@@ -98,7 +94,7 @@ const deleteUser = asyncHandler(async (req, res) => {
   }
 
   const deletedUser = await User.findByIdAndDelete(req.user.id, req.body);
-  if (deletedUser) res.status(201).send('Deleted User Successfully');
+  if (deletedUser) res.status(201).json({ msg: 'Deleted User Successfully' });
   else {
     res.status(400);
     throw new Error('Delete unsuccessful, try again.');

@@ -3,7 +3,7 @@ import { Form } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import ButtonComponent from './ButtonComponent';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const ForgotPasswordComponent = ({ email }) => {
   const [password, setPassword] = useState('');
@@ -11,6 +11,7 @@ const ForgotPasswordComponent = ({ email }) => {
   const [message, setMessage] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (password === '' || confirmPassword === '') setMessage(false);
@@ -40,6 +41,9 @@ const ForgotPasswordComponent = ({ email }) => {
   const updateUser = (email, newpassword) => () => {
     fetch(`http://localhost:7000/api/users/updatepassword/${email}`, {
       method: 'PUT',
+      headers: {
+        'content-type': 'application/json',
+      },
       body: JSON.stringify(newpassword),
     })
       .then((res) => {
@@ -47,11 +51,11 @@ const ForgotPasswordComponent = ({ email }) => {
           return res.json().then((err) => {
             throw new Error(err.message);
           });
-        }
+        } else return res.json();
       })
-      .then((msg) => {
+      .then(({msg}) => {
         notifySuccess(msg);
-        return <Navigate to='/' />;
+        navigate('/');
       })
       .catch((error) => notifyError(error));
   };
@@ -88,7 +92,7 @@ const ForgotPasswordComponent = ({ email }) => {
         <div className='d-grid gap-2'>
           <ButtonComponent
             variant={'dark'}
-            name={'Sign Up'}
+            name={'Update Password'}
             disabled={buttonDisabled}
           />
         </div>

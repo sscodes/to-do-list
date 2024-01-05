@@ -73,7 +73,6 @@ export const changeTaskDoneStatus = (change, token, id) => (dispatch) => {
     body: JSON.stringify(change),
   })
     .then((res) => {
-      console.log(res);
       if (!res.ok) {
         return res.json().then((err) => {
           throw new Error(err.message);

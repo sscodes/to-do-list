@@ -1,4 +1,4 @@
-import { sessionConstants, userConstants } from './constants';
+import { userConstants } from './constants';
 
 export const createUser = (user) => (dispatch) => {
   fetch('http://localhost:7000/api/users/signup', {
@@ -49,7 +49,7 @@ export const deleteUser = (token) => (dispatch) => {
     })
     .then(() => {
       dispatch({
-        type: sessionConstants.LOGOUT_USER,
+        type: userConstants.DELETE_USER,
       });
     })
     .catch((error) => {

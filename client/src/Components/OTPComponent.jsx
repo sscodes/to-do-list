@@ -59,7 +59,10 @@ const OTPComponent = ({ setEmailProp }) => {
   const confirmOTP = (e) => {
     e.preventDefault();
     // eslint-disable-next-line eqeqeq
-    if (localStorage.getItem('otp') == OTP) setEmailProp(email);
+    if (localStorage.getItem('otp') == OTP) {
+      localStorage.clear();
+      setEmailProp(email);
+    } else notifyError('Wrong OTP entered.');
   };
 
   return (

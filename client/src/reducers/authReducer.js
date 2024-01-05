@@ -1,5 +1,5 @@
 import { toast } from 'react-toastify';
-import { sessionConstants } from '../actions/constants';
+import { sessionConstants, userConstants } from '../actions/constants';
 
 const inistate = {
   user: JSON.parse(localStorage.getItem('auth')) || {},
@@ -7,17 +7,18 @@ const inistate = {
   authenticated: localStorage.getItem('auth') ? true : false,
 };
 
-const notify = (error) =>
-  toast.error(error, {
-    position: 'top-center',
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: 'colored',
-  });
+const notificationProperties = {
+  position: 'top-center',
+  autoClose: 2000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: 'colored',
+};
+
+const notifyError = (error) => toast.error(error, notificationProperties);
 
 const authReducer = (state = inistate, action) => {
   switch (action.type) {
@@ -28,7 +29,7 @@ const authReducer = (state = inistate, action) => {
         authenticated: true,
       };
     case sessionConstants.LOGIN_USER_FAIL:
-      notify(action.payload.error.message);
+      notifyError(action.payload.error.message);
       return {
         ...state,
         error: action.payload.error,
@@ -39,6 +40,13 @@ const authReducer = (state = inistate, action) => {
         ...state,
         user: {},
         error: null,
+        authenticated: false,
+      };
+    case userConstants.DELETE_USER:
+      localStorage.clear();
+      return {
+        ...state,
+        user: {},
         authenticated: false,
       };
     default:

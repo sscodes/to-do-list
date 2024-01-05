@@ -1,7 +1,8 @@
 const nodemailer = require('nodemailer');
 const User = require('../models/userModel');
+const asyncHandler = require('express-async-handler');
 
-const sendOTP = async (req, res) => {
+const sendOTP = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email: req.params.email });
   if (!user) {
     res.status(400);
@@ -20,11 +21,11 @@ const sendOTP = async (req, res) => {
     from: process.env.GMAIL_ID,
     to: req.params.email,
     subject: 'OTP for password reset of TO-DO-LIST',
-    text: `here is your OTP for password reset. Do not share it with anyone. ${otp}`,
+    text: `Here is your OTP for password reset. Do not share it with anyone. ${otp}`,
   };
 
   const info = await transporter.sendMail(mailOptions);
   if (info.accepted.length > 0) res.status(200).json(otp);
-};
+});
 
 module.exports = { sendOTP };

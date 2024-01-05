@@ -6,6 +6,7 @@ import Header from '../Components/Header';
 import Signin from '../Components/Signin';
 import Signup from '../Components/Signup';
 import { googleOauth } from '../actions/authActions';
+import { ToastContainer } from 'react-toastify';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -43,6 +44,7 @@ const Home = () => {
         </Row>
       </Container>
       <Footer />
+      <ToastContainer />
     </>
   );
 };
