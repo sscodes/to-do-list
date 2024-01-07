@@ -12,7 +12,8 @@ const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [message, setMessage] = useState(false);
+  const [passwordMessage, setPasswordMessage] = useState(null);
+  const [confirmPasswordMessage, setConfirmPasswordMessage] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const dispatch = useDispatch();
   const authenticated = useSelector((state) =>
@@ -22,16 +23,45 @@ const Signup = () => {
   );
 
   useEffect(() => {
-    if (password === '' || confirmPassword === '') setMessage(false);
-    else if (password !== confirmPassword) setMessage(true);
-    else setMessage(false);
+    if (password.length > 0 && password.length < 7)
+      setPasswordMessage('Length of password should be at least 7 characters');
+    else if (password.length > 0 && !/\d/.test(password))
+      setPasswordMessage('Password should have at least one numeric character');
+    else if (
+      password.length > 0 &&
+      // eslint-disable-next-line no-useless-escape
+      !/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(password)
+    )
+      setPasswordMessage('Password should have at least one special character');
+    else setPasswordMessage(null);
+  }, [password]);
+
+  useEffect(() => {
+    if (password === '' || confirmPassword === '')
+      setConfirmPasswordMessage(false);
+    else if (password !== confirmPassword) setConfirmPasswordMessage(true);
+    else setConfirmPasswordMessage(false);
   }, [password, confirmPassword]);
 
   useEffect(() => {
-    if (name && email && password && confirmPassword && !message)
+    if (
+      name &&
+      email &&
+      password &&
+      confirmPassword &&
+      !confirmPasswordMessage &&
+      !passwordMessage
+    )
       setButtonDisabled(false);
     else setButtonDisabled(true);
-  }, [name, email, password, message, confirmPassword]);
+  }, [
+    name,
+    email,
+    password,
+    confirmPasswordMessage,
+    confirmPassword,
+    passwordMessage,
+  ]);
 
   const signup = (e) => {
     e.preventDefault();
@@ -76,15 +106,24 @@ const Signup = () => {
             placeholder='Enter Password'
             onChange={(e) => setPassword(e.target.value)}
           />
+          {passwordMessage && (
+            <div className='text-danger' style={{ fontSize: '10px' }}>
+              {passwordMessage}
+            </div>
+          )}
         </Form.Group>
-        <Form.Group className='mb-3'>
+        <Form.Group className='mb-2'>
           <Form.Label>Confirm Password:</Form.Label>
           <Form.Control
             type='password'
             placeholder='Re-enter Password'
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
-          {message && <h6 className='text-danger'>Passwords do not match</h6>}
+          {confirmPasswordMessage && (
+            <div className='text-danger' style={{ fontSize: '10px' }}>
+              Passwords do not match
+            </div>
+          )}
         </Form.Group>
         <div className='d-grid gap-2'>
           <ButtonComponent

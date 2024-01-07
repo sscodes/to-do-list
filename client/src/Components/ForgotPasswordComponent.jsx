@@ -8,21 +8,43 @@ import { useNavigate } from 'react-router-dom';
 const ForgotPasswordComponent = ({ email }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [message, setMessage] = useState(false);
+  const [passwordMessage, setPasswordMessage] = useState(null);
+  const [confirmPasswordMessage, setConfirmPasswordMessage] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (password === '' || confirmPassword === '') setMessage(false);
-    else if (password !== confirmPassword) setMessage(true);
-    else setMessage(false);
+    if (password.length > 0 && password.length < 7)
+      setPasswordMessage('Length of password should be at least 7 characters');
+    else if (password.length > 0 && !/\d/.test(password))
+      setPasswordMessage('Password should have at least one numeric character');
+    else if (
+      password.length > 0 &&
+      // eslint-disable-next-line no-useless-escape
+      !/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(password)
+    )
+      setPasswordMessage('Password should have at least one special character');
+    else setPasswordMessage(null);
+  }, [password]);
+
+  useEffect(() => {
+    if (password === '' || confirmPassword === '')
+      setConfirmPasswordMessage(false);
+    else if (password !== confirmPassword) setConfirmPasswordMessage(true);
+    else setConfirmPasswordMessage(false);
   }, [password, confirmPassword]);
 
   useEffect(() => {
-    if (password && confirmPassword && !message) setButtonDisabled(false);
+    if (
+      password &&
+      confirmPassword &&
+      !confirmPasswordMessage &&
+      !passwordMessage
+    )
+      setButtonDisabled(false);
     else setButtonDisabled(true);
-  }, [password, message, confirmPassword]);
+  }, [password, confirmPasswordMessage, confirmPassword, passwordMessage]);
 
   const notificationProperties = {
     position: 'top-center',
@@ -49,11 +71,11 @@ const ForgotPasswordComponent = ({ email }) => {
       .then((res) => {
         if (!res.ok) {
           return res.json().then((err) => {
-            throw new Error(err.message);
+            throw new Error(err.confirmPasswordMessage);
           });
         } else return res.json();
       })
-      .then(({msg}) => {
+      .then(({ msg }) => {
         notifySuccess(msg);
         navigate('/');
       })
@@ -79,6 +101,9 @@ const ForgotPasswordComponent = ({ email }) => {
             placeholder='Enter Password'
             onChange={(e) => setPassword(e.target.value)}
           />
+          {passwordMessage && (
+            <h6 className='text-danger'>{passwordMessage}</h6>
+          )}
         </Form.Group>
         <Form.Group className='mb-3'>
           <Form.Label>Confirm new password:</Form.Label>
@@ -87,7 +112,9 @@ const ForgotPasswordComponent = ({ email }) => {
             placeholder='Re-enter Password'
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
-          {message && <h6 className='text-danger'>Passwords do not match</h6>}
+          {confirmPasswordMessage && (
+            <h6 className='text-danger'>Passwords do not match</h6>
+          )}
         </Form.Group>
         <div className='d-grid gap-2'>
           <ButtonComponent
