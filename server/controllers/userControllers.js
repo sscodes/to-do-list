@@ -2,6 +2,7 @@ const asyncHandler = require('express-async-handler');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/userModel');
+const fetch = require('cross-fetch');
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -93,12 +94,31 @@ const deleteUser = asyncHandler(async (req, res) => {
     throw new Error('User not found');
   }
 
-  const deletedUser = await User.findByIdAndDelete(req.user.id, req.body);
-  if (deletedUser) res.status(201).json({ msg: 'Deleted User Successfully' });
-  else {
-    res.status(400);
-    throw new Error('Delete unsuccessful, try again.');
-  }
+  let deletedUser = null;
+
+  fetch(`http://localhost:7000/api/tasks/deleteusertasks/${req.user.id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((res) => {
+      if (!res.ok) {
+        return res.json().then((err) => {
+          throw new Error(err.message);
+        });
+      } else return res.json();
+    })
+    .then(async (tasks) => {
+      console.log(tasks);
+      if (tasks)
+        deletedUser = await User.findByIdAndDelete(req.user.id, req.body);
+      if (deletedUser)
+        res.status(201).json({ msg: 'User deleted successfully.' });
+    })
+    .catch((err) => {
+      throw new Error(`${err.message} Delete unsuccessful, try again.`);
+    });
 });
 
 module.exports = {

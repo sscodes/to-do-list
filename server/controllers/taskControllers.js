@@ -91,9 +91,21 @@ const deleteTasks = asyncHandler(async (req, res) => {
   }
 });
 
+const deleteUserTasks = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.userid);
+  if (!user) {
+    res.status(400);
+    throw new Error('User not found');
+  }
+
+  const deletedTask = await Task.deleteMany({ user: req.params.userid });
+  res.status(201).json({ msg: 'deleted' });
+});
+
 module.exports = {
   createTask,
   readTasks,
   updateTasks,
   deleteTasks,
+  deleteUserTasks,
 };
