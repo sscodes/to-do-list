@@ -20,7 +20,7 @@ const FogotPassword = () => {
             {email ? (
               <ForgotPasswordComponent email={email} />
             ) : (
-              <OTPComponent setEmailProp={setEmail} />
+              <OTPComponent setEmailProp={setEmail} type={'forgotpassword'} />
             )}
           </Col>
           <Col></Col>

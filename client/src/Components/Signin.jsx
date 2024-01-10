@@ -18,7 +18,7 @@ const Signin = () => {
   );
 
   useEffect(() => {
-    if (email && password) setButtonDisabled(false);
+    if (email && password && navigator.onLine) setButtonDisabled(false);
     else setButtonDisabled(true);
   }, [email, password]);
 

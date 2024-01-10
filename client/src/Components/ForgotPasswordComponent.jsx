@@ -40,7 +40,8 @@ const ForgotPasswordComponent = ({ email }) => {
       password &&
       confirmPassword &&
       !confirmPasswordMessage &&
-      !passwordMessage
+      !passwordMessage &&
+      navigator.onLine
     )
       setButtonDisabled(false);
     else setButtonDisabled(true);

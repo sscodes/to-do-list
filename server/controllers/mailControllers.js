@@ -3,8 +3,10 @@ const User = require('../models/userModel');
 const asyncHandler = require('express-async-handler');
 
 const sendOTP = asyncHandler(async (req, res) => {
-  const user = await User.findOne({ email: req.params.email });
-  if (!user) {
+  let user = null;
+  if (req.params.type !== 'signup')
+    user = await User.findOne({ email: req.params.email });
+  if (!user && req.params.type !== 'signup') {
     res.status(400);
     throw new Error('No user found with this email id.');
   }

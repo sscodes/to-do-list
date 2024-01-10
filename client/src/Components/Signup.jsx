@@ -1,26 +1,18 @@
 import { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { createUser } from '../actions/userActions';
 import ButtonComponent from './ButtonComponent';
+import OTPComponent from './OTPComponent';
 
 const Signup = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showOTPComponent, setShowOTPComponent] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordMessage, setPasswordMessage] = useState(null);
   const [confirmPasswordMessage, setConfirmPasswordMessage] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(true);
-  const dispatch = useDispatch();
-  const authenticated = useSelector((state) =>
-    state.user.authenticated
-      ? state.user.authenticated
-      : state.auth.authenticated
-  );
 
   useEffect(() => {
     if (password.length > 0 && password.length < 7)
@@ -50,7 +42,8 @@ const Signup = () => {
       password &&
       confirmPassword &&
       !confirmPasswordMessage &&
-      !passwordMessage
+      !passwordMessage &&
+      navigator.onLine
     )
       setButtonDisabled(false);
     else setButtonDisabled(true);
@@ -65,20 +58,21 @@ const Signup = () => {
 
   const signup = (e) => {
     e.preventDefault();
-    const user = {
-      name,
-      email,
-      password,
-    };
-    dispatch(createUser(user));
+    setShowOTPComponent(true);
   };
 
-  if (authenticated) {
-    return <Navigate to={`/home`} />;
-  }
-
-  return (
-    <div>
+  return showOTPComponent ? (
+    <OTPComponent
+      user={{
+        name,
+        email,
+        password,
+      }}
+      type={'signup'}
+      emailProp={email}
+    />
+  ) : (
+    <>
       <div className='text-center'>
         <h4>New here? Sign Up!</h4>
       </div>
@@ -133,8 +127,7 @@ const Signup = () => {
           />
         </div>
       </Form>
-      <ToastContainer />
-    </div>
+    </>
   );
 };
 
