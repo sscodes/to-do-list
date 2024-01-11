@@ -29,6 +29,7 @@ const AddTask = () => {
       done: false,
     };
     dispatch(createTask(task, token));
+    e.target.reset();
   };
 
   return (

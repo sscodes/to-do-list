@@ -38,18 +38,18 @@ const Task = (props) => {
           <b>Deadline:</b>
           <h6>{formatDate(props.deadline)}</h6>
           <Row>
-            <Col>
-              <Row className='mt-4 border py-1 border-2 rounded border-success bg-success text-white'>
-                <Col xs={5} className='mx-auto'>
-                  <Form.Check
-                    type='checkbox'
-                    id='default-checkbox'
-                    defaultChecked={props.done}
-                    onChange={changeDoneStatus}
-                    className='d-inline'
-                  />
-                  <h5 className='d-inline'>{`     `}Mark as {props.done ? `pending` : `done`}</h5>
-                </Col>
+            <Col className='text-center'>
+              <Row className='d-block align-middle align-items-center mt-4 border py-1 border-2 rounded border-success bg-success text-white'>
+                <Form.Check
+                  type='checkbox'
+                  id='default-checkbox'
+                  defaultChecked={props.done}
+                  onChange={changeDoneStatus}
+                  className='d-inline'
+                />
+                <div className='d-inline mt-5 fs-6 fs-lg-5'>
+                  Mark as {props.done ? `pending` : `done`}
+                </div>
               </Row>
             </Col>
             <Col>

@@ -1,5 +1,13 @@
 input#default-checkbox {
-  height: 4vh;
-  width: 4vh;
+  height: 20px;
+  width: 20px;
   border-color: rgb(0, 0, 0);
+  margin-right: -1rem;
+  margin-top: -0.001rem;
+}
+
+@media (max-width: 768px) {
+  .your-element {
+    font-size: 14px;
+  }
 }

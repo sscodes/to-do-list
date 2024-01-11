@@ -27,11 +27,12 @@ const Home = () => {
         <Row className='pt-3 text-center'>
           <h4>A no-nonsense to-do list app.</h4>
         </Row>
-        <Row className='pb-2'>
-          <Col className='mx-1 p-2 border border-dark-subtle border-3 rounded'>
+        <Row className='pb-2 my-2 mt-lg-0'>
+          <Col lg={1} className='d-none d-lg-block'></Col>
+          <Col lg={5} className='mx-lg-1 p-2 border border-dark-subtle border-3 rounded'>
             <Signup />
           </Col>
-          <Col className='mx-1 p-2 border border-dark-subtle border-3 rounded'>
+          <Col lg={5} className='mx-lg-1 mt-2 mb-5 mt-lg-0 mb-lg-0 p-2 border border-dark-subtle border-3 rounded'>
             <Signin />
             <a
               href='http://localhost:7000/api/users/google'
@@ -41,6 +42,7 @@ const Home = () => {
               Login with Google
             </a>
           </Col>
+          <Col lg={1} className='d-none d-lg-block'></Col>
         </Row>
       </Container>
       <Footer />
