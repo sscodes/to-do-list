@@ -69,7 +69,7 @@ const OTPComponent = ({ setEmailProp, user, type, emailProp }) => {
   const sendOTP = (e) => {
     e.preventDefault();
     dispatch(sendOTPMail(email));
-    e.target.reset();
+    !emailSent && e.target.reset();
   };
 
   const confirmOTP = (e) => {
@@ -104,6 +104,16 @@ const OTPComponent = ({ setEmailProp, user, type, emailProp }) => {
               emailSent ? setOTP(e.target.value) : setEmail(e.target.value)
             }
           />
+          <u
+            style={{
+              fontSize: '0.9rem',
+              paddingTop: '0.4rem',
+              cursor: 'pointer',
+            }}
+            onClick={sendOTP}
+          >
+            {emailSent && 'Resend OTP'}
+          </u>
         </Form.Group>
         <div className='d-grid gap-2'>
           <ButtonComponent
