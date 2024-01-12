@@ -62,7 +62,7 @@ const ForgotPasswordComponent = ({ email }) => {
   const notifySuccess = (msg) => toast.success(msg, notificationProperties);
 
   const updateUser = (email, newpassword) => () => {
-    fetch(`http://localhost:7000/api/users/updatepassword/${email}`, {
+    fetch(`https://todolist-api.onrender.com/api/users/updatepassword/${email}`, {
       method: 'PUT',
       headers: {
         'content-type': 'application/json',

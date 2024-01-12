@@ -39,7 +39,7 @@ const OTPComponent = ({ setEmailProp, user, type, emailProp }) => {
   const notifySuccess = (msg) => toast.success(msg, notificationProperties);
 
   const sendOTPMail = (email) => () => {
-    fetch(`http://localhost:7000/api/mails/${type}/sendOTP/${email}`)
+    fetch(`https://todolist-api.onrender.com/api/mails/${type}/sendOTP/${email}`)
       .then((res) => {
         if (!res.ok) {
           return res.json().then((err) => {
