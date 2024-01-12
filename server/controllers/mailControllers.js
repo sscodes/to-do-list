@@ -23,7 +23,7 @@ const sendOTP = asyncHandler(async (req, res) => {
     from: process.env.GMAIL_ID,
     to: req.params.email,
     subject: 'OTP for your TO-DO-LIST account',
-    text: `Here is your OTP for your TO-DO-LIST account. Do not share it with anyone. ${otp}`,
+    html: `<h3>Here is your OTP for your TO-DO-LIST account. <br/> <br/> <b>${otp}</b> <br/> <br/> Warning: Do not share it with anyone!</h3> `,
   };
 
   const info = await transporter.sendMail(mailOptions);
