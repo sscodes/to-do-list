@@ -25,7 +25,7 @@ router.get(
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) =>
     res.redirect(
-      `http://localhost:3000?name=${req.user.name}&token=${generateToken(
+      `https://to-do-list-fyvc.onrender.com?name=${req.user.name}&token=${generateToken(
         req.user._id
       )}`
     )
