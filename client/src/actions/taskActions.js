@@ -1,7 +1,7 @@
 import { taskConstants } from './constants';
 
 export const createTask = (task, token) => (dispatch) => {
-  fetch('http://localhost:7000/api/tasks', {
+  fetch('http://todolist-api.onrender.com/api/tasks', {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
@@ -33,7 +33,7 @@ export const createTask = (task, token) => (dispatch) => {
 };
 
 export const readTask = (token) => (dispatch) => {
-  fetch('http://localhost:7000/api/tasks', {
+  fetch('http://todolist-api.onrender.com/api/tasks', {
     method: 'GET',
     headers: {
       authorization: `Bearer ${token}`,
@@ -64,7 +64,7 @@ export const readTask = (token) => (dispatch) => {
 };
 
 export const changeTaskDoneStatus = (change, token, id) => (dispatch) => {
-  fetch(`http://localhost:7000/api/tasks/${id}`, {
+  fetch(`http://todolist-api.onrender.com/api/tasks/${id}`, {
     method: 'PUT',
     headers: {
       'content-type': 'application/json',
@@ -97,7 +97,7 @@ export const changeTaskDoneStatus = (change, token, id) => (dispatch) => {
 };
 
 export const deleteTaskAction = (token, id) => (dispatch) => {
-  fetch(`http://localhost:7000/api/tasks/${id}`, {
+  fetch(`http://todolist-api.onrender.com/api/tasks/${id}`, {
     method: 'DELETE',
     headers: {
       authorization: `Bearer ${token}`,

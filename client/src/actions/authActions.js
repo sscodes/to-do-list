@@ -1,7 +1,7 @@
 import { sessionConstants } from './constants';
 
 export const loginUser = (user) => (dispatch) => {
-  fetch('http://localhost:7000/api/users/signin', {
+  fetch('https://todolist-api.onrender.com/api/users/signin', {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
