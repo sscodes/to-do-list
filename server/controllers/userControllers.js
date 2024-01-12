@@ -96,7 +96,7 @@ const deleteUser = asyncHandler(async (req, res) => {
 
   let deletedUser = null;
 
-  fetch(`https://todolist-api.onrender.com/api/tasks/deleteusertasks/${req.user.id}`, {
+  fetch(`https://to-do-list-api-ddho.onrender.com/api/tasks/deleteusertasks/${req.user.id}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',

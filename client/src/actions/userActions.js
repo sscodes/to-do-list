@@ -1,7 +1,7 @@
 import { userConstants } from './constants';
 
 export const createUser = (user) => (dispatch) => {
-  fetch('https://todolist-api.onrender.com/api/users/signup', {
+  fetch('https://to-do-list-api-ddho.onrender.com/api/users/signup', {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
@@ -33,7 +33,7 @@ export const createUser = (user) => (dispatch) => {
 };
 
 export const deleteUser = (token) => (dispatch) => {
-  fetch('https://todolist-api.onrender.com/api/users/deleteuser', {
+  fetch('https://to-do-list-api-ddho.onrender.com/api/users/deleteuser', {
     method: 'DELETE',
     headers: {
       'content-type': 'application/json',
