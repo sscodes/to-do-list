@@ -8,7 +8,7 @@ const Footer = () => {
       data-bs-theme='dark'
       fixed='bottom'
     >
-      Developed by{` `}
+      Developed by&nbsp;
       <a
         href='https://www.linkedin.com/in/sscodes/'
         target='_blank'
