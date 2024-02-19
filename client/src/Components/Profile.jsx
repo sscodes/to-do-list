@@ -6,11 +6,15 @@ import { Pie } from 'react-chartjs-2';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../actions/authActions';
 import { deleteUser } from '../actions/userActions';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = (props) => {
   Chart.register(ArcElement);
+
   const [name, setName] = useState('');
+
   const dispatch = useDispatch();
+
   const user = useSelector((state) =>
     Object.getOwnPropertyNames(state?.user?.user).length === 0
       ? state?.auth?.user
@@ -20,6 +24,9 @@ const Profile = (props) => {
     state.user.user.token ? state.user.user.token : state.auth.user.token
   );
   const tasks = useSelector((state) => state.tasks?.tasks);
+
+  const navigate = useNavigate();
+
   const doneTasks = tasks.filter((task) => task.done).length;
   const pendingTasks = tasks.filter((task) => !task.done).length;
 
@@ -43,18 +50,35 @@ const Profile = (props) => {
   };
 
   const onDelete = () => {
-    dispatch(deleteUser(token));
+    if (window.confirm('Are you sure you want to delete profile?'))
+      dispatch(deleteUser(token));
   };
   return (
     <Modal {...props} aria-labelledby='contained-modal-title-vcenter' centered>
       <Modal.Header closeButton>
         <Modal.Title id='contained-modal-title-vcenter'>{name}</Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-        <div style={{ width: 300 }}>
-          <div>
-            <Pie data={userData} />
-          </div>
+      <Modal.Body
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          textAlign: 'center',
+        }}
+      >
+        <div style={{ width: 300, minHeight: 100 }}>
+          {tasks.length ? (
+            <div>
+              <Pie data={userData} />
+            </div>
+          ) : (
+            <div>
+              <h4>No tasks added.</h4>
+              <Button onClick={() => navigate('/')} variant='dark'>
+                Add tasks
+              </Button>
+            </div>
+          )}
         </div>
       </Modal.Body>
       <Modal.Footer>
