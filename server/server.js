@@ -33,6 +33,12 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.use('/api/tasks', require('./routes/taskRoutes'));
+app.use('/api/users', require('./routes/userRoutes'));
+app.use('/api/mails', require('./routes/mailRoutes'));
+
+app.use(errorHandler);
+
 // Serve static assets (e.g., CSS, JS, images)
 app.use(express.static(path.join(__dirname, 'client/build')));
 
@@ -40,12 +46,6 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
-
-app.use('/api/tasks', require('./routes/taskRoutes'));
-app.use('/api/users', require('./routes/userRoutes'));
-app.use('/api/mails', require('./routes/mailRoutes'));
-
-app.use(errorHandler);
 
 app.listen(port, () => {
   console.log(`Server started on port ${port}`);
