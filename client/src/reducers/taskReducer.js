@@ -1,5 +1,6 @@
 import { toast } from 'react-toastify';
 import { taskConstants } from '../actions/constants';
+import taskDone from '../assets/TaskDone.wav';
 
 const inistate = {
   tasks: JSON.parse(localStorage.getItem('tasks')) || [],
@@ -47,6 +48,7 @@ const taskReducer = (state = inistate, action) => {
       };
     case taskConstants.UPDATE_TASK:
       notifySuccess(`Task Marked As ${action.doneType ? 'Done' : 'Pending'}`);
+      if (action.doneType) new Audio(taskDone).play();
       return {
         ...state,
         tasks: action.payload,
