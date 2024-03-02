@@ -28,8 +28,10 @@ const Profile = (props) => {
 
   const navigate = useNavigate();
 
-  const doneTasks = tasks.filter((task) => task.done).length;
-  const pendingTasks = tasks.filter((task) => !task.done).length;
+  const doneTasks =
+    tasks.length > 0 ? tasks.filter((task) => task.done).length : undefined;
+  const pendingTasks =
+    tasks.length > 0 ? tasks.filter((task) => !task.done).length : undefined;
 
   const userData = {
     labels: ['done', 'pending'],
@@ -69,7 +71,7 @@ const Profile = (props) => {
         }}
       >
         <div style={{ width: 300, minHeight: 100 }}>
-          {tasks.length ? (
+          {tasks.length>0 ? (
             <div>
               <Pie data={userData} />
             </div>
