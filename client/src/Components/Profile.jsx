@@ -1,12 +1,13 @@
-import { ArcElement, Chart } from 'chart.js';
+import { ArcElement } from 'chart.js';
+import Chart from 'chart.js/auto';
 import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { Pie } from 'react-chartjs-2';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { logoutUser } from '../actions/authActions';
 import { deleteUser } from '../actions/userActions';
-import { useNavigate } from 'react-router-dom';
 
 const Profile = (props) => {
   Chart.register(ArcElement);
@@ -37,6 +38,7 @@ const Profile = (props) => {
         label: 'Count',
         data: [doneTasks, pendingTasks],
         backgroundColor: ['rgb(120,120,120)', 'rgb(24,24,24)'],
+        hoverOffset: 4,
       },
     ],
   };
