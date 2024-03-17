@@ -36,6 +36,7 @@ const taskReducer = (state = inistate, action) => {
       };
     case taskConstants.ADD_TASK:
       notifySuccess('Task added successfully!');
+      if (localStorage.getItem('task')) localStorage.removeItem('task');
       return {
         ...state,
         tasks: action.payload,

@@ -8,6 +8,8 @@ import Hero from './Containers/Hero';
 import Home from './Containers/Home';
 import AllTasks from './Containers/PendingTasks';
 import PrivateRoute from './HOC/PrivateRoute';
+import { useDispatch, useSelector } from 'react-redux';
+import { createTask } from './actions/taskActions';
 
 function App() {
   const notificationProperties = {
@@ -21,13 +23,24 @@ function App() {
     theme: 'colored',
   };
 
+  const dispatch = useDispatch();
+
   const notifyError = (error) => toast.error(error, notificationProperties);
   const notifySuccess = (error) => toast.success(error, notificationProperties);
+
+  const token = useSelector((state) =>
+    state.user.user.token ? state.user.user.token : state.auth.user.token
+  );
 
   useEffect(() => {
     const handleOnlineStatusChange = () => {
       if (!navigator.onLine) notifyError('You are offline!');
-      else notifySuccess('You are back online!');
+      else {
+        notifySuccess('You are back online!');
+        if (localStorage.getItem('task')) {
+          dispatch(createTask(JSON.parse(localStorage.getItem('task')), token));
+        }
+      }
     };
 
     window.addEventListener('online', handleOnlineStatusChange);
@@ -37,8 +50,8 @@ function App() {
       window.removeEventListener('online', handleOnlineStatusChange);
       window.removeEventListener('offline', handleOnlineStatusChange);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   return (
     <div className='App'>
       <Routes>

@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import { createTask } from '../actions/taskActions';
 import ButtonComponent from './ButtonComponent';
 import Calendar from 'react-calendar';
@@ -9,6 +9,7 @@ import 'react-calendar/dist/Calendar.css';
 import { MdDateRange } from 'react-icons/md';
 
 const AddTask = () => {
+  const [online, setOnline] = useState(navigator.onLine);
   const [showCalender, setShowCalender] = useState(false);
   const [title, setTitle] = useState('');
   const [details, setDetails] = useState('');
@@ -27,6 +28,19 @@ const AddTask = () => {
     state.user.user.token ? state.user.user.token : state.auth.user.token
   );
 
+  const notificationProperties = {
+    position: 'top-center',
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: 'colored',
+  };
+
+  const notifySuccess = (msg) => toast.success(msg, notificationProperties);
+
   const submitTask = (e) => {
     e.preventDefault();
     const task = {
@@ -36,9 +50,30 @@ const AddTask = () => {
       deadline: deadline,
       done: false,
     };
-    dispatch(createTask(task, token));
+    if (online) dispatch(createTask(task, token));
+    else {
+      localStorage.setItem('task', JSON.stringify(task));
+      notifySuccess(
+        'Task saved! It will be uploaded once we go online. Kindly do not logout.'
+      );
+    }
     e.target.reset();
   };
+
+  useEffect(() => {
+    const handleOnlineStatusChange = () => {
+      if (navigator.onLine) setOnline(true);
+      else setOnline(false);
+    };
+
+    window.addEventListener('online', handleOnlineStatusChange);
+    window.addEventListener('offline', handleOnlineStatusChange);
+
+    return () => {
+      window.removeEventListener('online', handleOnlineStatusChange);
+      window.removeEventListener('offline', handleOnlineStatusChange);
+    };
+  }, []);
 
   const setDate = (e) => {
     setDeadline(e);
