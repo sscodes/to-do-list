@@ -1,6 +1,46 @@
 .App {
-  background-color: rgb(217, 216, 216);
   min-height: 100vh;
+}
+
+.theme-light {
+  background-color: rgb(216, 216, 216);
+}
+
+.theme-dark {
+  background-color: rgb(74, 74, 74);
+}
+
+.form-control-dark {
+  border: 1px solid black;
+  border-color: black !important;
+  background-color: #b7b7b7 !important;
+}
+
+.text-light {
+  color: rgb(200, 200, 200);
+}
+
+.text-dark {
+  color: rgb(24, 24, 24);
+}
+
+.ThemeIcon {
+  color: rgb(177, 177, 177);
+  font-size: 1.5rem;
+  padding-left: 1%;
+  margin-bottom: 0.7%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.task-header-dark {
+  background-color: #d0d0d0 !important;
+}
+
+.task-body-dark {
+  background-color: #a1a1a1;
+  border-radius: 0 0 5px 5px;
 }
 
 .Home {

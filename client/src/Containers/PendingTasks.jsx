@@ -28,8 +28,8 @@ const PendingTasks = () => {
       <Header />
       <Container className='pt-3'>
         <Row>
-          <Col>
-            {tasks.map((task) => (
+          {tasks.map((task) => (
+            <Col className='py-2' xs={12} sm={4} lg={3} key={task._id}>
               <Task
                 id={task._id}
                 title={task.taskName}
@@ -37,17 +37,13 @@ const PendingTasks = () => {
                 deadline={task.deadline}
                 variant='danger'
                 done={task.done}
-                key={task._id}
               />
-            ))}
-          </Col>
+            </Col>
+          ))}
         </Row>
         <Row className='py-3 pb-5'>
           <Col className='d-flex justify-content-center pb-5'>
-            <Link
-              to='/completed-tasks'
-              style={{ textDecoration: 'none' }}
-            >
+            <Link to='/completed-tasks' style={{ textDecoration: 'none' }}>
               <ButtonComponent variant={'dark'} name={'Show Completed Tasks'} />
             </Link>
           </Col>

@@ -57,9 +57,15 @@ const Profile = (props) => {
     if (window.confirm('Are you sure you want to delete profile?'))
       dispatch(deleteUser(token));
   };
+
+  const { theme } = useSelector((state) => state.theme);
+
   return (
     <Modal {...props} aria-labelledby='contained-modal-title-vcenter' centered>
-      <Modal.Header closeButton>
+      <Modal.Header
+        className={`${theme === 'DARK' && 'task-header-dark'}`}
+        closeButton
+      >
         <Modal.Title id='contained-modal-title-vcenter'>{name}</Modal.Title>
       </Modal.Header>
       <Modal.Body
@@ -69,9 +75,10 @@ const Profile = (props) => {
           justifyContent: 'center',
           textAlign: 'center',
         }}
+        className={`${theme === 'DARK' && 'task-body-dark'}`}
       >
         <div style={{ width: 300, minHeight: 100 }}>
-          {tasks.length>0 ? (
+          {tasks.length > 0 ? (
             <div>
               <Pie data={userData} />
             </div>
@@ -85,7 +92,7 @@ const Profile = (props) => {
           )}
         </div>
       </Modal.Body>
-      <Modal.Footer>
+      <Modal.Footer className={`${theme === 'DARK' && 'task-header-dark '}`}>
         <Button onClick={logout} variant='dark'>
           Logout
         </Button>

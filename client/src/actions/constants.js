@@ -23,3 +23,8 @@ export const sessionConstants = {
   LOGIN_USER_FAIL: 'LOGIN_USER_FAIL',
   LOGOUT_USER: 'LOGOUT_USER',
 };
+
+export const themeConstants = {
+  DARK_THEME: 'DARK_THEME',
+  LIGHT_THEME: 'LIGHT_THEME',
+};

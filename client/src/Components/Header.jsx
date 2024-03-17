@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Container, Navbar } from 'react-bootstrap';
+import { MdDarkMode, MdLightMode } from 'react-icons/md';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { themeActions } from '../actions/themeActions';
 import Profile from './Profile';
-import { useSelector } from 'react-redux';
 
 const Header = () => {
   const [name, setName] = useState('');
@@ -20,6 +22,16 @@ const Header = () => {
     setModal(true);
   };
 
+  const dispatch = useDispatch();
+
+  const {theme} = useSelector((state) => state.theme);
+
+  const changeTheme = () => {
+    console.log(theme);
+    if (theme === 'LIGHT') dispatch(themeActions('DARK'));
+    else dispatch(themeActions('LIGHT'));
+  };
+
   return (
     <>
       <Profile show={modal} onHide={() => setModal(false)} />
@@ -35,7 +47,7 @@ const Header = () => {
               to='/'
               style={{ textDecoration: 'none', color: 'whitesmoke' }}
             >
-              <h4>To-Do-List</h4>
+              <h4>TaskTrack</h4>
             </Link>
           </Navbar.Brand>
           <Navbar.Toggle />
@@ -51,6 +63,13 @@ const Header = () => {
               </Navbar.Text>
             </Navbar.Collapse>
           )}
+          <div className='ThemeIcon'>
+            {theme === 'DARK' ? (
+              <MdLightMode onClick={changeTheme} />
+            ) : (
+              <MdDarkMode onClick={changeTheme} />
+            )}
+          </div>
         </Container>
       </Navbar>
     </>

@@ -53,9 +53,7 @@ const AddTask = () => {
     if (online) dispatch(createTask(task, token));
     else {
       localStorage.setItem('task', JSON.stringify(task));
-      notifySuccess(
-        'Task saved! It will be uploaded once we go online. Kindly do not logout.'
-      );
+      notifySuccess('Task saved! It will be uploaded once we go online.');
     }
     e.target.reset();
   };
@@ -75,6 +73,8 @@ const AddTask = () => {
     };
   }, []);
 
+  const { theme } = useSelector((state) => state.theme);
+
   const setDate = (e) => {
     setDeadline(e);
     const date = new Date(e);
@@ -86,29 +86,45 @@ const AddTask = () => {
 
   return (
     <div>
-      <h4>Add a task:</h4>
+      <h4 className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}>
+        Add a task:
+      </h4>
       <Form onSubmit={submitTask}>
         <Form.Group className='mb-1'>
-          <Form.Label>Task Title:</Form.Label>
+          <Form.Label
+            className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}
+          >
+            Task Title:
+          </Form.Label>
           <Form.Control
             type='text'
+            className={`${theme === 'DARK' && 'form-control-dark'}`}
             placeholder='Add Task'
             onChange={(e) => setTitle(e.target.value)}
           />
         </Form.Group>
         <Form.Group className='mb-1'>
-          <Form.Label>Task Description (optional):</Form.Label>
+          <Form.Label
+            className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}
+          >
+            Task Description (optional):
+          </Form.Label>
           <Form.Control
             as='textarea'
+            className={`${theme === 'DARK' && 'form-control-dark'}`}
             placeholder='Descrbe the task...'
             rows={3}
             onChange={(e) => setDetails(e.target.value)}
           />
         </Form.Group>
         <Form.Group className='mb-3' style={{ position: 'relative' }}>
-          <Form.Label>Set deadline:</Form.Label>
+          <Form.Label
+            className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}
+          >
+            Set deadline:
+          </Form.Label>
           <div
-            className='date-field'
+            className={`date-field ${theme === 'DARK' && 'form-control-dark'}`}
             onClick={() => setShowCalender((e) => !e)}
           >
             {`${dd}/${mm}/${yyyy}`} <MdDateRange />

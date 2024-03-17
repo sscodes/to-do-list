@@ -47,7 +47,9 @@ const userReducer = (state = inistate, action) => {
         ...state,
       };
     case sessionConstants.LOGOUT_USER:
-      localStorage.clear();
+      localStorage.removeItem('tasks');
+      localStorage.removeItem('user');
+      localStorage.removeItem('auth');
       return {
         ...state,
         user: {},

@@ -15,9 +15,13 @@ const UpcomingDeadlines = () => {
     (a, b) => new Date(a.deadline) - new Date(b.deadline)
   );
 
+  const { theme } = useSelector((state) => state.theme);
+
   return (
     <>
-      <h4 className='pb-2'>Upcoming Deadlines:</h4>
+      <h4 className={`${theme === 'DARK' ? 'text-light' : 'text-dark'} pb-2`}>
+        Upcoming Deadlines:
+      </h4>
       {sortedAlertTasks.map((task) => (
         <Alert key={task._id} variant='danger'>
           {task.taskName}

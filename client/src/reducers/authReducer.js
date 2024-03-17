@@ -43,7 +43,9 @@ const authReducer = (state = inistate, action) => {
         authenticated: false,
       };
     case userConstants.DELETE_USER:
-      localStorage.clear();
+      localStorage.removeItem('tasks');
+      localStorage.removeItem('user');
+      localStorage.removeItem('auth');
       return {
         ...state,
         user: {},

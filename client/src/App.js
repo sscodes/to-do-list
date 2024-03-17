@@ -32,6 +32,8 @@ function App() {
     state.user.user.token ? state.user.user.token : state.auth.user.token
   );
 
+  const { theme } = useSelector((state) => state.theme);
+
   useEffect(() => {
     const handleOnlineStatusChange = () => {
       if (!navigator.onLine) notifyError('You are offline!');
@@ -53,7 +55,7 @@ function App() {
   }, []);
 
   return (
-    <div className='App'>
+    <div className={`App ${theme === 'LIGHT' ? 'theme-light' : 'theme-dark'}`}>
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/forgotpassword' element={<ForgotPasword />} />
