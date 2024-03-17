@@ -10,3 +10,24 @@
   align-items: center;
   justify-content: center;
 }
+
+.date-field {
+  padding-left: 4%;
+  padding-bottom: 1.5%;
+  padding-top: 1.5%;
+  width: 100%;
+  background-color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calender {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  bottom: 40px;
+  width: 100%;
+}

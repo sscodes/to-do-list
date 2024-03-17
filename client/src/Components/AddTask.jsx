@@ -4,11 +4,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { createTask } from '../actions/taskActions';
 import ButtonComponent from './ButtonComponent';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+import { MdDateRange } from 'react-icons/md';
 
 const AddTask = () => {
+  const [showCalender, setShowCalender] = useState(false);
   const [title, setTitle] = useState('');
   const [details, setDetails] = useState('');
   const [deadline, setDeadline] = useState('');
+  const [dd, setdd] = useState('dd');
+  const [mm, setmm] = useState('mm');
+  const [yyyy, setyyyy] = useState('yyyy');
+
   const dispatch = useDispatch();
   const user = useSelector((state) =>
     Object.getOwnPropertyNames(state?.user?.user).length === 0
@@ -32,6 +40,15 @@ const AddTask = () => {
     e.target.reset();
   };
 
+  const setDate = (e) => {
+    setDeadline(e);
+    const date = new Date(e);
+    setdd(date.getDate().toString().padStart(2, '0'));
+    setmm((date.getMonth() + 1).toString().padStart(2, '0'));
+    setyyyy(date.getFullYear());
+    setShowCalender(false);
+  };
+
   return (
     <div>
       <h4>Add a task:</h4>
@@ -53,12 +70,17 @@ const AddTask = () => {
             onChange={(e) => setDetails(e.target.value)}
           />
         </Form.Group>
-        <Form.Group className='mb-3'>
+        <Form.Group className='mb-3' style={{ position: 'relative' }}>
           <Form.Label>Set deadline:</Form.Label>
-          <Form.Control
-            type='date'
-            onChange={(e) => setDeadline(e.target.value)}
-          />
+          <div
+            className='date-field'
+            onClick={() => setShowCalender((e) => !e)}
+          >
+            {`${dd}/${mm}/${yyyy}`} <MdDateRange />
+          </div>
+          <div className='calender'>
+            {showCalender && <Calendar onChange={setDate} value={new Date()} />}
+          </div>
         </Form.Group>
         <div className='d-grid gap-2'>
           <ButtonComponent
