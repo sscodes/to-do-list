@@ -4,6 +4,7 @@ import { MdDarkMode, MdLightMode } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { themeActions } from '../actions/themeActions';
+import image from '../assets/Logo.png';
 import Profile from './Profile';
 
 const Header = () => {
@@ -24,7 +25,7 @@ const Header = () => {
 
   const dispatch = useDispatch();
 
-  const {theme} = useSelector((state) => state.theme);
+  const { theme } = useSelector((state) => state.theme);
 
   const changeTheme = () => {
     console.log(theme);
@@ -47,7 +48,14 @@ const Header = () => {
               to='/'
               style={{ textDecoration: 'none', color: 'whitesmoke' }}
             >
-              <h4>TaskTrack</h4>
+              <img
+                alt=''
+                src={image}
+                width='30'
+                height='30'
+                className='d-inline align-top'
+              />{' '}
+              <h4 className='d-inline'>TaskMate</h4>
             </Link>
           </Navbar.Brand>
           <Navbar.Toggle />
