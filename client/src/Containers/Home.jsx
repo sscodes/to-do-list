@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 import Signin from '../Components/Signin';
@@ -20,12 +20,14 @@ const Home = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const { theme } = useSelector((state) => state.theme);
+
   return (
     <>
       <Header />
       <Container>
         <Row className='pt-3 text-center'>
-          <h4>A no-nonsense to-do list app.</h4>
+          <h4 className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}>A no-nonsense to-do list app.</h4>
         </Row>
         <Row className='pb-2 my-2 mt-lg-0'>
           <Col lg={1} className='d-none d-lg-block'></Col>

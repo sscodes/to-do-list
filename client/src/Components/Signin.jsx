@@ -17,6 +17,8 @@ const Signin = () => {
       : state.auth.authenticated
   );
 
+  const { theme } = useSelector((state) => state.theme);
+
   useEffect(() => {
     if (email && password && navigator.onLine) setButtonDisabled(false);
     else setButtonDisabled(true);
@@ -38,12 +40,21 @@ const Signin = () => {
   return (
     <div>
       <div className='text-center'>
-        <h4>Already have an account?</h4>
-        <h4> Sign In!</h4>
+        <h4 className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}>
+          Already have an account?
+        </h4>
+        <h4 className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}>
+          {' '}
+          Sign In!
+        </h4>
       </div>
       <Form onSubmit={signin}>
         <Form.Group className='mb-1'>
-          <Form.Label>Email address:</Form.Label>
+          <Form.Label
+            className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}
+          >
+            Email address:
+          </Form.Label>
           <Form.Control
             type='email'
             placeholder='name@example.com'
@@ -51,7 +62,11 @@ const Signin = () => {
           />
         </Form.Group>
         <Form.Group className='mb-3'>
-          <Form.Label>Password:</Form.Label>
+          <Form.Label
+            className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}
+          >
+            Password:
+          </Form.Label>
           <Form.Control
             type='password'
             placeholder='Enter Password'
@@ -61,6 +76,7 @@ const Signin = () => {
             <Link
               to='/forgotpassword'
               style={{ textDecoration: 'none', color: 'black' }}
+              className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}
             >
               (Forgot Password?)
             </Link>

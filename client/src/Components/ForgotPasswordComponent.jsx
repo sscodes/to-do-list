@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import ButtonComponent from './ButtonComponent';
 import { useNavigate } from 'react-router-dom';
@@ -62,13 +62,16 @@ const ForgotPasswordComponent = ({ email }) => {
   const notifySuccess = (msg) => toast.success(msg, notificationProperties);
 
   const updateUser = (email, newpassword) => () => {
-    fetch(`https://to-do-list-api-ddho.onrender.com/api/users/updatepassword/${email}`, {
-      method: 'PUT',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify(newpassword),
-    })
+    fetch(
+      `https://to-do-list-api-ddho.onrender.com/api/users/updatepassword/${email}`,
+      {
+        method: 'PUT',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify(newpassword),
+      }
+    )
       .then((res) => {
         if (!res.ok) {
           return res.json().then((err) => {
@@ -92,11 +95,17 @@ const ForgotPasswordComponent = ({ email }) => {
     );
   };
 
+  const { theme } = useSelector((state) => state.theme);
+
   return (
     <>
       <Form onSubmit={changePassword}>
         <Form.Group className='mb-1'>
-          <Form.Label>Enter new password:</Form.Label>
+          <Form.Label
+            className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}
+          >
+            Enter new password:
+          </Form.Label>
           <Form.Control
             type='password'
             placeholder='Enter Password'

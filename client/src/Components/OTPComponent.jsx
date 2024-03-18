@@ -17,7 +17,9 @@ const OTPComponent = ({ setEmailProp, user, type, emailProp }) => {
     state.user.authenticated
       ? state.user.authenticated
       : state.auth.authenticated
-  );
+  );  
+
+  const { theme } = useSelector((state) => state.theme);
 
   useEffect(() => {
     if (email && navigator.onLine) setButtonDisabled(false);
@@ -94,7 +96,7 @@ const OTPComponent = ({ setEmailProp, user, type, emailProp }) => {
     <>
       <Form onSubmit={emailSent ? confirmOTP : sendOTP}>
         <Form.Group className='mb-3'>
-          <Form.Label>
+          <Form.Label className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}>
             {emailSent ? 'Enter OTP' : 'Enter Email address'}
           </Form.Label>
           <Form.Control

@@ -3,6 +3,7 @@ import { Form } from 'react-bootstrap';
 import 'react-toastify/dist/ReactToastify.css';
 import ButtonComponent from './ButtonComponent';
 import OTPComponent from './OTPComponent';
+import { useSelector } from 'react-redux';
 
 const Signup = () => {
   const [name, setName] = useState('');
@@ -61,6 +62,8 @@ const Signup = () => {
     setShowOTPComponent(true);
   };
 
+  const { theme } = useSelector((state) => state.theme);
+
   return showOTPComponent ? (
     <OTPComponent
       user={{
@@ -74,11 +77,11 @@ const Signup = () => {
   ) : (
     <>
       <div className='text-center'>
-        <h4>New here? Sign Up!</h4>
+        <h4 className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}>New here? Sign Up!</h4>
       </div>
       <Form onSubmit={signup}>
         <Form.Group className='mb-1'>
-          <Form.Label>Name:</Form.Label>
+          <Form.Label className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}>Name:</Form.Label>
           <Form.Control
             type='text'
             placeholder='Enter name'
@@ -86,7 +89,7 @@ const Signup = () => {
           />
         </Form.Group>
         <Form.Group className='mb-1'>
-          <Form.Label>Email address:</Form.Label>
+          <Form.Label className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}>Email address:</Form.Label>
           <Form.Control
             type='email'
             placeholder='name@example.com'
@@ -94,7 +97,7 @@ const Signup = () => {
           />
         </Form.Group>
         <Form.Group className='mb-1'>
-          <Form.Label>Password:</Form.Label>
+          <Form.Label className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}>Password:</Form.Label>
           <Form.Control
             type='password'
             placeholder='Enter Password'
@@ -107,7 +110,7 @@ const Signup = () => {
           )}
         </Form.Group>
         <Form.Group className='mb-2'>
-          <Form.Label>Confirm Password:</Form.Label>
+          <Form.Label className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}>Confirm Password:</Form.Label>
           <Form.Control
             type='password'
             placeholder='Re-enter Password'
