@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { themeActions } from '../actions/themeActions';
 import image from '../assets/Logo.png';
 import Profile from './Profile';
+import { CgProfile } from 'react-icons/cg';
 
 const Header = () => {
   const [name, setName] = useState('');
@@ -61,13 +62,8 @@ const Header = () => {
           <Navbar.Toggle />
           {name?.length && (
             <Navbar.Collapse className='justify-content-end'>
-              <Navbar.Text>
-                <h6 className='pt-1'>
-                  Signed in as:{' '}
-                  <u onClick={showProfile} style={{ cursor: 'pointer' }}>
-                    {name}
-                  </u>
-                </h6>
+              <Navbar.Text className='ThemeIcon'>
+                <CgProfile onClick={showProfile} />
               </Navbar.Text>
             </Navbar.Collapse>
           )}
