@@ -85,6 +85,7 @@ const Signup = () => {
           <Form.Control
             type='text'
             placeholder='Enter name'
+            className={`${theme === 'DARK' && 'form-control-dark'}`}
             onChange={(e) => setName(e.target.value)}
           />
         </Form.Group>
@@ -93,6 +94,7 @@ const Signup = () => {
           <Form.Control
             type='email'
             placeholder='name@example.com'
+            className={`${theme === 'DARK' && 'form-control-dark'}`}
             onChange={(e) => setEmail(e.target.value)}
           />
         </Form.Group>
@@ -101,6 +103,7 @@ const Signup = () => {
           <Form.Control
             type='password'
             placeholder='Enter Password'
+            className={`${theme === 'DARK' && 'form-control-dark'}`}
             onChange={(e) => setPassword(e.target.value)}
           />
           {passwordMessage && (
@@ -114,6 +117,7 @@ const Signup = () => {
           <Form.Control
             type='password'
             placeholder='Re-enter Password'
+            className={`${theme === 'DARK' && 'form-control-dark'}`}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
           {confirmPasswordMessage && (

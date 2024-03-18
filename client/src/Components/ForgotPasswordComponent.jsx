@@ -110,6 +110,7 @@ const ForgotPasswordComponent = ({ email }) => {
             type='password'
             placeholder='Enter Password'
             onChange={(e) => setPassword(e.target.value)}
+            className={`${theme === 'DARK' && 'form-control-dark'}`}
           />
           {passwordMessage && (
             <h6 className='text-danger'>{passwordMessage}</h6>
@@ -121,6 +122,7 @@ const ForgotPasswordComponent = ({ email }) => {
             type='password'
             placeholder='Re-enter Password'
             onChange={(e) => setConfirmPassword(e.target.value)}
+            className={`${theme === 'DARK' && 'form-control-dark'}`}
           />
           {confirmPasswordMessage && (
             <h6 className='text-danger'>Passwords do not match</h6>

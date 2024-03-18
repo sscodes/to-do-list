@@ -59,6 +59,7 @@ const Signin = () => {
             type='email'
             placeholder='name@example.com'
             onChange={(e) => setEmail(e.target.value)}
+            className={`${theme === 'DARK' && 'form-control-dark'}`}
           />
         </Form.Group>
         <Form.Group className='mb-3'>
@@ -71,6 +72,7 @@ const Signin = () => {
             type='password'
             placeholder='Enter Password'
             onChange={(e) => setPassword(e.target.value)}
+            className={`${theme === 'DARK' && 'form-control-dark'}`}
           />
           <div className='pt-1'>
             <Link

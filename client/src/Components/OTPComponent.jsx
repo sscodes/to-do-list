@@ -105,6 +105,7 @@ const OTPComponent = ({ setEmailProp, user, type, emailProp }) => {
             onChange={(e) =>
               emailSent ? setOTP(e.target.value) : setEmail(e.target.value)
             }
+            className={`${theme === 'DARK' && 'form-control-dark'}`}
           />
           <u
             style={{
