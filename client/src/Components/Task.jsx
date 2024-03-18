@@ -1,10 +1,10 @@
+import { useState } from 'react';
 import { Button, Card, Col, Form, Modal, Row } from 'react-bootstrap';
 import { MdDelete } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
+import ModalComponent from '../HOC/ModalComponent';
 import '../Style/Checkbox.css';
 import { changeTaskDoneStatus, deleteTaskAction } from '../actions/taskActions';
-import { useEffect, useState } from 'react';
-import ModalComponent from '../HOC/ModalComponent';
 
 const Task = (props) => {
   const [deleteTaskModal, setDeleteTaskModal] = useState(false);
@@ -28,7 +28,7 @@ const Task = (props) => {
 
   const deleteTask = () => {
     dispatch(deleteTaskAction(token, props.id));
-    setDeleteTaskModal(false)
+    setDeleteTaskModal(false);
   };
 
   const { theme } = useSelector((state) => state.theme);
@@ -73,7 +73,9 @@ const Task = (props) => {
             </Col>
           </Row>
         </Card.Header>
-        <Card.Body className={`${theme === 'DARK' && 'task-body-dark task-body-border'}`}>
+        <Card.Body
+          className={`${theme === 'DARK' && 'task-body-dark task-body-border'}`}
+        >
           <Card.Text>{props.details}</Card.Text>
           <b>Deadline:</b> {formatDate(props.deadline)}
           <Row>

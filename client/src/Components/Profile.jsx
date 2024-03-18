@@ -85,7 +85,7 @@ const Profile = ({show, onHide}) => {
             </div>
           ) : (
             <div>
-              <h4>No tasks added.</h4>
+              <h4 className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}>No tasks added.</h4>
               <Button onClick={() => navigate('/')} variant='dark'>
                 Add tasks
               </Button>
