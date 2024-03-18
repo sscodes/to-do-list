@@ -8,8 +8,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logoutUser } from '../actions/authActions';
 import { deleteUser } from '../actions/userActions';
+import ModalComponent from './HOC/ModalComponent';
 
-const Profile = (props) => {
+const Profile = ({show, onHide}) => {
   Chart.register(ArcElement);
 
   const [name, setName] = useState('');
@@ -61,7 +62,7 @@ const Profile = (props) => {
   const { theme } = useSelector((state) => state.theme);
 
   return (
-    <Modal {...props} aria-labelledby='contained-modal-title-vcenter' centered>
+    <ModalComponent show={show} onHide={onHide}>
       <Modal.Header
         className={`${theme === 'DARK' && 'task-header-dark'}`}
         closeButton
@@ -100,7 +101,7 @@ const Profile = (props) => {
           Delete User
         </Button>
       </Modal.Footer>
-    </Modal>
+    </ModalComponent>
   );
 };
 

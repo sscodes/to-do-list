@@ -39,7 +39,10 @@
 }
 
 .task-body-dark {
-  background-color: #a1a1a1;
+  background-color: #a1a1a1 !important;
+}
+
+.task-body-border {
   border-radius: 0 0 5px 5px;
 }
 
