@@ -1,7 +1,7 @@
 import { themeConstants } from '../actions/constants';
 
 const inistate = {
-  theme: localStorage.getItem('theme'),
+  theme: localStorage.getItem('theme') || 'LIGHT',
 };
 
 const themeReducer = (state = inistate, action) => {
