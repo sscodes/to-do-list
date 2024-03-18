@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import '../Style/Checkbox.css';
 import { changeTaskDoneStatus, deleteTaskAction } from '../actions/taskActions';
 import { useEffect, useState } from 'react';
-import ModalComponent from './HOC/ModalComponent';
+import ModalComponent from '../HOC/ModalComponent';
 
 const Task = (props) => {
   const [deleteTaskModal, setDeleteTaskModal] = useState(false);
