@@ -60,7 +60,12 @@ const Task = (props) => {
         </Modal.Footer>
       </ModalComponent>
       <Card
-        style={{ width: '97%', height: '100%', border: '0.15rem solid black' }}
+        style={{
+          width: '97%',
+          height: '100%',
+          border: '0.15rem solid black',
+          cursor: 'pointer',
+        }}
       >
         <Card.Header className={`${theme === 'DARK' && 'task-header-dark'}`}>
           <Row>

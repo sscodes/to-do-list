@@ -4,6 +4,7 @@ input#default-checkbox {
   border-color: rgb(0, 0, 0);
   margin-right: -1rem;
   margin-top: -0.001rem;
+  border-radius: 50%;
 }
 
 @media (max-width: 768px) {
