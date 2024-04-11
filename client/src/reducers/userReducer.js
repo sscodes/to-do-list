@@ -18,16 +18,24 @@ const inistate = {
   };
 
   const notifyError = (error) => toast.error(error, notificationProperties);
+  const notify = (message) => toast(message, notificationProperties);
 
 const userReducer = (state = inistate, action) => {
   switch (action.type) {
+    case userConstants.ADD_USER_LOADING:
+      notify('Please wait while we get you ready.');
+      return {
+        ...state,
+      };
     case userConstants.ADD_USER:
+      setTimeout(() => toast.dismiss(), 740);
       return {
         ...state,
         user: action.payload,
         authenticated: true,
       };
     case userConstants.ADD_USER_FAIL:
+      setTimeout(() => toast.dismiss(), 740);
       notifyError(action.payload.error.message);
       return {
         ...state,

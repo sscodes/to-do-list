@@ -1,6 +1,9 @@
 import { userConstants } from './constants';
 
 export const createUser = (user) => (dispatch) => {
+  dispatch({
+    type: userConstants.ADD_USER_LOADING,
+  })
   fetch('https://to-do-list-api-ddho.onrender.com/api/users/signup', {
     method: 'POST',
     headers: {

@@ -1,6 +1,9 @@
 import { sessionConstants } from './constants';
 
 export const loginUser = (user) => (dispatch) => {
+  dispatch({
+    type: sessionConstants.LOGIN_USER_LOADING,
+  })
   fetch('https://to-do-list-api-ddho.onrender.com/api/users/signin', {
     method: 'POST',
     headers: {
