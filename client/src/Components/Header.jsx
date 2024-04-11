@@ -29,7 +29,6 @@ const Header = () => {
   const { theme } = useSelector((state) => state.theme);
 
   const changeTheme = () => {
-    console.log(theme);
     if (theme === 'LIGHT') dispatch(themeActions('DARK'));
     else dispatch(themeActions('LIGHT'));
   };
