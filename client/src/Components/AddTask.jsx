@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import { createTask } from '../actions/taskActions';
@@ -7,6 +6,7 @@ import ButtonComponent from './ButtonComponent';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { MdDateRange } from 'react-icons/md';
+import FormComponent from './FormComponent';
 
 const AddTask = () => {
   const [online, setOnline] = useState(navigator.onLine);
@@ -89,58 +89,18 @@ const AddTask = () => {
       <h4 className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}>
         Add a task:
       </h4>
-      <Form onSubmit={submitTask}>
-        <Form.Group className='mb-1'>
-          <Form.Label
-            className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}
-          >
-            Task Title:
-          </Form.Label>
-          <Form.Control
-            type='text'
-            className={`${theme === 'DARK' && 'form-control-dark'}`}
-            placeholder='Add Task'
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group className='mb-1'>
-          <Form.Label
-            className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}
-          >
-            Task Description (optional):
-          </Form.Label>
-          <Form.Control
-            as='textarea'
-            className={`${theme === 'DARK' && 'form-control-dark'}`}
-            placeholder='Descrbe the task...'
-            rows={3}
-            onChange={(e) => setDetails(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group className='mb-3' style={{ position: 'relative' }}>
-          <Form.Label
-            className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}
-          >
-            Set deadline:
-          </Form.Label>
-          <div
-            className={`date-field ${theme === 'DARK' && 'form-control-dark'}`}
-            onClick={() => setShowCalender((e) => !e)}
-          >
-            {`${dd}/${mm}/${yyyy}`} <MdDateRange />
-          </div>
-          <div className='calender'>
-            {showCalender && <Calendar onChange={setDate} value={new Date()} />}
-          </div>
-        </Form.Group>
-        <div className='d-grid gap-2'>
-          <ButtonComponent
-            type={'submit'}
-            variant={'dark'}
-            name={'Add Tasks'}
-          />
-        </div>
-      </Form>
+      <FormComponent
+        submitTask={submitTask}
+        setTitle={setTitle}
+        setDetails={setDetails}
+        setDate={setDate}
+        showCalender={showCalender}
+        setShowCalender={setShowCalender}
+        dd={dd}
+        mm={mm}
+        yyyy={yyyy}
+        buttonTitle='Add Task'
+      />
       <ToastContainer />
     </div>
   );

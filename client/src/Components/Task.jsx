@@ -1,13 +1,41 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Card, Col, Form, Modal, Row } from 'react-bootstrap';
 import { MdDelete } from 'react-icons/md';
+import { BiSolidEditAlt } from 'react-icons/bi';
 import { useDispatch, useSelector } from 'react-redux';
 import ModalComponent from '../HOC/ModalComponent';
 import '../Style/Checkbox.css';
-import { changeTaskDoneStatus, deleteTaskAction } from '../actions/taskActions';
+import { updateTask, deleteTaskAction } from '../actions/taskActions';
+import FormComponent from './FormComponent';
+import { toast } from 'react-toastify';
 
 const Task = (props) => {
+  const [online, setOnline] = useState(navigator.onLine);
   const [deleteTaskModal, setDeleteTaskModal] = useState(false);
+  const [editTaskModal, setEditTaskModal] = useState(false);
+  const [title, setTitle] = useState(props.title);
+  const [details, setDetails] = useState(props.details);
+  const [deadline, setDeadline] = useState('');
+  const [showCalender, setShowCalender] = useState(false);
+  const [dd, setdd] = useState('dd');
+  const [mm, setmm] = useState('mm');
+  const [yyyy, setyyyy] = useState('yyyy');
+
+  useEffect(() => {
+    const handleOnlineStatusChange = () => {
+      if (navigator.onLine) setOnline(true);
+      else setOnline(false);
+    };
+
+    window.addEventListener('online', handleOnlineStatusChange);
+    window.addEventListener('offline', handleOnlineStatusChange);
+
+    return () => {
+      window.removeEventListener('online', handleOnlineStatusChange);
+      window.removeEventListener('offline', handleOnlineStatusChange);
+    };
+  }, []);
+
   const dispatch = useDispatch();
   const token = useSelector((state) =>
     state.user.user.token ? state.user.user.token : state.auth.user.token
@@ -23,7 +51,19 @@ const Task = (props) => {
     const change = {
       done: !props.done,
     };
-    dispatch(changeTaskDoneStatus(change, token, props.id));
+    dispatch(updateTask(change, token, props.id));
+  };
+
+  const changeTask = (e) => {
+    e.preventDefault();
+    const change = {};
+    if (title.length > 0) change.taskName = title;
+    if (details.length > 0) change.taskDetail = details;
+    if (deadline.length > 0) change.deadline = deadline;
+    if (online) dispatch(updateTask(change, token, props.id));
+    else notifyError("Can't make changes when offline.");
+    e.target.reset();
+    setEditTaskModal(false);
   };
 
   const deleteTask = () => {
@@ -31,10 +71,55 @@ const Task = (props) => {
     setDeleteTaskModal(false);
   };
 
+  const setDate = (e) => {
+    setDeadline(e);
+    const date = new Date(e);
+    setdd(date.getDate().toString().padStart(2, '0'));
+    setmm((date.getMonth() + 1).toString().padStart(2, '0'));
+    setyyyy(date.getFullYear());
+    setShowCalender(false);
+  };
+
+  const notificationProperties = {
+    position: 'top-center',
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: 'colored',
+  };
+
+  const notifyError = (error) => toast.error(error, notificationProperties);
+
   const { theme } = useSelector((state) => state.theme);
 
   return (
     <>
+      <ModalComponent show={editTaskModal} onHide={setEditTaskModal}>
+        <Modal.Body
+          className={`update-modal-body ${
+            theme === 'DARK' && 'task-body-dark'
+          }`}
+        >
+          <FormComponent
+            submitTask={changeTask}
+            title={title}
+            details={details}
+            setTitle={setTitle}
+            setDetails={setDetails}
+            setDate={setDate}
+            showCalender={showCalender}
+            setShowCalender={setShowCalender}
+            dd={dd}
+            mm={mm}
+            yyyy={yyyy}
+            buttonTitle='Update Task'
+            border={true}
+          />
+        </Modal.Body>
+      </ModalComponent>
       <ModalComponent show={deleteTaskModal} onHide={setDeleteTaskModal}>
         <Modal.Header
           className={`${theme === 'DARK' && 'task-header-dark'}`}
@@ -69,13 +154,33 @@ const Task = (props) => {
       >
         <Card.Header className={`${theme === 'DARK' && 'task-header-dark'}`}>
           <Row>
-            <Col xs={10}>{props.title}</Col>
-            <Col xs={2}>
-              <MdDelete
-                style={{ cursor: 'pointer' }}
-                onClick={() => setDeleteTaskModal(true)}
-              />
-            </Col>
+            {!props.done ? (
+              <>
+                <Col xs={9}>{props.title}</Col>
+                <Col xs={1}>
+                  <BiSolidEditAlt
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => setEditTaskModal(true)}
+                  />
+                </Col>
+                <Col xs={1}>
+                  <MdDelete
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => setDeleteTaskModal(true)}
+                  />
+                </Col>
+              </>
+            ) : (
+              <>
+                <Col xs={10}>{props.title}</Col>
+                <Col xs={2}>
+                  <MdDelete
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => setDeleteTaskModal(true)}
+                  />
+                </Col>
+              </>
+            )}
           </Row>
         </Card.Header>
         <Card.Body

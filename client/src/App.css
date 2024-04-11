@@ -79,3 +79,7 @@
   bottom: 40px;
   width: 100%;
 }
+
+.update-modal-body {
+  border-radius: 7px 7px 7px 7px;
+}

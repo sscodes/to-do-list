@@ -79,7 +79,9 @@ const taskReducer = (state = inistate, action) => {
       };
     case taskConstants.UPDATE_TASK:
       setTimeout(() => toast.dismiss(), 740);
-      notifySuccess(`Task Marked As ${action.doneType ? 'Done' : 'Pending'}`);
+      if (action.doneType !== undefined)
+        notifySuccess(`Task Marked As ${action.doneType ? 'Done' : 'Pending'}`);
+      else notifySuccess('Task Updated Successfully');
       if (action.doneType) new Audio(taskDone).play();
       return {
         ...state,

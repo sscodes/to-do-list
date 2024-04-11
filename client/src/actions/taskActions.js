@@ -3,7 +3,7 @@ import { taskConstants } from './constants';
 export const createTask = (task, token) => (dispatch) => {
   dispatch({
     type: taskConstants.ADD_TASK_LOADING,
-  })
+  });
   fetch('https://to-do-list-api-ddho.onrender.com/api/tasks', {
     method: 'POST',
     headers: {
@@ -38,7 +38,7 @@ export const createTask = (task, token) => (dispatch) => {
 export const readTask = (token) => (dispatch) => {
   dispatch({
     type: taskConstants.READ_TASKS_LOADING,
-  })
+  });
   fetch('https://to-do-list-api-ddho.onrender.com/api/tasks', {
     method: 'GET',
     headers: {
@@ -69,10 +69,10 @@ export const readTask = (token) => (dispatch) => {
     });
 };
 
-export const changeTaskDoneStatus = (change, token, id) => (dispatch) => {
+export const updateTask = (change, token, id) => (dispatch) => {
   dispatch({
     type: taskConstants.UPDATE_TASK_LOADING,
-  })
+  });
   fetch(`https://to-do-list-api-ddho.onrender.com/api/tasks/${id}`, {
     method: 'PUT',
     headers: {
@@ -89,11 +89,17 @@ export const changeTaskDoneStatus = (change, token, id) => (dispatch) => {
       } else return res.json();
     })
     .then((tasks) => {
-      dispatch({
-        type: taskConstants.UPDATE_TASK,
-        payload: tasks,
-        doneType: change.done,
-      });
+      if (change.done !== undefined)
+        dispatch({
+          type: taskConstants.UPDATE_TASK,
+          payload: tasks,
+          doneType: change.done,
+        });
+      else
+        dispatch({
+          type: taskConstants.UPDATE_TASK,
+          payload: tasks,
+        });
     })
     .catch((error) => {
       dispatch({
@@ -108,7 +114,7 @@ export const changeTaskDoneStatus = (change, token, id) => (dispatch) => {
 export const deleteTaskAction = (token, id) => (dispatch) => {
   dispatch({
     type: taskConstants.DELETE_TASK_LOADING,
-  })
+  });
   fetch(`https://to-do-list-api-ddho.onrender.com/api/tasks/${id}`, {
     method: 'DELETE',
     headers: {
