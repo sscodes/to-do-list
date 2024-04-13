@@ -6,9 +6,9 @@ import Modal from 'react-bootstrap/Modal';
 import { Pie } from 'react-chartjs-2';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { logoutUser } from '../actions/authActions';
-import { deleteUser } from '../actions/userActions';
-import ModalComponent from '../HOC/ModalComponent';
+import { logoutUser } from '../../actions/authActions';
+import { deleteUser } from '../../actions/userActions';
+import ModalComponent from '../../HOC/ModalComponent';
 
 const Profile = ({show, onHide}) => {
   Chart.register(ArcElement);

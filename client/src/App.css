@@ -110,3 +110,10 @@
 .pagination-last {
   border-radius: 0 7px 7px 0;
 }
+
+.card-styling {
+  width: 97%;
+  height: 100%;
+  border: 0.15rem solid black;
+  cursor: pointer;
+}

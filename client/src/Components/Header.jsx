@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { themeActions } from '../actions/themeActions';
 import image from '../assets/Logo.png';
-import Profile from './Profile';
+import Profile from '../Components/Modals/Profile';
 import { CgProfile } from 'react-icons/cg';
 
 const Header = () => {
