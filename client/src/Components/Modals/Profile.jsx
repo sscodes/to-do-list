@@ -6,11 +6,11 @@ import Modal from 'react-bootstrap/Modal';
 import { Pie } from 'react-chartjs-2';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import ModalComponent from '../../HOC/ModalComponent';
 import { logoutUser } from '../../actions/authActions';
 import { deleteUser } from '../../actions/userActions';
-import ModalComponent from '../../HOC/ModalComponent';
 
-const Profile = ({show, onHide}) => {
+const Profile = ({ show, onHide }) => {
   Chart.register(ArcElement);
 
   const [name, setName] = useState('');
@@ -85,7 +85,11 @@ const Profile = ({show, onHide}) => {
             </div>
           ) : (
             <div>
-              <h4 className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}>No tasks added.</h4>
+              <h4
+                className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}
+              >
+                No tasks added.
+              </h4>
               <Button onClick={() => navigate('/')} variant='dark'>
                 Add tasks
               </Button>

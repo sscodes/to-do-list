@@ -6,10 +6,10 @@ import { ToastContainer } from 'react-toastify';
 import ButtonComponent from '../Components/ButtonComponent';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
+import PaginationComponent from '../Components/PaginationComponent';
+import SearchTask from '../Components/SearchTask';
 import Task from '../Components/Task';
 import { readTask } from '../actions/taskActions';
-import SearchTask from '../Components/SearchTask';
-import PaginationComponent from '../Components/PaginationComponent';
 
 const PendingTasks = () => {
   const [searchedText, setSearchedText] = useState('');

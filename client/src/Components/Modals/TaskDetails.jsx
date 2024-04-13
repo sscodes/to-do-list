@@ -1,8 +1,8 @@
 import React from 'react';
-import ModalComponent from '../../HOC/ModalComponent';
 import { Button, Modal } from 'react-bootstrap';
-import { formatDate } from '../../utils/formDate';
 import { useSelector } from 'react-redux';
+import ModalComponent from '../../HOC/ModalComponent';
+import { formatDate } from '../../utils/formDate';
 
 const TaskDetails = (props) => {
   const { theme } = useSelector((state) => state.theme);

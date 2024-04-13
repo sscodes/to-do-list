@@ -1,17 +1,15 @@
 import { useEffect, useState } from 'react';
-import { Button, Card, Col, Form, Modal, Row } from 'react-bootstrap';
-import { MdDelete } from 'react-icons/md';
+import { Card, Col, Form, Row } from 'react-bootstrap';
 import { BiSolidEditAlt } from 'react-icons/bi';
+import { MdDelete } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
-import ModalComponent from '../HOC/ModalComponent';
+import { toast } from 'react-toastify';
 import '../Style/Checkbox.css';
 import { updateTask } from '../actions/taskActions';
-import FormComponent from './FormComponent';
-import { toast } from 'react-toastify';
-import EditModal from './Modals/EditModal';
-import DeleteModal from './Modals/DeleteModal';
-import TaskDetails from './Modals/TaskDetails';
 import { formatDate } from '../utils/formDate';
+import DeleteModal from './Modals/DeleteModal';
+import EditModal from './Modals/EditModal';
+import TaskDetails from './Modals/TaskDetails';
 
 const Task = (props) => {
   const [online, setOnline] = useState(navigator.onLine);
@@ -46,7 +44,8 @@ const Task = (props) => {
     state.user.user.token ? state.user.user.token : state.auth.user.token
   );
 
-  const changeDoneStatus = () => {
+  const changeDoneStatus = (e) => {
+    setShowTaskModal(false);
     const change = {
       done: !props.done,
     };
@@ -136,13 +135,19 @@ const Task = (props) => {
                 <Col xs={1}>
                   <BiSolidEditAlt
                     style={{ cursor: 'pointer' }}
-                    onClick={() => setEditTaskModal(true)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setEditTaskModal(true);
+                    }}
                   />
                 </Col>
                 <Col xs={1}>
                   <MdDelete
                     style={{ cursor: 'pointer' }}
-                    onClick={() => setDeleteTaskModal(true)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setDeleteTaskModal(true);
+                    }}
                   />
                 </Col>
               </>

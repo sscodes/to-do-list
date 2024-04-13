@@ -1,8 +1,8 @@
 import React from 'react';
-import { deleteTaskAction } from '../../actions/taskActions';
+import { Button, Modal } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import ModalComponent from '../../HOC/ModalComponent';
-import { Button, Modal } from 'react-bootstrap';
+import { deleteTaskAction } from '../../actions/taskActions';
 import { formatDate } from '../../utils/formDate';
 
 const DeleteModal = (props) => {
@@ -21,10 +21,7 @@ const DeleteModal = (props) => {
       show={props.deleteTaskModal}
       onHide={props.etDeleteTaskModal}
     >
-      <Modal.Header
-        className={`${theme === 'DARK' && 'task-header-dark'}`}
-        closeButton
-      >
+      <Modal.Header className={`${theme === 'DARK' && 'task-header-dark'}`}>
         <Modal.Title id='contained-modal-title-vcenter'>
           {props.title}
           <h6>
