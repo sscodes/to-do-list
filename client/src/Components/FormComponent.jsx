@@ -36,7 +36,7 @@ const FormComponent = ({
             className={`${border ? 'border border-dark' : ''} ${theme === 'DARK' && 'form-control-dark'}`}
             placeholder='Add Task'
             onChange={(e) => setTitle(e.target.value)}
-            value={title ? title : ''}
+            value={title && title}
           />
         </Form.Group>
         <Form.Group className='mb-1'>
@@ -51,7 +51,7 @@ const FormComponent = ({
             placeholder='Descrbe the task...'
             rows={3}
             onChange={(e) => setDetails(e.target.value)}
-            value={details ? details : ''}
+            value={details && details}
           />
         </Form.Group>
         <Form.Group className='mb-3' style={{ position: 'relative' }}>
