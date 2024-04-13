@@ -9,10 +9,12 @@ import Header from '../Components/Header';
 import Task from '../Components/Task';
 import { readTask } from '../actions/taskActions';
 import SearchTask from '../Components/SearchTask';
+import PaginationComponent from '../Components/PaginationComponent';
 
 const PendingTasks = () => {
   const [searchedText, setSearchedText] = useState('');
   const [tasksOnFilter, setTasksOnFilter] = useState([]);
+  const [page, setPage] = useState(0);
   const dispatch = useDispatch();
   const token = useSelector((state) =>
     state.user.user.token ? state.user.user.token : state.auth.user.token
@@ -71,7 +73,7 @@ const PendingTasks = () => {
             </div>
           )}
           {tasksOnFilter.length === 0 && searchedText.length === 0
-            ? tasks.map((task) => (
+            ? tasks.slice(page * 8, (page + 1) * 8).map((task) => (
                 <Col className='py-2' xs={12} sm={4} lg={3} key={task._id}>
                   <Task
                     id={task._id}
@@ -96,6 +98,15 @@ const PendingTasks = () => {
                 </Col>
               ))}
         </Row>
+        {tasksOnFilter.length === 0 &&
+          searchedText.length === 0 &&
+          Math.ceil(tasks.length / 8) > 1 && (
+            <PaginationComponent
+              count={Math.ceil(tasks.length / 8)}
+              page={page}
+              setPage={setPage}
+            />
+          )}
         <Row className='py-3 pb-5'>
           <Col className='d-flex justify-content-center pb-5'>
             <Link to='/completed-tasks' style={{ textDecoration: 'none' }}>

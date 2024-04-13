@@ -83,3 +83,30 @@
 .update-modal-body {
   border-radius: 7px 7px 7px 7px;
 }
+
+.pagination-item a {
+  color: black;
+  font-weight: 700;
+}
+
+.page-link {
+  border: 2px solid black !important;
+}
+
+.active span.page-link {
+  background-color: rgb(47, 47, 47) !important;
+  border: none;
+}
+
+.pagination-item a:hover {
+  color: rgb(74, 74, 74);
+  font-weight: 700;
+}
+
+.pagination-first {
+  border-radius: 7px 0 0 7px;
+}
+
+.pagination-last {
+  border-radius: 0 7px 7px 0;
+}
