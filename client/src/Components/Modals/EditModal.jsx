@@ -25,6 +25,7 @@ const EditModal = (props) => {
           yyyy={props.yyyy}
           buttonTitle='Update Task'
           border={props.true}
+          disableBtn={props.disableBtn}
         />
       </Modal.Body>
     </ModalComponent>

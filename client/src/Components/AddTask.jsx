@@ -13,10 +13,16 @@ const AddTask = () => {
   const [showCalender, setShowCalender] = useState(false);
   const [title, setTitle] = useState('');
   const [details, setDetails] = useState('');
-  const [deadline, setDeadline] = useState('');
+  const [deadline, setDeadline] = useState(null);
   const [dd, setdd] = useState('dd');
   const [mm, setmm] = useState('mm');
   const [yyyy, setyyyy] = useState('yyyy');
+  const [disableBtn, setDisableBtn] = useState(true);
+
+  useEffect(() => {
+    if (title.length > 0 && deadline) setDisableBtn(false);
+    else setDisableBtn(true);
+  }, [title, deadline]);
 
   const dispatch = useDispatch();
   const user = useSelector((state) =>
@@ -100,6 +106,7 @@ const AddTask = () => {
         mm={mm}
         yyyy={yyyy}
         buttonTitle='Add Task'
+        disableBtn={disableBtn}
       />
       <ToastContainer />
     </div>

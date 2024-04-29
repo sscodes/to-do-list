@@ -23,6 +23,12 @@ const Task = (props) => {
   const [dd, setdd] = useState('dd');
   const [mm, setmm] = useState('mm');
   const [yyyy, setyyyy] = useState('yyyy');
+  const [disableBtn, setDisableBtn] = useState(true);
+
+  useEffect(() => {
+    if (title.length > 0 && deadline) setDisableBtn(false);
+    else setDisableBtn(true);
+  }, [title, deadline]);
 
   useEffect(() => {
     const handleOnlineStatusChange = () => {
@@ -104,7 +110,7 @@ const Task = (props) => {
         changeTask={changeTask}
         title={title}
         details={details}
-        setTitle
+        setTitle={setTitle}
         setDetails={setDetails}
         setDate={setDate}
         showCalender={showCalender}
@@ -112,6 +118,7 @@ const Task = (props) => {
         dd={dd}
         mm={mm}
         yyyy={yyyy}
+        disableBtn={disableBtn}
       />
       <DeleteModal
         setDeleteTaskModal={setDeleteTaskModal}
