@@ -18,16 +18,16 @@ const UpcomingDeadlines = () => {
   const { theme } = useSelector((state) => state.theme);
 
   return (
-    <>
-      <h4 className={`${theme === 'DARK' ? 'text-light' : 'text-dark'} pb-2`}>
+    <div className='upcoming-deadlines'>
+      <h1 className={`${theme === 'DARK' ? 'text-light' : 'text-dark'} pb-2`}>
         Upcoming Deadlines:
-      </h4>
+      </h1>
       {sortedAlertTasks.map((task) => (
-        <Alert key={task._id} variant='danger'>
+        <Alert key={task._id} variant='danger' className='h5' style={{width: '97%'}}>
           {task.taskName}
         </Alert>
       ))}
-    </>
+    </div>
   );
 };
 

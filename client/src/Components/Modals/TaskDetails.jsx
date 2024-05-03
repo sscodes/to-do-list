@@ -9,12 +9,12 @@ const TaskDetails = (props) => {
   return (
     <ModalComponent show={props.show} onHide={props.onHide}>
       <Modal.Header className={`${theme === 'DARK' && 'task-header-dark'}`}>
-        <Modal.Title>{props.title}</Modal.Title>
+        <Modal.Title style={{ fontSize: '2rem' }}>{props.title}</Modal.Title>
       </Modal.Header>
 
       <Modal.Body className={`${theme === 'DARK' && 'task-body-dark'}`}>
-        <p>{props.details}</p>
-        <b style={{ fontSize: '0.8rem' }}>
+        <p style={{ fontSize: '1.7rem' }}>{props.details}</p>
+        <b style={{ fontSize: '1.2rem', textDecoration: 'underline' }}>
           This task needs to be completed by {formatDate(props.deadline)}
         </b>
       </Modal.Body>

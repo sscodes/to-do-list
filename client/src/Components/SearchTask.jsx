@@ -10,6 +10,7 @@ const SearchTask = ({ placeholder, setSearchedText }) => {
       placeholder={placeholder}
       className={`${theme === 'DARK' && 'form-control-dark'}`}
       onChange={(e) => setSearchedText(e.target.value)}
+      style={{ fontSize: '1.4rem' }}
     />
   );
 };

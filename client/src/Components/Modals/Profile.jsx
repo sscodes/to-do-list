@@ -67,7 +67,9 @@ const Profile = ({ show, onHide }) => {
         className={`${theme === 'DARK' && 'task-header-dark'}`}
         closeButton
       >
-        <Modal.Title id='contained-modal-title-vcenter'>{name}</Modal.Title>
+        <Modal.Title id='contained-modal-title-vcenter'>
+          <div className='h1'>{name}</div>
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body
         style={{
@@ -85,11 +87,11 @@ const Profile = ({ show, onHide }) => {
             </div>
           ) : (
             <div>
-              <h4
+              <h2
                 className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}
               >
                 No tasks added.
-              </h4>
+              </h2>
               <Button onClick={() => navigate('/')} variant='dark'>
                 Add tasks
               </Button>
@@ -97,7 +99,7 @@ const Profile = ({ show, onHide }) => {
           )}
         </div>
       </Modal.Body>
-      <Modal.Footer className={`${theme === 'DARK' && 'task-header-dark '}`}>
+      <Modal.Footer className={`${theme === 'DARK' && 'task-header-dark'}`}>
         <Button onClick={logout} variant='dark'>
           Logout
         </Button>

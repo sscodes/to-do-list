@@ -1,11 +1,8 @@
 import { useEffect, useState } from 'react';
+import 'react-calendar/dist/Calendar.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import { createTask } from '../actions/taskActions';
-import ButtonComponent from './ButtonComponent';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
-import { MdDateRange } from 'react-icons/md';
 import FormComponent from './FormComponent';
 
 const AddTask = () => {
@@ -92,9 +89,9 @@ const AddTask = () => {
 
   return (
     <div>
-      <h4 className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}>
+      <h1 className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}>
         Add a task:
-      </h4>
+      </h1>
       <FormComponent
         submitTask={submitTask}
         setTitle={setTitle}

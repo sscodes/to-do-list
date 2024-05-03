@@ -11,9 +11,9 @@ const FormComponent = (props) => {
   return (
     <div>
       <Form onSubmit={props.submitTask}>
-        <Form.Group className='mb-1'>
+        <Form.Group className='mb-3'>
           <Form.Label
-            className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}
+            className={`${theme === 'DARK' ? 'text-light' : 'text-dark'} h5`}
           >
             Task Title:
           </Form.Label>
@@ -22,14 +22,15 @@ const FormComponent = (props) => {
             className={`${props.border ? 'border border-dark' : ''} ${
               theme === 'DARK' && 'form-control-dark'
             }`}
+            style={{fontSize: '1.4rem'}}
             placeholder='Add Task'
             onChange={(e) => props.setTitle(e.target.value)}
             value={props.title && props.title}
           />
         </Form.Group>
-        <Form.Group className='mb-1'>
+        <Form.Group className='mb-3'>
           <Form.Label
-            className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}
+            className={`${theme === 'DARK' ? 'text-light' : 'text-dark'} h5`}
           >
             Task Description (optional):
           </Form.Label>
@@ -38,15 +39,16 @@ const FormComponent = (props) => {
             className={`${props.border ? 'border border-dark' : ''} ${
               theme === 'DARK' && 'form-control-dark'
             }`}
+            style={{fontSize: '1.4rem'}}
             placeholder='Descrbe the task...'
-            rows={3}
+            rows={4}
             onChange={(e) => props.setDetails(e.target.value)}
             value={props.details && props.details}
           />
         </Form.Group>
         <Form.Group className='mb-3' style={{ position: 'relative' }}>
           <Form.Label
-            className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}
+            className={`${theme === 'DARK' ? 'text-light' : 'text-dark'} h5`}
           >
             Set deadline:
           </Form.Label>
@@ -55,6 +57,7 @@ const FormComponent = (props) => {
               props.border ? 'border border-dark' : ''
             } date-field ${theme === 'DARK' && 'form-control-dark'}`}
             onClick={() => props.setShowCalender((e) => !e)}
+            style={{fontSize: '1.4rem'}}
           >
             {`${props.dd}/${props.mm}/${props.yyyy}`} <MdDateRange />
           </div>

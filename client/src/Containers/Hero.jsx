@@ -12,15 +12,13 @@ const Hero = () => {
     <>
       <Header />
       <Container className='pb-5 pb-lg-0 py-lg-3'>
-        <Row className='mt-3 mt-lg-0'>
-          <Col lg={1} className='d-none d-lg-block'></Col>
-          <Col lg={5} className='mx-lg-1 p-3 border border-dark-subtle border-3 rounded'>
+        <Row className='mt-3 mt-lg-0' style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem'}}>
+          <div className='p-3 border border-dark-subtle border-3 rounded'>
             <AddTask />
-          </Col>
-          <Col lg={5} className='mx-lg-1 mt-2 mt-lg-0 p-3 border border-dark-subtle border-3 rounded'>
+          </div>
+          <div className='mt-2 mt-lg-0 p-3 border border-dark-subtle border-3 rounded'>
             <UpcomingDeadlines />
-          </Col>
-          <Col lg={1} className='d-none d-lg-block'></Col>
+          </div>
         </Row>
         <Row className='pb-5 pb-lg-0 mt-3 mt-lg-0 py-lg-2'>
           <Col className='d-flex justify-content-center'>

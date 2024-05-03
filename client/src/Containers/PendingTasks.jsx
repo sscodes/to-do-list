@@ -59,11 +59,11 @@ const PendingTasks = () => {
           {tasksOnFilter.length === 0 && searchedText.length !== 0 && (
             <div className='d-flex justify-content-center task-not-found'>
               <div className='border-2 border-black'>
-                <h4
+                <h1
                   className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}
                 >
                   No such task found...
-                </h4>
+                </h1>
                 <div className='d-flex justify-content-center'>
                   <Button onClick={() => navigate('/')} variant='dark'>
                     Add tasks
@@ -107,7 +107,7 @@ const PendingTasks = () => {
               setPage={setPage}
             />
           )}
-        <Row className='py-3 pb-5'>
+        <Row className='pb-5'>
           <Col className='d-flex justify-content-center pb-5'>
             <Link to='/completed-tasks' style={{ textDecoration: 'none' }}>
               <ButtonComponent variant={'dark'} name={'Show Completed Tasks'} />

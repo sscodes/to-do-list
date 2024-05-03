@@ -134,14 +134,14 @@ const Task = (props) => {
           <Row>
             {!props.done ? (
               <>
-                <Col xs={9}>
+                <Col xs={9} className='h4'>
                   {props.title.length > 11
                     ? props.title.slice(0, 11) + '...'
                     : props.title}
                 </Col>
                 <Col xs={1}>
                   <BiSolidEditAlt
-                    style={{ cursor: 'pointer' }}
+                    style={{ cursor: 'pointer', fontSize: '1.2rem' }}
                     onClick={(e) => {
                       e.stopPropagation();
                       setEditTaskModal(true);
@@ -150,7 +150,7 @@ const Task = (props) => {
                 </Col>
                 <Col xs={1}>
                   <MdDelete
-                    style={{ cursor: 'pointer' }}
+                    style={{ cursor: 'pointer', fontSize: '1.2rem' }}
                     onClick={(e) => {
                       e.stopPropagation();
                       setDeleteTaskModal(true);
@@ -160,14 +160,14 @@ const Task = (props) => {
               </>
             ) : (
               <>
-                <Col xs={10}>
+                <Col xs={10} className='h4'>
                   {props.title.length > 11
                     ? props.title.slice(0, 11) + '...'
                     : props.title}
                 </Col>
                 <Col xs={2}>
                   <MdDelete
-                    style={{ cursor: 'pointer' }}
+                    style={{ cursor: 'pointer', fontSize: '1.2rem' }}
                     onClick={() => setDeleteTaskModal(true)}
                   />
                 </Col>
@@ -178,12 +178,13 @@ const Task = (props) => {
         <Card.Body
           className={`${theme === 'DARK' && 'task-body-dark task-body-border'}`}
         >
-          <Card.Text>
+          <Card.Text style={{fontSize: '1.2rem'}}>
             {props.details.length > 24
               ? props.details.slice(0, 24) + '...'
               : props.details}
           </Card.Text>
-          <b>Deadline:</b> {formatDate(props.deadline)}
+          <b className='h6'>Deadline:</b>{' '}
+          <span className='h6'>{formatDate(props.deadline)}</span>
           <Row>
             <Col className='text-center'>
               <Row className='d-block align-middle align-items-center mt-4 border py-1 border rounded border-dark text-dark'>

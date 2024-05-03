@@ -37,7 +37,7 @@ const Header = () => {
     <>
       <Profile show={modal} onHide={() => setModal(false)} />
       <Navbar
-        className='bg-body-tertiary'
+        className='bg-body-tertiary navbar'
         bg='dark'
         data-bs-theme='dark'
         sticky='top'
@@ -48,14 +48,16 @@ const Header = () => {
               to='/'
               style={{ textDecoration: 'none', color: 'whitesmoke' }}
             >
-              <img
-                alt=''
-                src={image}
-                width='30'
-                height='30'
-                className='d-inline align-top'
-              />{' '}
-              <h4 className='d-inline'>TaskMate</h4>
+              <div style={{ display: 'flex', gap: '0.4rem' }}>
+                <img
+                  alt=''
+                  src={image}
+                  width='47'
+                  height='47'
+                  className='d-inline align-top'
+                />
+                <h1 className='d-inline'>TaskMate</h1>
+              </div>
             </Link>
           </Navbar.Brand>
           <Navbar.Toggle />

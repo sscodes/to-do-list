@@ -3,7 +3,7 @@ import { Navbar } from 'react-bootstrap';
 const Footer = () => {
   return (
     <Navbar
-      className='bg-body-tertiary text-light py-3 d-flex justify-content-center'
+      className='bg-body-tertiary text-light py-3 d-flex justify-content-center navbar footer'
       bg='dark'
       data-bs-theme='dark'
       fixed='bottom'

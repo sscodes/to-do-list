@@ -24,9 +24,17 @@
   color: rgb(24, 24, 24);
 }
 
+.navbar{
+  height: 5.2rem;
+}
+
+.footer{
+  font-size: 1.4rem;
+}
+
 .ThemeIcon {
   color: rgb(177, 177, 177);
-  font-size: 1.5rem;
+  font-size: 2.4rem;
   padding-left: 1%;
   margin-bottom: 0.7%;
   cursor: pointer;
@@ -78,6 +86,11 @@
   position: absolute;
   bottom: 40px;
   width: 100%;
+}
+
+.upcoming-deadlines{
+  height: 60vh;
+  overflow-y: scroll;
 }
 
 .update-modal-body {
