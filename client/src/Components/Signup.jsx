@@ -77,34 +77,54 @@ const Signup = () => {
   ) : (
     <>
       <div className='text-center'>
-        <h4 className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}>New here? Sign Up!</h4>
+        <h2 className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}>
+          New here? Sign Up!
+        </h2>
       </div>
       <Form onSubmit={signup}>
         <Form.Group className='mb-1'>
-          <Form.Label className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}>Name:</Form.Label>
+          <Form.Label
+            className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}
+            style={{ fontSize: '1.7rem' }}
+          >
+            Name:
+          </Form.Label>
           <Form.Control
             type='text'
             placeholder='Enter name'
             className={`${theme === 'DARK' && 'form-control-dark'}`}
             onChange={(e) => setName(e.target.value)}
+            style={{ fontSize: '1.7rem' }}
           />
         </Form.Group>
         <Form.Group className='mb-1'>
-          <Form.Label className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}>Email address:</Form.Label>
+          <Form.Label
+            className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}
+            style={{ fontSize: '1.7rem' }}
+          >
+            Email address:
+          </Form.Label>
           <Form.Control
             type='email'
             placeholder='name@example.com'
             className={`${theme === 'DARK' && 'form-control-dark'}`}
             onChange={(e) => setEmail(e.target.value)}
+            style={{ fontSize: '1.7rem' }}
           />
         </Form.Group>
         <Form.Group className='mb-1'>
-          <Form.Label className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}>Password:</Form.Label>
+          <Form.Label
+            className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}
+            style={{ fontSize: '1.7rem' }}
+          >
+            Password:
+          </Form.Label>
           <Form.Control
             type='password'
             placeholder='Enter Password'
             className={`${theme === 'DARK' && 'form-control-dark'}`}
             onChange={(e) => setPassword(e.target.value)}
+            style={{ fontSize: '1.7rem' }}
           />
           {passwordMessage && (
             <div className='text-danger' style={{ fontSize: '10px' }}>
@@ -113,12 +133,18 @@ const Signup = () => {
           )}
         </Form.Group>
         <Form.Group className='mb-2'>
-          <Form.Label className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}>Confirm Password:</Form.Label>
+          <Form.Label
+            className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}
+            style={{ fontSize: '1.7rem' }}
+          >
+            Confirm Password:
+          </Form.Label>
           <Form.Control
             type='password'
             placeholder='Re-enter Password'
             className={`${theme === 'DARK' && 'form-control-dark'}`}
             onChange={(e) => setConfirmPassword(e.target.value)}
+            style={{ fontSize: '1.7rem' }}
           />
           {confirmPasswordMessage && (
             <div className='text-danger' style={{ fontSize: '10px' }}>

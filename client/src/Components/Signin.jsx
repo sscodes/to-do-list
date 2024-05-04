@@ -40,18 +40,18 @@ const Signin = () => {
   return (
     <div>
       <div className='text-center'>
-        <h4 className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}>
+        <h2 className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}>
           Already have an account?
-        </h4>
-        <h4 className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}>
-          {' '}
+        </h2>
+        <h2 className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}>
           Sign In!
-        </h4>
+        </h2>
       </div>
       <Form onSubmit={signin}>
         <Form.Group className='mb-1'>
           <Form.Label
             className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}
+            style={{ fontSize: '1.7rem' }}
           >
             Email address:
           </Form.Label>
@@ -60,11 +60,13 @@ const Signin = () => {
             placeholder='name@example.com'
             onChange={(e) => setEmail(e.target.value)}
             className={`${theme === 'DARK' && 'form-control-dark'}`}
+            style={{ fontSize: '1.7rem' }}
           />
         </Form.Group>
         <Form.Group className='mb-3'>
           <Form.Label
             className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}
+            style={{ fontSize: '1.7rem' }}
           >
             Password:
           </Form.Label>
@@ -73,11 +75,16 @@ const Signin = () => {
             placeholder='Enter Password'
             onChange={(e) => setPassword(e.target.value)}
             className={`${theme === 'DARK' && 'form-control-dark'}`}
+            style={{ fontSize: '1.7rem' }}
           />
           <div className='pt-1'>
             <Link
               to='/forgotpassword'
-              style={{ textDecoration: 'none', color: 'black' }}
+              style={{
+                textDecoration: 'none',
+                color: 'black',
+                fontSize: '1.7rem',
+              }}
               className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}
             >
               (Forgot Password?)

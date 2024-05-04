@@ -27,25 +27,25 @@ const Home = () => {
       <Header />
       <Container>
         <Row className='pt-3 text-center'>
-          <h4 className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}>A no-nonsense to-do list app.</h4>
+          <h1 className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}>
+            A no-nonsense to-do list app.
+          </h1>
         </Row>
-        <Row className='pb-2 my-2 mt-lg-0'>
-          <Col lg={1} className='d-none d-lg-block'></Col>
-          <Col lg={5} className='mx-lg-1 p-2 border border-dark-subtle border-3 rounded'>
+        <div className='pb-2 my-2 mt-lg-0 boxes'>
+          <div className='p-2 border border-dark-subtle border-3 rounded'>
             <Signup />
-          </Col>
-          <Col lg={5} className='mx-lg-1 mt-2 mb-5 mt-lg-0 mb-lg-0 p-2 border border-dark-subtle border-3 rounded'>
+          </div>
+          <div className='mt-2 mb-5 mt-lg-0 mb-lg-0 p-2 border border-dark-subtle border-3 rounded'>
             <Signin />
             <a
               href='https://to-do-list-api-ddho.onrender.com/api/users/google'
               className='d-grid gap-2 mt-3 border border-primary rounded bg-primary py-1 border-3 text-white text-center'
-              style={{ textDecoration: 'none' }}
+              style={{ textDecoration: 'none', fontSize: '1.4rem' }}
             >
               Login with Google
             </a>
-          </Col>
-          <Col lg={1} className='d-none d-lg-block'></Col>
-        </Row>
+          </div>
+        </div>
       </Container>
       <Footer />
       <ToastContainer />

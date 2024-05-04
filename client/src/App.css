@@ -24,11 +24,11 @@
   color: rgb(24, 24, 24);
 }
 
-.navbar{
+.navbar {
   height: 5.2rem;
 }
 
-.footer{
+.footer {
   font-size: 1.4rem;
 }
 
@@ -88,7 +88,7 @@
   width: 100%;
 }
 
-.upcoming-deadlines{
+.upcoming-deadlines {
   height: 60vh;
   overflow-y: scroll;
 }
@@ -129,4 +129,18 @@
   height: 100%;
   border: 0.15rem solid black;
   cursor: pointer;
+}
+
+.boxes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 1000px) {
+  .boxes {
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 1rem;
+  }
 }
