@@ -19,9 +19,9 @@ const UpcomingDeadlines = () => {
 
   return (
     <div className='upcoming-deadlines'>
-      <h1 className={`${theme === 'DARK' ? 'text-light' : 'text-dark'} pb-2`}>
+      <h4 className={`${theme === 'DARK' ? 'text-light' : 'text-dark'} pb-2`}>
         Upcoming Deadlines:
-      </h1>
+      </h4>
       {sortedAlertTasks.map((task) => (
         <Alert key={task._id} variant='danger' className='h5' style={{width: '97%'}}>
           {task.taskName}

@@ -89,9 +89,9 @@ const AddTask = () => {
 
   return (
     <div>
-      <h1 className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}>
+      <h4 className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}>
         Add a task:
-      </h1>
+      </h4>
       <FormComponent
         submitTask={submitTask}
         setTitle={setTitle}

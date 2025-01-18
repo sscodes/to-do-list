@@ -7,7 +7,7 @@ const ButtonComponent = ({ variant, name, type, disabled, onClick }) => {
       variant={variant}
       disabled={disabled}
       onClick={onClick}
-      style={{ fontSize: '1.5rem' }}
+      style={{ fontSize: '1rem' }}
     >
       {name}
     </Button>
