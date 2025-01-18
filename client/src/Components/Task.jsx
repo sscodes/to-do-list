@@ -125,6 +125,7 @@ const Task = (props) => {
         deleteTaskModal={deleteTaskModal}
         title={props.title}
         deadline={props.deadline}
+        id={props.id}
       />
       <Card
         className='card-styling'
@@ -178,7 +179,7 @@ const Task = (props) => {
         <Card.Body
           className={`${theme === 'DARK' && 'task-body-dark task-body-border'}`}
         >
-          <Card.Text style={{fontSize: '1.2rem'}}>
+          <Card.Text style={{ fontSize: '1.2rem' }}>
             {props.details.length > 24
               ? props.details.slice(0, 24) + '...'
               : props.details}

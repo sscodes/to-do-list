@@ -19,7 +19,7 @@ const PendingTasks = () => {
   const token = useSelector((state) =>
     state.user.user.token ? state.user.user.token : state.auth.user.token
   );
-  const tasks = useSelector((state) => state.tasks.tasks).filter(
+  const tasks = useSelector((state) => state.tasks.tasks)?.filter(
     (task) => !task.done
   );
 
@@ -30,7 +30,7 @@ const PendingTasks = () => {
 
   useEffect(() => {
     if (searchedText.length > 0) {
-      const filteredTasks = tasks.filter((task) =>
+      const filteredTasks = tasks?.filter((task) =>
         task.taskName.toLowerCase().includes(searchedText.toLowerCase())
       );
       setTasksOnFilter(filteredTasks);

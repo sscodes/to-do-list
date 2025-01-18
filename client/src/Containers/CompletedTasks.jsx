@@ -11,13 +11,13 @@ import { useNavigate } from 'react-router-dom';
 const CompletedTasks = () => {
   const [searchedText, setSearchedText] = useState('');
   const [tasksOnFilter, setTasksOnFilter] = useState([]);
-  const tasks = useSelector((state) => state.tasks.tasks).filter(
+  const tasks = useSelector((state) => state.tasks.tasks)?.filter(
     (task) => task.done
   );
 
   useEffect(() => {
     if (searchedText.length > 0) {
-      const filteredTasks = tasks.filter((task) =>
+      const filteredTasks = tasks?.filter((task) =>
         task.taskName.toLowerCase().includes(searchedText.toLowerCase())
       );
       setTasksOnFilter(filteredTasks);
