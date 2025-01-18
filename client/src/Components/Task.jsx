@@ -169,7 +169,10 @@ const Task = (props) => {
                 <Col xs={2}>
                   <MdDelete
                     style={{ cursor: 'pointer', fontSize: '1.2rem' }}
-                    onClick={() => setDeleteTaskModal(true)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setDeleteTaskModal(true);
+                    }}
                   />
                 </Col>
               </>
