@@ -48,7 +48,6 @@
     ]
   },
   "devDependencies": {
-    "@locator/babel-jsx": "^0.4.4",
-    "@locator/runtime": "^0.4.4"
+    "@locator/babel-jsx": "^0.4.4"
   }
 }

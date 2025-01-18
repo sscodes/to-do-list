@@ -7,7 +7,7 @@ import { formatDate } from '../../utils/formDate';
 const TaskDetails = (props) => {
   const { theme } = useSelector((state) => state.theme);
   return (
-    <ModalComponent show={props.show} onHide={props.onHide}>
+    <ModalComponent show={props.show} onHide={props.onHide} fullscreen={true}>
       <Modal.Header className={`${theme === 'DARK' && 'task-header-dark'}`}>
         <Modal.Title style={{ fontSize: '2rem' }}>{props.title}</Modal.Title>
       </Modal.Header>

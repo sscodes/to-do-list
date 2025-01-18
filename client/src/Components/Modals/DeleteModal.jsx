@@ -20,6 +20,7 @@ const DeleteModal = (props) => {
     <ModalComponent
       show={props.deleteTaskModal}
       onHide={props.etDeleteTaskModal}
+      fullscreen={false}
     >
       <Modal.Header className={`${theme === 'DARK' && 'task-header-dark'}`}>
         <Modal.Title id='contained-modal-title-vcenter'>

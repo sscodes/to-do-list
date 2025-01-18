@@ -68,7 +68,7 @@ const Profile = ({ show, onHide }) => {
         closeButton
       >
         <Modal.Title id='contained-modal-title-vcenter'>
-          <div className='h1'>{name}</div>
+          <div className='h4'>{name}</div>
         </Modal.Title>
       </Modal.Header>
       <Modal.Body
@@ -80,18 +80,26 @@ const Profile = ({ show, onHide }) => {
         }}
         className={`${theme === 'DARK' && 'task-body-dark'}`}
       >
-        <div style={{ width: 300, minHeight: 100 }}>
+        <div
+          style={{
+            width: 300,
+            minHeight: 100,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
           {tasks.length > 0 ? (
             <div>
               <Pie data={userData} />
             </div>
           ) : (
             <div>
-              <h2
+              <h5
                 className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}
               >
                 No tasks added.
-              </h2>
+              </h5>
               <Button onClick={() => navigate('/')} variant='dark'>
                 Add tasks
               </Button>
