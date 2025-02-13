@@ -9,9 +9,12 @@ import { useNavigate } from 'react-router-dom';
 import ModalComponent from '../../HOC/ModalComponent';
 import { logoutUser } from '../../actions/authActions';
 import { deleteUser } from '../../actions/userActions';
+import { useReadTask } from '../../services/tasks/tasks.data';
 
 const Profile = ({ show, onHide }) => {
   Chart.register(ArcElement);
+  const [doneTasks, setDoneTasks] = useState();
+  const [pendingTasks, setPendingTasks] = useState();
 
   const [name, setName] = useState('');
 
@@ -25,14 +28,25 @@ const Profile = ({ show, onHide }) => {
   const token = useSelector((state) =>
     state.user.user.token ? state.user.user.token : state.auth.user.token
   );
-  const tasks = useSelector((state) => state.tasks?.tasks);
+
+  const {
+    tasks,
+    isPending: isGetTasksPending,
+    isError: isGetTasksError,
+  } = useReadTask(token);
 
   const navigate = useNavigate();
 
-  const doneTasks =
-    tasks.length > 0 ? tasks.filter((task) => task.done).length : undefined;
-  const pendingTasks =
-    tasks.length > 0 ? tasks.filter((task) => !task.done).length : undefined;
+  useEffect(() => {
+    if (!isGetTasksPending && !isGetTasksError) {
+      setDoneTasks(
+        tasks.length > 0 ? tasks.filter((task) => task.done).length : undefined
+      );
+      setPendingTasks(
+        tasks.length > 0 ? tasks.filter((task) => !task.done).length : undefined
+      );
+    }
+  }, [isGetTasksPending, isGetTasksError, tasks]);
 
   const userData = {
     labels: ['done', 'pending'],
@@ -89,7 +103,7 @@ const Profile = ({ show, onHide }) => {
             justifyContent: 'center',
           }}
         >
-          {tasks.length > 0 ? (
+          {tasks?.length > 0 ? (
             <div>
               <Pie data={userData} />
             </div>

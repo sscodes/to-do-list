@@ -26,7 +26,27 @@ export class TaskService {
     return data;
   }
 
-  async updateTask(params) {}
+  async updateTask(change, token, id) {
+    const res = await fetch(`https://to-do-list-api-ddho.onrender.com/api/tasks/${id}`, {
+      method: 'PUT',
+      headers: {
+        'content-type': 'application/json',
+        authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(change),
+    })
+    const data = await res.json();
+    return data;
+  }
 
-  async deleteTask(params) {}
+  async deleteTask(token, id) {
+    const res = await fetch(`https://to-do-list-api-ddho.onrender.com/api/tasks/${id}`, {
+      method: 'DELETE',
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
+    const data = await res.json();
+    return data;
+  }
 }

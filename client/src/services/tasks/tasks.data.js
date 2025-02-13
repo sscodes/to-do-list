@@ -34,6 +34,36 @@ export const useReadTask = (token) => {
   };
 };
 
-export const updateTask = (params) => {};
+export const useUpdateTask = () => {
+  const queryClient = useQueryClient();
 
-export const deleteTask = (params) => {};
+  return useMutation(
+    {
+      mutationFn: ({change, token, id}) => {
+        return taskServices.updateTask(change, token, id)},
+      onSuccess: () => {
+        queryClient.invalidateQueries(taskKeys.readTasks);
+      },
+      onError: (err) => {
+        console.error(err);
+      },
+    }
+  );
+};
+
+export const useDeleteTask = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation(
+    {
+      mutationFn: ({token, id}) => {
+        return taskServices.deleteTask(token, id)},
+      onSuccess: () => {
+        queryClient.invalidateQueries(taskKeys.readTasks);
+      },
+      onError: (err) => {
+        console.error(err);
+      },
+    }
+  );
+};

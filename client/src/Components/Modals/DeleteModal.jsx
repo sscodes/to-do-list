@@ -1,18 +1,20 @@
 import React from 'react';
-import { Button, Modal } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
 import ModalComponent from '../../HOC/ModalComponent';
-import { deleteTaskAction } from '../../actions/taskActions';
+import { Button, Modal } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import { formatDate } from '../../utils/formDate';
+import { useDeleteTask } from '../../services/tasks/tasks.data';
 
 const DeleteModal = (props) => {
-  const dispatch = useDispatch();
   const token = useSelector((state) =>
     state.user.user.token ? state.user.user.token : state.auth.user.token
   );
   const { theme } = useSelector((state) => state.theme);
+
+  const { mutateAsync: deleteTaskAction } = useDeleteTask();
+
   const deleteTask = () => {
-    dispatch(deleteTaskAction(token, props.id));
+    deleteTaskAction({ token, id: props.id });
     props.setDeleteTaskModal(false);
   };
 
