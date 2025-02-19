@@ -9,7 +9,7 @@ import Home from './Containers/Home';
 import AllTasks from './Containers/PendingTasks';
 import PrivateRoute from './HOC/PrivateRoute';
 import { useDispatch, useSelector } from 'react-redux';
-import { createTask } from './actions/taskActions';
+import { useCreateTask } from './services/tasks/tasks.data';
 
 function App() {
   const notificationProperties = {
@@ -34,13 +34,15 @@ function App() {
 
   const { theme } = useSelector((state) => state.theme);
 
+  const { mutateAsync: createTask } = useCreateTask();
+
   useEffect(() => {
     const handleOnlineStatusChange = () => {
       if (!navigator.onLine) notifyError('You are offline!');
       else {
         notifySuccess('You are back online!');
         if (localStorage.getItem('task')) {
-          dispatch(createTask(JSON.parse(localStorage.getItem('task')), token));
+          createTask({ task: JSON.parse(localStorage.getItem('task')), token });
         }
       }
     };

@@ -18,7 +18,7 @@ const generateToken = (id) => {
 router.post('/signup', createUser);
 router.post('/signin', loginUser);
 router.put('/updatepassword/:email', updateUser);
-router.delete('/deleteuser', protect, deleteUser);
+router.delete('/deleteuser/:id', protect, deleteUser);
 router.get('/google', passport.authenticate('google', { scope: ['profile'] }));
 router.get(
   '/google/redirect',

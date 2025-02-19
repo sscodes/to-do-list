@@ -8,10 +8,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import ModalComponent from '../../HOC/ModalComponent';
 import { logoutUser } from '../../actions/authActions';
-import { deleteUser } from '../../actions/userActions';
+import { useReadTask } from '../../services/tasks/tasks.data';
+import { useDeleteUser } from '../../services/auth/auth.data';
 
 const Profile = ({ show, onHide }) => {
   Chart.register(ArcElement);
+  const [doneTasks, setDoneTasks] = useState();
+  const [pendingTasks, setPendingTasks] = useState();
 
   const [name, setName] = useState('');
 
@@ -25,14 +28,26 @@ const Profile = ({ show, onHide }) => {
   const token = useSelector((state) =>
     state.user.user.token ? state.user.user.token : state.auth.user.token
   );
-  const tasks = useSelector((state) => state.tasks?.tasks);
+  const { mutateAsync: deleteUser, isSuccess: isDeleteUserSuccess } = useDeleteUser();
+
+  const {
+    tasks,
+    isPending: isGetTasksPending,
+    isError: isGetTasksError,
+  } = useReadTask(token);
 
   const navigate = useNavigate();
 
-  const doneTasks =
-    tasks.length > 0 ? tasks.filter((task) => task.done).length : undefined;
-  const pendingTasks =
-    tasks.length > 0 ? tasks.filter((task) => !task.done).length : undefined;
+  useEffect(() => {
+    if (!isGetTasksPending && !isGetTasksError) {
+      setDoneTasks(
+        tasks.length > 0 ? tasks.filter((task) => task.done).length : undefined
+      );
+      setPendingTasks(
+        tasks.length > 0 ? tasks.filter((task) => !task.done).length : undefined
+      );
+    }
+  }, [isGetTasksPending, isGetTasksError, tasks]);
 
   const userData = {
     labels: ['done', 'pending'],
@@ -47,16 +62,23 @@ const Profile = ({ show, onHide }) => {
   };
 
   useEffect(() => {
+    if (isDeleteUserSuccess) {
+      localStorage.clear();
+      window.location.reload();
+    }
+  }, [isDeleteUserSuccess])
+
+  useEffect(() => {
     setName(user.name);
   }, [user.name]);
 
   const logout = () => {
     dispatch(logoutUser());
   };
-
-  const onDelete = () => {
+  console.log(user._id);
+  const onDelete = async () => {
     if (window.confirm('Are you sure you want to delete profile?'))
-      dispatch(deleteUser(token));
+      await deleteUser({ token, userId: user._id });
   };
 
   const { theme } = useSelector((state) => state.theme);
@@ -89,7 +111,7 @@ const Profile = ({ show, onHide }) => {
             justifyContent: 'center',
           }}
         >
-          {tasks.length > 0 ? (
+          {tasks?.length > 0 ? (
             <div>
               <Pie data={userData} />
             </div>

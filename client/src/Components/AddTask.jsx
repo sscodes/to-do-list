@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import 'react-calendar/dist/Calendar.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
-import { createTask } from '../actions/taskActions';
 import FormComponent from './FormComponent';
+import { useCreateTask } from '../services/tasks/tasks.data';
 
 const AddTask = () => {
   const [online, setOnline] = useState(navigator.onLine);
@@ -44,7 +44,9 @@ const AddTask = () => {
 
   const notifySuccess = (msg) => toast.success(msg, notificationProperties);
 
-  const submitTask = (e) => {
+  const { mutateAsync: createTask } = useCreateTask();
+
+  const submitTask = async (e) => {
     e.preventDefault();
     const task = {
       user: user._id,
@@ -53,7 +55,7 @@ const AddTask = () => {
       deadline: deadline,
       done: false,
     };
-    if (online) dispatch(createTask(task, token));
+    if (online) await createTask({ task, token });
     else {
       localStorage.setItem('task', JSON.stringify(task));
       notifySuccess('Task saved! It will be uploaded once we go online.');

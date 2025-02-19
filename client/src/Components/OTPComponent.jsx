@@ -3,9 +3,9 @@ import { Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
-import { createUser } from '../actions/userActions';
 import ButtonComponent from './ButtonComponent';
 import Signup from './Signup';
+import { useCreateUser } from '../services/auth/auth.data';
 
 const OTPComponent = ({ setEmailProp, user, type, emailProp }) => {
   const [email, setEmail] = useState('');
@@ -17,7 +17,8 @@ const OTPComponent = ({ setEmailProp, user, type, emailProp }) => {
     state.user.authenticated
       ? state.user.authenticated
       : state.auth.authenticated
-  );  
+  );
+  const { mutateAsync: createUser } = useCreateUser();
 
   const { theme } = useSelector((state) => state.theme);
 
@@ -41,7 +42,9 @@ const OTPComponent = ({ setEmailProp, user, type, emailProp }) => {
   const notifySuccess = (msg) => toast.success(msg, notificationProperties);
 
   const sendOTPMail = (email) => () => {
-    fetch(`https://to-do-list-api-ddho.onrender.com/api/mails/${type}/sendOTP/${email}`)
+    fetch(
+      `https://to-do-list-api-ddho.onrender.com/api/mails/${type}/sendOTP/${email}`
+    )
       .then((res) => {
         if (!res.ok) {
           return res.json().then((err) => {
@@ -74,16 +77,15 @@ const OTPComponent = ({ setEmailProp, user, type, emailProp }) => {
     !emailSent && e.target.reset();
   };
 
-  const confirmOTP = (e) => {
+  const confirmOTP = async (e) => {
     e.preventDefault();
-    // eslint-disable-next-line eqeqeq
     if (localStorage.getItem('otp') == OTP) {
       if (type === 'forgotpassword') {
         localStorage.clear();
         setEmailProp(email);
       } else {
         notifySuccess('Email Verified');
-        dispatch(createUser(user));
+        await createUser({ user });
       }
     } else notifyError('Wrong OTP entered.');
   };
@@ -96,7 +98,9 @@ const OTPComponent = ({ setEmailProp, user, type, emailProp }) => {
     <>
       <Form onSubmit={emailSent ? confirmOTP : sendOTP}>
         <Form.Group className='mb-3'>
-          <Form.Label className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}>
+          <Form.Label
+            className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}
+          >
             {emailSent ? 'Enter OTP' : 'Enter Email address'}
           </Form.Label>
           <Form.Control

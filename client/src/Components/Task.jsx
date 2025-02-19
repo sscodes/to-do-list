@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react';
 import { Card, Col, Form, Row } from 'react-bootstrap';
 import { BiSolidEditAlt } from 'react-icons/bi';
 import { MdDelete } from 'react-icons/md';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import '../Style/Checkbox.css';
-import { updateTask } from '../actions/taskActions';
 import { formatDate } from '../utils/formDate';
 import DeleteModal from './Modals/DeleteModal';
 import EditModal from './Modals/EditModal';
 import TaskDetails from './Modals/TaskDetails';
+import { useUpdateTask } from '../services/tasks/tasks.data';
 
 const Task = (props) => {
   const [online, setOnline] = useState(navigator.onLine);
@@ -45,17 +45,18 @@ const Task = (props) => {
     };
   }, []);
 
-  const dispatch = useDispatch();
+  const { mutateAsync: updateTask } = useUpdateTask();
+
   const token = useSelector((state) =>
     state.user.user.token ? state.user.user.token : state.auth.user.token
   );
 
-  const changeDoneStatus = (e) => {
+  const changeDoneStatus = async (e) => {
     setShowTaskModal(false);
     const change = {
       done: !props.done,
     };
-    dispatch(updateTask(change, token, props.id));
+    await updateTask({ change, token, id: props.id });
   };
 
   const changeTask = (e) => {
@@ -64,7 +65,7 @@ const Task = (props) => {
     if (title.length > 0) change.taskName = title;
     if (details.length > 0) change.taskDetail = details;
     if (deadline.length > 0) change.deadline = deadline;
-    if (online) dispatch(updateTask(change, token, props.id));
+    if (online) updateTask({ change, token, id: props.id });
     else notifyError("Can't make changes when offline.");
     e.target.reset();
     setEditTaskModal(false);
