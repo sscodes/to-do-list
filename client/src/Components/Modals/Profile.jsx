@@ -8,8 +8,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import ModalComponent from '../../HOC/ModalComponent';
 import { logoutUser } from '../../actions/authActions';
-import { deleteUser } from '../../actions/userActions';
 import { useReadTask } from '../../services/tasks/tasks.data';
+import { useDeleteUser } from '../../services/auth/auth.data';
 
 const Profile = ({ show, onHide }) => {
   Chart.register(ArcElement);
@@ -28,6 +28,7 @@ const Profile = ({ show, onHide }) => {
   const token = useSelector((state) =>
     state.user.user.token ? state.user.user.token : state.auth.user.token
   );
+  const { mutateAsync: deleteUser, isSuccess: isDeleteUserSuccess } = useDeleteUser();
 
   const {
     tasks,
@@ -61,16 +62,23 @@ const Profile = ({ show, onHide }) => {
   };
 
   useEffect(() => {
+    if (isDeleteUserSuccess) {
+      localStorage.clear();
+      window.location.reload();
+    }
+  }, [isDeleteUserSuccess])
+
+  useEffect(() => {
     setName(user.name);
   }, [user.name]);
 
   const logout = () => {
     dispatch(logoutUser());
   };
-
-  const onDelete = () => {
+  console.log(user._id);
+  const onDelete = async () => {
     if (window.confirm('Are you sure you want to delete profile?'))
-      dispatch(deleteUser(token));
+      await deleteUser({ token, userId: user._id });
   };
 
   const { theme } = useSelector((state) => state.theme);

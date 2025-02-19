@@ -1,7 +1,12 @@
 const taskKeys = {
   all: ['tasks'],
 };
-
 taskKeys.readTasks = [...taskKeys.all, 'readTasks'];
 
-export { taskKeys };
+const authKeys = {
+  all: ['users']
+}
+authKeys.createUser = [...authKeys.all, 'createUser'];
+authKeys.deleteUser = [...authKeys.all, 'deleteUser'];
+
+export { taskKeys, authKeys };

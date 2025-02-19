@@ -16,7 +16,7 @@ const UpcomingDeadlines = () => {
   } = useReadTask(token);
 
   useEffect(() => {
-    if (!isGetTasksPending && !isGetTasksError) {
+    if (!isGetTasksPending && !isGetTasksError && Array.isArray(allTasks)) {
       const alertTasks = allTasks
         .filter((task) => {
           const diffTime = Math.abs(new Date(task.deadline) - new Date());

@@ -87,8 +87,8 @@ const updateUser = asyncHandler(async (req, res) => {
 });
 
 const deleteUser = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user.id);
-
+  const user = await User.findById(req.params.id);
+  console.log(user)
   if (!user) {
     res.status(400);
     throw new Error('User not found');
@@ -96,7 +96,7 @@ const deleteUser = asyncHandler(async (req, res) => {
 
   let deletedUser = null;
 
-  fetch(`https://to-do-list-api-ddho.onrender.com/api/tasks/deleteusertasks/${req.user.id}`, {
+  fetch(`https://to-do-list-api-ddho.onrender.com/api/tasks/deleteusertasks/${req.params.id}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -111,7 +111,7 @@ const deleteUser = asyncHandler(async (req, res) => {
     })
     .then(async (tasks) => {
       if (tasks)
-        deletedUser = await User.findByIdAndDelete(req.user.id, req.body);
+        deletedUser = await User.findByIdAndDelete(req.params.id, req.body);
       if (deletedUser)
         res.status(201).json({ msg: 'User deleted successfully.' });
     })

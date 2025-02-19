@@ -13,8 +13,8 @@ const DeleteModal = (props) => {
 
   const { mutateAsync: deleteTaskAction } = useDeleteTask();
 
-  const deleteTask = () => {
-    deleteTaskAction({ token, id: props.id });
+  const deleteTask = async () => {
+    await deleteTaskAction({ token, id: props.id });
     props.setDeleteTaskModal(false);
   };
 

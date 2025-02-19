@@ -51,12 +51,12 @@ const Task = (props) => {
     state.user.user.token ? state.user.user.token : state.auth.user.token
   );
 
-  const changeDoneStatus = (e) => {
+  const changeDoneStatus = async (e) => {
     setShowTaskModal(false);
     const change = {
       done: !props.done,
     };
-    updateTask({change, token, id: props.id});
+    await updateTask({ change, token, id: props.id });
   };
 
   const changeTask = (e) => {
@@ -65,7 +65,7 @@ const Task = (props) => {
     if (title.length > 0) change.taskName = title;
     if (details.length > 0) change.taskDetail = details;
     if (deadline.length > 0) change.deadline = deadline;
-    if (online) updateTask({change, token, id: props.id});
+    if (online) updateTask({ change, token, id: props.id });
     else notifyError("Can't make changes when offline.");
     e.target.reset();
     setEditTaskModal(false);

@@ -44,9 +44,9 @@ const AddTask = () => {
 
   const notifySuccess = (msg) => toast.success(msg, notificationProperties);
 
-  const {mutateAsync: createTask} = useCreateTask()
+  const { mutateAsync: createTask } = useCreateTask();
 
-  const submitTask = (e) => {
+  const submitTask = async (e) => {
     e.preventDefault();
     const task = {
       user: user._id,
@@ -55,7 +55,7 @@ const AddTask = () => {
       deadline: deadline,
       done: false,
     };
-    if (online) createTask({task, token});
+    if (online) await createTask({ task, token });
     else {
       localStorage.setItem('task', JSON.stringify(task));
       notifySuccess('Task saved! It will be uploaded once we go online.');
