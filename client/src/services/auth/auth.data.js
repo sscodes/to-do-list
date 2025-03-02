@@ -13,7 +13,10 @@ export const useCreateUser = () => {
       return authServices.createUser(user);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(authKeys.createUser);
+      queryClient.invalidateQueries({
+        queryKey: authKeys.createUser,
+        refetchType: 'none',
+      });
     },
     onError: (err) => {
       console.error(err);
@@ -57,6 +60,9 @@ export const useSendOTPMail = (type, email) => {
   const res = useQuery({
     queryKey: authKeys.sendOTPMail,
     queryFn: () => authServices.sendOTPMail(type, email),
+    enabled: !!email,
+    refetchOnWindowFocus: false,
+    staleTime: Infinity,
   });
 
   return {

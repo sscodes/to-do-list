@@ -103,6 +103,7 @@ const OTPComponent = ({ setEmailProp, user, type, emailProp }) => {
             variant={'dark'}
             name={isSuccess ? 'Confirm OTP' : 'Reset Password'}
             disabled={buttonDisabled}
+            type={'submit'}
           />
         </div>
       </Form>

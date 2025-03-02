@@ -63,7 +63,7 @@ export class AuthService {
 
   async sendOTPMail(type, email) {
     const res = await fetch(
-      `https://to-do-list-api-ddho.onrender.com/api/mails/${type}/sendOTaP/${email}`
+      `https://to-do-list-api-ddho.onrender.com/api/mails/${type}/sendOTP/${email}`
     );
     const data = await res.json();
     return data;
