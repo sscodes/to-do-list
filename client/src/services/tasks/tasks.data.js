@@ -25,6 +25,7 @@ export const useReadTask = (token) => {
   const res = useQuery({
     queryKey: taskKeys.readTasks,
     queryFn: () => taskServices.readTask(token),
+    enabled: !!token
   });
 
   return {

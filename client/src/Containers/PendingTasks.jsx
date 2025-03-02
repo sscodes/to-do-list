@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import ButtonComponent from '../Components/ButtonComponent';
@@ -16,9 +16,7 @@ const PendingTasks = () => {
   const [tasksOnFilter, setTasksOnFilter] = useState([]);
   const [page, setPage] = useState(0);
   const [tasks, setTasks] = useState([]);
-  const token = useSelector((state) =>
-    state.user.user.token ? state.user.user.token : state.auth.user.token
-  );
+  const token = JSON.parse(localStorage.getItem('auth'))?.token;
 
   const {
     tasks: allTasks,
@@ -27,9 +25,10 @@ const PendingTasks = () => {
   } = useReadTask(token);
 
   useEffect(() => {
-    if (!isGetTasksPending && !isGetTasksError){
-      const incompleteTasks = allTasks.filter(task => !task.done)
-      setTasks(incompleteTasks);}
+    if (!isGetTasksPending && !isGetTasksError) {
+      const incompleteTasks = allTasks.filter((task) => !task.done);
+      setTasks(incompleteTasks);
+    }
   }, [isGetTasksPending, isGetTasksError, allTasks]);
 
   useEffect(() => {

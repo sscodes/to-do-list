@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import 'react-calendar/dist/Calendar.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
-import FormComponent from './FormComponent';
 import { useCreateTask } from '../services/tasks/tasks.data';
+import FormComponent from './FormComponent';
 
 const AddTask = () => {
   const [online, setOnline] = useState(navigator.onLine);
@@ -21,15 +21,8 @@ const AddTask = () => {
     else setDisableBtn(true);
   }, [title, deadline]);
 
-  const dispatch = useDispatch();
-  const user = useSelector((state) =>
-    Object.getOwnPropertyNames(state?.user?.user).length === 0
-      ? state?.auth?.user
-      : state?.user?.user
-  );
-  const token = useSelector((state) =>
-    state.user.user.token ? state.user.user.token : state.auth.user.token
-  );
+  const user = JSON.parse(localStorage.getItem('auth'));
+  const token = JSON.parse(localStorage.getItem('auth'))?.token;
 
   const notificationProperties = {
     position: 'top-center',

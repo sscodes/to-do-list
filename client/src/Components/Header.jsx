@@ -11,14 +11,10 @@ import { CgProfile } from 'react-icons/cg';
 const Header = () => {
   const [name, setName] = useState('');
   const [modal, setModal] = useState('');
-  const user = useSelector((state) =>
-    Object.getOwnPropertyNames(state?.user?.user).length === 0
-      ? state?.auth?.user
-      : state?.user?.user
-  );
+  const user = JSON.parse(localStorage.getItem('auth'));
   useEffect(() => {
-    setName(user.name);
-  }, [user.name]);
+    setName(user?.name);
+  }, [user?.name]);
 
   const showProfile = () => {
     setModal(true);

@@ -1,39 +1,36 @@
 import { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
-import { loginUser } from '../actions/authActions';
 import ButtonComponent from './ButtonComponent';
 import { ToastContainer } from 'react-toastify';
+import { useLoginUser } from '../services/auth/auth.data';
 
 const Signin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [buttonDisabled, setButtonDisabled] = useState(true);
-  const dispatch = useDispatch();
-  const authenticated = useSelector((state) =>
-    state.user.authenticated
-      ? state.user.authenticated
-      : state.auth.authenticated
-  );
 
   const { theme } = useSelector((state) => state.theme);
+  const { mutateAsync: loginUser, isSuccess: isAuthenticated } = useLoginUser();
 
   useEffect(() => {
     if (email && password && navigator.onLine) setButtonDisabled(false);
     else setButtonDisabled(true);
   }, [email, password]);
 
-  const signin = (e) => {
+  const signin = async (e) => {
     e.preventDefault();
     const user = {
       email,
       password,
     };
-    dispatch(loginUser(user));
+    const res = await loginUser({ user });
+    localStorage.setItem('auth', JSON.stringify(res))
+    console.log(res)
   };
 
-  if (authenticated) {
+  if (isAuthenticated) {
     return <Navigate to={`/home`} />;
   }
 

@@ -4,10 +4,9 @@ import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { Pie } from 'react-chartjs-2';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import ModalComponent from '../../HOC/ModalComponent';
-import { logoutUser } from '../../actions/authActions';
 import { useReadTask } from '../../services/tasks/tasks.data';
 import { useDeleteUser } from '../../services/auth/auth.data';
 
@@ -15,21 +14,14 @@ const Profile = ({ show, onHide }) => {
   Chart.register(ArcElement);
   const [doneTasks, setDoneTasks] = useState();
   const [pendingTasks, setPendingTasks] = useState();
-
   const [name, setName] = useState('');
 
-  const dispatch = useDispatch();
+  const user = JSON.parse(localStorage.getItem('auth'));
 
-  const user = useSelector((state) =>
-    Object.getOwnPropertyNames(state?.user?.user).length === 0
-      ? state?.auth?.user
-      : state?.user?.user
-  );
-  const token = useSelector((state) =>
-    state.user.user.token ? state.user.user.token : state.auth.user.token
-  );
-  const { mutateAsync: deleteUser, isSuccess: isDeleteUserSuccess } = useDeleteUser();
+  const { mutateAsync: deleteUser, isSuccess: isDeleteUserSuccess } =
+    useDeleteUser();
 
+  const token = JSON.parse(localStorage.getItem('auth'))?.token;
   const {
     tasks,
     isPending: isGetTasksPending,
@@ -66,19 +58,20 @@ const Profile = ({ show, onHide }) => {
       localStorage.clear();
       window.location.reload();
     }
-  }, [isDeleteUserSuccess])
+  }, [isDeleteUserSuccess]);
 
   useEffect(() => {
-    setName(user.name);
-  }, [user.name]);
+    setName(user?.name);
+  }, [user?.name]);
 
   const logout = () => {
-    dispatch(logoutUser());
+    localStorage.clear();
+    navigate('/');
   };
-  console.log(user._id);
+
   const onDelete = async () => {
     if (window.confirm('Are you sure you want to delete profile?'))
-      await deleteUser({ token, userId: user._id });
+      await deleteUser({ token, userId: user?._id });
   };
 
   const { theme } = useSelector((state) => state.theme);

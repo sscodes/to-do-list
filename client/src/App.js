@@ -8,7 +8,7 @@ import Hero from './Containers/Hero';
 import Home from './Containers/Home';
 import AllTasks from './Containers/PendingTasks';
 import PrivateRoute from './HOC/PrivateRoute';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useCreateTask } from './services/tasks/tasks.data';
 
 function App() {
@@ -23,14 +23,10 @@ function App() {
     theme: 'colored',
   };
 
-  const dispatch = useDispatch();
-
   const notifyError = (error) => toast.error(error, notificationProperties);
   const notifySuccess = (error) => toast.success(error, notificationProperties);
 
-  const token = useSelector((state) =>
-    state.user.user.token ? state.user.user.token : state.auth.user.token
-  );
+  const token = JSON.parse(localStorage.getItem('auth'))?.token;
 
   const { theme } = useSelector((state) => state.theme);
 

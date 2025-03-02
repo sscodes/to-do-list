@@ -1,23 +1,19 @@
 import { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import ButtonComponent from './ButtonComponent';
-import Signup from './Signup';
-import { useCreateUser } from '../services/auth/auth.data';
+import { useCreateUser, useSendOTPMail } from '../services/auth/auth.data';
 
 const OTPComponent = ({ setEmailProp, user, type, emailProp }) => {
   const [email, setEmail] = useState('');
-  const [emailSent, setEmailSent] = useState(false);
   const [OTP, setOTP] = useState();
   const [buttonDisabled, setButtonDisabled] = useState(true);
-  const dispatch = useDispatch();
-  const authenticated = useSelector((state) =>
-    state.user.authenticated
-      ? state.user.authenticated
-      : state.auth.authenticated
-  );
+  const isAuthenticated = JSON.parse(localStorage.getItem('auth'))?.token
+    ? true
+    : false;
+  console.log(JSON.parse(localStorage.getItem('auth')));
   const { mutateAsync: createUser } = useCreateUser();
 
   const { theme } = useSelector((state) => state.theme);
@@ -41,41 +37,21 @@ const OTPComponent = ({ setEmailProp, user, type, emailProp }) => {
   const notifyError = (error) => toast.error(error, notificationProperties);
   const notifySuccess = (msg) => toast.success(msg, notificationProperties);
 
-  const sendOTPMail = (email) => () => {
-    fetch(
-      `https://to-do-list-api-ddho.onrender.com/api/mails/${type}/sendOTP/${email}`
-    )
-      .then((res) => {
-        if (!res.ok) {
-          return res.json().then((err) => {
-            throw new Error(err.message);
-          });
-        } else return res.json();
-      })
-      .then((otp) => {
-        localStorage.setItem('otp', JSON.stringify(otp));
-        setEmailSent(true);
-        notifySuccess(`OTP sent on ${email}`);
-      })
-      .catch((err) => {
-        notifyError(err.message);
-        setEmailSent(false);
-      });
-  };
+  const { otp, isSuccess, refetch } = useSendOTPMail(type, email);
+
+  useEffect(() => {
+    if (isSuccess) {
+      localStorage.setItem('otp', JSON.stringify(otp));
+      notifySuccess(`OTP sent on ${email}`);
+    }
+  }, [isSuccess, otp]);
 
   useEffect(() => {
     if (type === 'signup') {
       setEmail(emailProp);
-      dispatch(sendOTPMail(emailProp));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const sendOTP = (e) => {
-    e.preventDefault();
-    dispatch(sendOTPMail(email));
-    !emailSent && e.target.reset();
-  };
 
   const confirmOTP = async (e) => {
     e.preventDefault();
@@ -90,24 +66,24 @@ const OTPComponent = ({ setEmailProp, user, type, emailProp }) => {
     } else notifyError('Wrong OTP entered.');
   };
 
-  if (authenticated) {
+  if (isAuthenticated) {
     return <Navigate to={`/home`} />;
   }
 
-  return type === 'forgotpassword' || emailSent ? (
+  return (
     <>
-      <Form onSubmit={emailSent ? confirmOTP : sendOTP}>
+      <Form onSubmit={isSuccess ? confirmOTP : null}>
         <Form.Group className='mb-3'>
           <Form.Label
             className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}
           >
-            {emailSent ? 'Enter OTP' : 'Enter Email address'}
+            {isSuccess ? 'Enter OTP' : 'Enter Email address'}
           </Form.Label>
           <Form.Control
-            type={emailSent ? 'text' : 'email'}
-            placeholder={emailSent ? 'Enter OTP' : 'name@example.com'}
+            type={isSuccess ? 'text' : 'email'}
+            placeholder={isSuccess ? 'Enter OTP' : 'name@example.com'}
             onChange={(e) =>
-              emailSent ? setOTP(e.target.value) : setEmail(e.target.value)
+              isSuccess ? setOTP(e.target.value) : setEmail(e.target.value)
             }
             className={`${theme === 'DARK' && 'form-control-dark'}`}
           />
@@ -117,23 +93,21 @@ const OTPComponent = ({ setEmailProp, user, type, emailProp }) => {
               paddingTop: '0.4rem',
               cursor: 'pointer',
             }}
-            onClick={sendOTP}
+            onClick={refetch}
           >
-            {emailSent && 'Resend OTP'}
+            {isSuccess && 'Resend OTP'}
           </u>
         </Form.Group>
         <div className='d-grid gap-2'>
           <ButtonComponent
             variant={'dark'}
-            name={emailSent ? 'Confirm OTP' : 'Reset Password'}
+            name={isSuccess ? 'Confirm OTP' : 'Reset Password'}
             disabled={buttonDisabled}
           />
         </div>
       </Form>
       <ToastContainer />
     </>
-  ) : (
-    <Signup />
   );
 };
 

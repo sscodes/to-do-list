@@ -1,12 +1,13 @@
 import { useEffect } from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 import Signin from '../Components/Signin';
 import Signup from '../Components/Signup';
 import { googleOauth } from '../actions/authActions';
-import { ToastContainer } from 'react-toastify';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -21,6 +22,12 @@ const Home = () => {
   }, []);
 
   const { theme } = useSelector((state) => state.theme);
+
+  const token = JSON.parse(localStorage.getItem('auth'))?.token;
+
+  if (token) {
+    return <Navigate to={`/home`} />;
+  }
 
   return (
     <>

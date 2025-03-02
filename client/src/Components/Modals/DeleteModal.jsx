@@ -6,9 +6,7 @@ import { formatDate } from '../../utils/formDate';
 import { useDeleteTask } from '../../services/tasks/tasks.data';
 
 const DeleteModal = (props) => {
-  const token = useSelector((state) =>
-    state.user.user.token ? state.user.user.token : state.auth.user.token
-  );
+  const token = JSON.parse(localStorage.getItem('auth'))?.token;
   const { theme } = useSelector((state) => state.theme);
 
   const { mutateAsync: deleteTaskAction } = useDeleteTask();

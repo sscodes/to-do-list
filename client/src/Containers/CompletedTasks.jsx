@@ -13,9 +13,7 @@ const CompletedTasks = () => {
   const [searchedText, setSearchedText] = useState('');
   const [tasksOnFilter, setTasksOnFilter] = useState([]);
   const [tasks, setTasks] = useState([]);
-  const token = useSelector((state) =>
-    state.user.user.token ? state.user.user.token : state.auth.user.token
-  );
+  const token = JSON.parse(localStorage.getItem('auth'))?.token;
 
   const {
     tasks: allTasks,

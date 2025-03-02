@@ -47,9 +47,7 @@ const Task = (props) => {
 
   const { mutateAsync: updateTask } = useUpdateTask();
 
-  const token = useSelector((state) =>
-    state.user.user.token ? state.user.user.token : state.auth.user.token
-  );
+  const token = JSON.parse(localStorage.getItem('auth'))?.token;
 
   const changeDoneStatus = async (e) => {
     setShowTaskModal(false);

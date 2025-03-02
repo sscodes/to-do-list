@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { ToastContainer, toast } from 'react-toastify';
-import ButtonComponent from './ButtonComponent';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import { useUpdateUserPassword } from '../services/auth/auth.data';
+import ButtonComponent from './ButtonComponent';
 
 const ForgotPasswordComponent = ({ email }) => {
   const [password, setPassword] = useState('');
@@ -60,39 +61,25 @@ const ForgotPasswordComponent = ({ email }) => {
 
   const notifyError = (error) => toast.error(error, notificationProperties);
   const notifySuccess = (msg) => toast.success(msg, notificationProperties);
+  const {
+    mutateAsync: updatepassword,
+    isSuccess,
+    isError,
+  } = useUpdateUserPassword();
 
-  const updateUser = (email, newpassword) => () => {
-    fetch(
-      `https://to-do-list-api-ddho.onrender.com/api/users/updatepassword/${email}`,
-      {
-        method: 'PUT',
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify(newpassword),
-      }
-    )
-      .then((res) => {
-        if (!res.ok) {
-          return res.json().then((err) => {
-            throw new Error(err.confirmPasswordMessage);
-          });
-        } else return res.json();
-      })
-      .then(({ msg }) => {
-        notifySuccess(msg);
-        navigate('/');
-      })
-      .catch((error) => notifyError(error));
-  };
-
-  const changePassword = (e) => {
+  const changePassword = async (e) => {
     e.preventDefault();
-    dispatch(
-      updateUser(email, {
-        password,
-      })
-    );
+    const res = await updatepassword(email, {
+      password,
+    });
+
+    if (isSuccess) {
+      notifySuccess(res);
+    }
+
+    if (isError) {
+      notifyError(res);
+    }
   };
 
   const { theme } = useSelector((state) => state.theme);

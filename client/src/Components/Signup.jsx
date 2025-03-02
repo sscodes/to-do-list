@@ -157,6 +157,7 @@ const Signup = () => {
             variant={'dark'}
             name={'Sign Up'}
             disabled={buttonDisabled}
+            type={'submit'}
           />
         </div>
       </Form>

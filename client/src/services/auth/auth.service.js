@@ -14,9 +14,22 @@ export class AuthService {
     return data;
   }
 
-  async readUser(token) {}
+  // async readUser(token) {}
 
-  async updateUser(change, token, id) {}
+  async updateUserPassword(email, newpassword) {
+    const res = await fetch(
+      `https://to-do-list-api-ddho.onrender.com/api/users/updatepassword/${email}`,
+      {
+        method: 'PUT',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify(newpassword),
+      }
+    );
+    const data = await res.json();
+    return data;
+  }
 
   async deleteUser(token, userId) {
     const res = await fetch(
@@ -28,6 +41,29 @@ export class AuthService {
           authorization: `Bearer ${token}`,
         },
       }
+    );
+    const data = await res.json();
+    return data;
+  }
+
+  async loginUser(user) {
+    const res = await fetch(
+      'https://to-do-list-api-ddho.onrender.com/api/users/signin',
+      {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify(user),
+      }
+    );
+    const data = await res.json();
+    return data;
+  }
+
+  async sendOTPMail(type, email) {
+    const res = await fetch(
+      `https://to-do-list-api-ddho.onrender.com/api/mails/${type}/sendOTaP/${email}`
     );
     const data = await res.json();
     return data;

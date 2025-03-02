@@ -5,11 +5,18 @@ import ForgotPasswordComponent from '../Components/ForgotPasswordComponent';
 import Header from '../Components/Header';
 import OTPComponent from '../Components/OTPComponent';
 import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
 const FogotPassword = () => {
   const [email, setEmail] = useState();
   
   const { theme } = useSelector((state) => state.theme);
+
+  const token = JSON.parse(localStorage.getItem('auth'))?.token;
+
+  if (token) {
+    return <Navigate to={`/home`} />;
+  }
 
   return (
     <>
