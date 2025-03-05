@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import Footer from '../Components/Footer';
 import ForgotPasswordComponent from '../Components/ForgotPasswordComponent';
-import Header from '../Components/Header';
+import Header from '../Components/header/Header';
 import OTPComponent from '../Components/OTPComponent';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';

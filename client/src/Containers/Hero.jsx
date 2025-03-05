@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import AddTask from '../Components/AddTask';
 import ButtonComponent from '../Components/ButtonComponent';
 import Footer from '../Components/Footer';
-import Header from '../Components/Header';
+import Header from '../Components/header/Header';
 import UpcomingDeadlines from '../Components/UpcomingDeadlines';
 
 const Hero = () => {

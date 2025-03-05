@@ -10,6 +10,8 @@ import AllTasks from './Containers/PendingTasks';
 import PrivateRoute from './HOC/PrivateRoute';
 import { useSelector } from 'react-redux';
 import { useCreateTask } from './services/tasks/tasks.data';
+import Footer from './Components/Footer';
+import Header from './Components/header/Header';
 
 function App() {
   const notificationProperties = {
@@ -54,34 +56,38 @@ function App() {
 
   return (
     <div className={`App ${theme === 'LIGHT' ? 'theme-light' : 'theme-dark'}`}>
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/forgotpassword' element={<ForgotPasword />} />
-        <Route
-          path='/home'
-          element={
-            <PrivateRoute>
-              <Hero />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path='/pending-tasks'
-          element={
-            <PrivateRoute>
-              <AllTasks />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path='/completed-tasks'
-          element={
-            <PrivateRoute>
-              <CompletedTasks />
-            </PrivateRoute>
-          }
-        />
-      </Routes>
+      <Header />
+      <div className='d-flex align-items-center' style={{ width: '90vw', height: 'calc(100vh - 100px)' }}>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/forgotpassword' element={<ForgotPasword />} />
+          <Route
+            path='/home'
+            element={
+              <PrivateRoute>
+                <Hero />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path='/pending-tasks'
+            element={
+              <PrivateRoute>
+                <AllTasks />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path='/completed-tasks'
+            element={
+              <PrivateRoute>
+                <CompletedTasks />
+              </PrivateRoute>
+            }
+          />
+        </Routes>
+      </div>
+      {/* <Footer /> */}
       <ToastContainer />
     </div>
   );

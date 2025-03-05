@@ -3,10 +3,12 @@ import { Container, Navbar } from 'react-bootstrap';
 import { MdDarkMode, MdLightMode } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { themeActions } from '../actions/themeActions';
-import image from '../assets/Logo.png';
-import Profile from '../Components/Modals/Profile';
+import { themeActions } from '../../actions/themeActions';
+import logo from '../../assets/logo/Logo.svg';
+import Profile from '../Modals/Profile';
 import { CgProfile } from 'react-icons/cg';
+import SVG from 'react-inlinesvg';
+import './Header.css'
 
 const Header = () => {
   const [name, setName] = useState('');
@@ -33,9 +35,8 @@ const Header = () => {
     <>
       <Profile show={modal} onHide={() => setModal(false)} />
       <Navbar
-        className='bg-body-tertiary navbar header'
-        bg='dark'
-        data-bs-theme='dark'
+        className='navbar header customHeaderClass border-bottom shadow-sm'
+        data-bs-theme='light'
         sticky='top'
       >
         <Container className='header-contents'>
@@ -45,14 +46,12 @@ const Header = () => {
               style={{ textDecoration: 'none', color: 'whitesmoke' }}
             >
               <div style={{ display: 'flex', gap: '8px' }}>
-                <img
-                  alt=''
-                  src={image}
-                  width='35'
-                  height='35'
-                  className='d-inline align-top'
+                <SVG
+                  src={logo}
+                  width={240}
+                  height='auto'
+                  title='React'
                 />
-                <h3 className='d-inline'>TaskMate</h3>
               </div>
             </Link>
           </Navbar.Brand>
@@ -64,13 +63,13 @@ const Header = () => {
               </Navbar.Text>
             </Navbar.Collapse>
           )}
-          <div className='ThemeIcon'>
+          {/* <div className='ThemeIcon'>
             {theme === 'DARK' ? (
               <MdLightMode onClick={changeTheme} />
             ) : (
               <MdDarkMode onClick={changeTheme} />
             )}
-          </div>
+          </div> */}
         </Container>
       </Navbar>
     </>

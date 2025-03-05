@@ -1,15 +1,24 @@
-import { useEffect } from 'react';
-import { Container, Row } from 'react-bootstrap';
+import { useEffect, useState } from 'react';
+import { Carousel, Col, Container, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import Footer from '../Components/Footer';
-import Header from '../Components/Header';
-import Signin from '../Components/Signin';
-import Signup from '../Components/Signup';
+import Signin from '../Components/signin/Signin';
+import Signup from '../Components/signup/Signup';
 import { googleOauth } from '../actions/authActions';
+import SVG from 'react-inlinesvg';
+import onlineOrgainzer from '../assets/illustrations/online-orgainzer.svg';
+import indoorBike from '../assets/illustrations/indoor-bike.svg';
+import workingLate from '../assets/illustrations/working-late.svg';
+import { AUTH_FORMAT } from '../helpers/constants';
 
 const Home = () => {
+  const [index, setIndex] = useState(0);
+  const [authFormat, setAuthFormat] = useState(AUTH_FORMAT.SIGN_UP);
+
+  const handleSelect = (selectedIndex) => {
+    setIndex(selectedIndex);
+  };
   const dispatch = useDispatch();
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -31,30 +40,65 @@ const Home = () => {
 
   return (
     <>
-      <Header />
-      <Container>
-        <Row className='pt-3 text-center'>
-          <h1 className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}>
-            A no-nonsense to-do list app.
-          </h1>
-        </Row>
-        <div className='pb-2 my-2 mt-lg-0 boxes'>
-          <div className='p-2 border border-dark-subtle border-3 rounded'>
-            <Signup />
-          </div>
-          <div className='mt-2 mb-5 mt-lg-0 mb-lg-0 p-2 border border-dark-subtle border-3 rounded'>
-            <Signin />
-            <a
-              href='https://to-do-list-api-ddho.onrender.com/api/users/google'
-              className='d-grid gap-2 mt-3 border border-primary rounded bg-primary py-1 border-3 text-white text-center'
-              style={{ textDecoration: 'none', fontSize: '1.4rem' }}
+      <Container fluid className='mb-5'>
+        <Row className='boxes'>
+          <Col className='d-flex justify-content-center'>
+            {authFormat === 'up' ? (
+              <Signup setAuthFormat={setAuthFormat} />
+            ) : (
+              <Signin setAuthFormat={setAuthFormat} />
+            )}
+          </Col>
+          <Col className='d-flex justify-content-center'>
+            <Carousel
+              activeIndex={index}
+              onSelect={handleSelect}
+              className='h-100 d-flex align-items-center'
+              slide={false}
+              controls={false}
+              indicators={false}
+              keyboard={false}
             >
-              Login with Google
-            </a>
-          </div>
-        </div>
+              <Carousel.Item>
+                <SVG src={onlineOrgainzer} height={470} title='React' />
+                <div className='text-black mt-5 text-center'>
+                  <h3 className='tm-font-tertiary tm-text-primary fw-bold tm-italics'>
+                    Sort, Filter & Focus!
+                  </h3>
+                  <p className='tm-font-secondary fw-medium'>
+                    Keep only what matters—TaskMate helps you streamline your
+                    tasks and stay productive.
+                  </p>
+                </div>
+              </Carousel.Item>
+              <Carousel.Item>
+                <SVG src={indoorBike} height={470} title='React' />
+                <div className='text-black mt-5 text-center'>
+                  <h3 className='tm-font-tertiary tm-text-primary fw-bold tm-italics'>
+                    Because Every Step Counts!
+                  </h3>
+                  <p className='tm-font-tertiary fw-medium'>
+                    From workouts to work projects, track progress and stay
+                    accountable with TaskMate.
+                  </p>
+                </div>
+              </Carousel.Item>
+              <Carousel.Item>
+                <SVG src={workingLate} height={470} title='React' />
+                <div className='text-black mt-5 text-center'>
+                  <h3 className='tm-font-primary tm-text-primary fw-bold tm-italics'>
+                    Burning the midnight oil? Make it count!
+                  </h3>
+                  <p className='tm-font-secondary fw-medium'>
+                    Your side hustle deserves your passion. Track progress, stay
+                    productive, and make it happen with TaskMate.
+                  </p>
+                </div>
+              </Carousel.Item>
+            </Carousel>
+          </Col>
+        </Row>
       </Container>
-      <Footer />
       <ToastContainer />
     </>
   );
