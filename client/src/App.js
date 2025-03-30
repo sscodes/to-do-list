@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import './App.css';
 import CompletedTasks from './Containers/CompletedTasks';
-import ForgotPasword from './Containers/FogotPassword';
+import ForgotPasword from './Containers/forgot-password/FogotPassword';
 import Hero from './Containers/Hero';
 import Home from './Containers/Home';
 import AllTasks from './Containers/PendingTasks';

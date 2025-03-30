@@ -7,7 +7,11 @@ const ButtonComponent = ({ variant, name, type, disabled, onClick }) => {
       variant={variant}
       disabled={disabled}
       onClick={onClick}
-      style={{ fontSize: '1rem', fontFamily: 'Inter, sans-serif' }}
+      style={{
+        fontSize: '1rem',
+        fontFamily: 'Inter, sans-serif',
+        backgroundColor: '#3737c8ff',
+      }}
     >
       {name}
     </Button>

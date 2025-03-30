@@ -88,9 +88,7 @@ const ForgotPasswordComponent = ({ email }) => {
     <>
       <Form onSubmit={changePassword}>
         <Form.Group className='mb-1'>
-          <Form.Label
-            className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}
-          >
+          <Form.Label className={'tm-font-secondary fw-medium'}>
             Enter new password:
           </Form.Label>
           <Form.Control
@@ -104,7 +102,9 @@ const ForgotPasswordComponent = ({ email }) => {
           )}
         </Form.Group>
         <Form.Group className='mb-3'>
-          <Form.Label>Confirm new password:</Form.Label>
+          <Form.Label className={'tm-font-secondary fw-medium'}>
+            Confirm new password:
+          </Form.Label>
           <Form.Control
             type='password'
             placeholder='Re-enter Password'

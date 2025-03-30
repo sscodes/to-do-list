@@ -75,7 +75,7 @@ const OTPComponent = ({ setEmailProp, user, type, emailProp }) => {
       <Form onSubmit={isSuccess ? confirmOTP : null}>
         <Form.Group className='mb-3'>
           <Form.Label
-            className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}
+            className={'tm-font-secondary fw-medium'}
           >
             {isSuccess ? 'Enter OTP' : 'Enter Email address'}
           </Form.Label>
