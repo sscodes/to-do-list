@@ -72,7 +72,7 @@ const Signup = ({ setAuthFormat }) => {
     <div className='signUp d-flex flex-column row-gap-3 justify-content-center border border-1 rounded rounded-4 p-5 bg-white shadow'>
       {showOTPComponent ? (
         <div xs={6} className='d-flex align-items-center'>
-          <div>
+          <div className='w-100'>
             <div className='tm-font-primary'>
               <h4 className={'fw-bold'}>Enter OTP</h4>
               <h6 className={'tm-text-primary'}>
