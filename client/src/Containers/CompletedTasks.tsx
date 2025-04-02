@@ -1,13 +1,13 @@
-import { Button, Col, Container, Row } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
-import { ToastContainer } from 'react-toastify';
 import Footer from '../Components/Footer';
 import Header from '../Components/header/Header';
 import Task from '../Components/Task';
 import SearchTask from '../Components/SearchTask';
+import { Button, Col, Container, Row } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useReadTask } from '../services/tasks/tasks.data';
+import { useReadTask } from '../services/tasks/tasks.data.ts';
 
 const CompletedTasks = () => {
   const [searchedText, setSearchedText] = useState('');
