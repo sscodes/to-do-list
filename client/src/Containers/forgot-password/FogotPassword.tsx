@@ -5,7 +5,7 @@ import { Navigate } from 'react-router-dom';
 import SVG from 'react-inlinesvg';
 import ForgotPasswordComponent from '../../Components/ForgotPasswordComponent';
 import OTPComponent from '../../Components/OTPComponent';
-import forgotPassword from '../../assets/illustrations/forgot-password.svg';
+import forgotPassword from '../../../public/assets/illustrations/forgot-password.svg';
 import classes from './FogotPassword.module.css';
 import clsx from 'clsx';
 

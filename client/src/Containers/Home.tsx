@@ -6,9 +6,9 @@ import { ToastContainer } from 'react-toastify';
 import Signin from '../Components/signin/Signin';
 import Signup from '../Components/signup/Signup';
 import SVG from 'react-inlinesvg';
-import onlineOrgainzer from '../assets/illustrations/online-orgainzer.svg';
-import indoorBike from '../assets/illustrations/indoor-bike.svg';
-import workingLate from '../assets/illustrations/working-late.svg';
+import onlineOrgainzer from '../../public/assets/illustrations/online-orgainzer.svg';
+import indoorBike from '../../public/assets/illustrations/indoor-bike.svg';
+import workingLate from '../../public/assets/illustrations/working-late.svg';
 import { AUTH_FORMAT } from '../helpers/constants';
 
 const Home = () => {

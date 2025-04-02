@@ -3,7 +3,7 @@ import { Form } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
-import google from '../../assets/logo/google.png';
+import google from '../../../public/assets/logo/google.png';
 import { AUTH_FORMAT } from '../../helpers/constants';
 import ButtonComponent from '../ButtonComponent';
 import OTPComponent from '../OTPComponent';

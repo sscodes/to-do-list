@@ -3,7 +3,7 @@ import { Form } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
 import ButtonComponent from '../ButtonComponent';
-import google from '../../assets/logo/google.png';
+import google from '../../../public/assets/logo/google.png';
 import { useLoginUser } from '../../services/auth/auth.data';
 import { AUTH_FORMAT } from '../../helpers/constants';
 import classes from './Signin.module.css';

@@ -4,7 +4,7 @@ import { MdDarkMode, MdLightMode } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { themeActions } from '../../actions/themeActions';
-import logo from '../../assets/logo/Logo.svg';
+import logo from '../../../public/assets/logo/Logo.svg';
 import Profile from '../Modals/Profile';
 import { CgProfile } from 'react-icons/cg';
 import SVG from 'react-inlinesvg';
