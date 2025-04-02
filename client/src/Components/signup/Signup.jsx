@@ -7,7 +7,8 @@ import google from '../../assets/logo/google.png';
 import { AUTH_FORMAT } from '../../helpers/constants';
 import ButtonComponent from '../ButtonComponent';
 import OTPComponent from '../OTPComponent';
-import './Signup.css';
+import classes from './Signup.module.css';
+import clsx from 'clsx';
 
 const Signup = ({ setAuthFormat }) => {
   const [name, setName] = useState('');
@@ -69,7 +70,12 @@ const Signup = ({ setAuthFormat }) => {
   const { theme } = useSelector((state) => state.theme);
 
   return (
-    <div className='signUp d-flex flex-column row-gap-3 justify-content-center border border-1 rounded rounded-4 p-5 bg-white shadow'>
+    <div
+      className={clsx(
+        classes.signUp,
+        'd-flex flex-column row-gap-3 justify-content-center border border-1 rounded rounded-4 p-5 bg-white shadow'
+      )}
+    >
       {showOTPComponent ? (
         <div xs={6} className='d-flex align-items-center'>
           <div className='w-100'>
@@ -183,9 +189,19 @@ const Signup = ({ setAuthFormat }) => {
             </div>
           </Form>
           <div className='d-flex align-items-center gap-2'>
-            <div className='d-inline-block w-100 divider bg-secondary'></div>
+            <div
+              className={clsx(
+                classes.divider,
+                'd-inline-block w-100 bg-secondary'
+              )}
+            ></div>
             <div className='text-secondary tm-font-secondary'>or</div>
-            <div className='d-inline-block w-100 divider bg-secondary'></div>
+            <div
+              className={clsx(
+                classes.divider,
+                'd-inline-block w-100 bg-secondary'
+              )}
+            ></div>
           </div>
           <a
             href='https://to-do-list-api-ddho.onrender.com/api/users/google'

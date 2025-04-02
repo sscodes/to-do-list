@@ -6,6 +6,8 @@ import ButtonComponent from '../ButtonComponent';
 import google from '../../assets/logo/google.png';
 import { useLoginUser } from '../../services/auth/auth.data';
 import { AUTH_FORMAT } from '../../helpers/constants';
+import classes from './Signin.module.css';
+import clsx from 'clsx';
 
 const Signin = ({ setAuthFormat }) => {
   const [email, setEmail] = useState('');
@@ -36,7 +38,12 @@ const Signin = ({ setAuthFormat }) => {
   }
 
   return (
-    <div className='signIn d-flex flex-column row-gap-3 justify-content-center border border-1 rounded rounded-4 p-5 bg-white shadow'>
+    <div
+      className={clsx(
+        'd-flex flex-column row-gap-3 justify-content-center border border-1 rounded rounded-4 p-5 bg-white shadow',
+        classes.signIn
+      )}
+    >
       <div className='text-center tm-font-primary'>
         <h4
           className={`${theme === 'DARK' ? 'text-light' : 'text-dark'} fw-bold`}
@@ -104,9 +111,13 @@ const Signin = ({ setAuthFormat }) => {
         </div>
       </Form>
       <div className='d-flex align-items-center gap-2'>
-        <div className='d-inline-block w-100 divider bg-secondary'></div>
+        <div
+          className={clsx(classes.divider, 'd-inline-block w-100 bg-secondary')}
+        ></div>
         <div className='text-secondary tm-font-secondary'>or</div>
-        <div className='d-inline-block w-100 divider bg-secondary'></div>
+        <div
+          className={clsx(classes.divider, 'd-inline-block w-100 bg-secondary')}
+        ></div>
       </div>
       <a
         href='https://to-do-list-api-ddho.onrender.com/api/users/google'

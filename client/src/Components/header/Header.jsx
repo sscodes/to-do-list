@@ -8,7 +8,8 @@ import logo from '../../assets/logo/Logo.svg';
 import Profile from '../Modals/Profile';
 import { CgProfile } from 'react-icons/cg';
 import SVG from 'react-inlinesvg';
-import './Header.css'
+import classes from './Header.module.css'
+import clsx from 'clsx';
 
 const Header = () => {
   const [name, setName] = useState('');
@@ -35,7 +36,7 @@ const Header = () => {
     <>
       <Profile show={modal} onHide={() => setModal(false)} />
       <Navbar
-        className='navbar header customHeaderClass border-bottom shadow-sm'
+        className={clsx('navbar header  border-bottom shadow-sm w-100', classes.customHeaderClass)}
         data-bs-theme='light'
         sticky='top'
       >

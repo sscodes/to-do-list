@@ -6,7 +6,8 @@ import SVG from 'react-inlinesvg';
 import ForgotPasswordComponent from '../../Components/ForgotPasswordComponent';
 import OTPComponent from '../../Components/OTPComponent';
 import forgotPassword from '../../assets/illustrations/forgot-password.svg';
-import './FogotPassword.css';
+import classes from './FogotPassword.module.css';
+import clsx from 'clsx';
 
 const FogotPassword = () => {
   const [email, setEmail] = useState();
@@ -30,7 +31,7 @@ const FogotPassword = () => {
                 Don't worry, happens with the best of us!
               </h6>
             </div>
-            <div className='forgotPwd mt-4'>
+            <div className={clsx(classes.forgotPwd, 'mt-4')}>
               {email ? (
                 <ForgotPasswordComponent email={email} />
               ) : (
