@@ -116,7 +116,7 @@ const Signin = ({ setAuthFormat }) => {
         <div>
           <img src={google} alt='' width={20} />
         </div>
-        <div className='tm-font-secondary'>Sign up with Google</div>
+        <div className='tm-font-secondary'>Sign in with Google</div>
       </a>
       <div className='text-center tm-font-secondary'>
         New Here?{' '}

@@ -5,7 +5,6 @@ import { Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import Signin from '../Components/signin/Signin';
 import Signup from '../Components/signup/Signup';
-import { googleOauth } from '../actions/authActions';
 import SVG from 'react-inlinesvg';
 import onlineOrgainzer from '../assets/illustrations/online-orgainzer.svg';
 import indoorBike from '../assets/illustrations/indoor-bike.svg';
@@ -26,7 +25,8 @@ const Home = () => {
       name: searchParams?.get('name'),
       token: searchParams?.get('token'),
     };
-    if (searchParams?.get('name')) dispatch(googleOauth(user));
+    if (searchParams?.get('name'))
+      localStorage.setItem('auth', JSON.stringify(user));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
