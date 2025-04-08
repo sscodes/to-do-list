@@ -8,6 +8,7 @@ import { useLoginUser } from '../../services/auth/auth.data';
 import { AUTH_FORMAT } from '../../helpers/constants';
 import classes from './Signin.module.css';
 import clsx from 'clsx';
+import { API_END_POINT } from '@/helpers/config';
 
 const Signin = ({ setAuthFormat }) => {
   const [email, setEmail] = useState('');
@@ -120,7 +121,7 @@ const Signin = ({ setAuthFormat }) => {
         ></div>
       </div>
       <a
-        href='https://to-do-list-api-ddho.onrender.com/api/users/google'
+        href={`${API_END_POINT}/api/users/google`}
         className='d-flex justify-content-center align-items-center gap-2 border border-primary rounded bg-white border-1 py-2'
         style={{ textDecoration: 'none', fontSize: '1rem' }}
       >

@@ -1,0 +1,26 @@
+export const ASSETS = {
+  logo: {
+    productLogo: '/assets/logo/Logo.svg',
+    googleLogo: '/assets/logo/google.png',
+  },
+  illustrations: {
+    authentication: '/assets/illustrations/authentication.svg',
+    buildYourHome: '/assets/illustrations/build-your-home.svg',
+    buildingBlocks: '/assets/illustrations/building-blocks.svg',
+    businessDeal: '/assets/illustrations/business-deal.svg',
+    devProductivity: '/assets/illustrations/dev-productivity.svg',
+    digitalNomad: '/assets/illustrations/digital-nomad.svg',
+    finance: '/assets/illustrations/finance.svg',
+    forgotPassword: '/assets/illustrations/forgot-password.svg',
+    indoorBike: '/assets/illustrations/indoor-bike.svg',
+    makingArt: '/assets/illustrations/making-art.svg',
+    onlineOrganizer: '/assets/illustrations/online-organizer.svg',
+    personalTraining: '/assets/illustrations/personal-training.svg',
+    reading: '/assets/illustrations/reading.svg',
+    sharedGoals: '/assets/illustrations/shared-goals.svg',
+    stabilityBall: '/assets/illustrations/stability-ball.svg',
+    traveling: '/assets/illustrations/traveling.svg',
+    workInProgress: '/assets/illustrations/work-in-progress.svg',
+    workingLate: '/assets/illustrations/working-late.svg',
+  },
+};

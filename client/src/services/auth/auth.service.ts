@@ -1,7 +1,9 @@
+import { API_END_POINT } from "@/helpers/config";
+
 export class AuthService {
   async createUser(user) {
     const res = await fetch(
-      'https://to-do-list-api-ddho.onrender.com/api/users/signup',
+      `${API_END_POINT}api/users/signup`,
       {
         method: 'POST',
         headers: {
@@ -18,7 +20,7 @@ export class AuthService {
 
   async updateUserPassword(email, newpassword) {
     const res = await fetch(
-      `https://to-do-list-api-ddho.onrender.com/api/users/updatepassword/${email}`,
+      `${API_END_POINT}api/users/updatepassword/${email}`,
       {
         method: 'PUT',
         headers: {
@@ -48,7 +50,7 @@ export class AuthService {
 
   async loginUser(user) {
     const res = await fetch(
-      'https://to-do-list-api-ddho.onrender.com/api/users/signin',
+      `${API_END_POINT}api/users/signin`,
       {
         method: 'POST',
         headers: {
@@ -63,7 +65,7 @@ export class AuthService {
 
   async sendOTPMail(type, email) {
     const res = await fetch(
-      `https://to-do-list-api-ddho.onrender.com/api/mails/${type}/sendOTP/${email}`
+      `${API_END_POINT}api/mails/${type}/sendOTP/${email}`
     );
     const data = await res.json();
     return data;

@@ -27,10 +27,13 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
+    "dev": "vite --mode development",
+    "start": "vite --mode production",
+    "stg": "vite --mode staging",
+    "build": "vite build --mode production",
+    "build:staging": "vite build --mode staging",
     "typecheck": "tsc --noEmit",
-    "preview": "vite preview",
+    "preview": "vite preview --port 3000",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
   },
   "eslintConfig": {

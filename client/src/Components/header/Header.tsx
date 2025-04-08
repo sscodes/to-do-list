@@ -1,20 +1,20 @@
 import { useEffect, useState } from 'react';
 import { Container, Navbar } from 'react-bootstrap';
-import { MdDarkMode, MdLightMode } from 'react-icons/md';
-import { useDispatch, useSelector } from 'react-redux';
+// import { MdDarkMode, MdLightMode } from 'react-icons/md';
+// import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { themeActions } from '../../actions/themeActions';
-import logo from '../../../public/assets/logo/Logo.svg';
+// import { themeActions } from '../../actions/themeActions';
 import Profile from '../Modals/Profile';
 import { CgProfile } from 'react-icons/cg';
 import SVG from 'react-inlinesvg';
-import classes from './Header.module.css'
+import classes from './Header.module.css';
 import clsx from 'clsx';
+import { ASSETS } from '@/helpers/assets';
 
 const Header = () => {
   const [name, setName] = useState('');
-  const [modal, setModal] = useState('');
-  const user = JSON.parse(localStorage.getItem('auth'));
+  const [modal, setModal] = useState(false);
+  const user = JSON.parse(localStorage.getItem('auth') as string);
   useEffect(() => {
     setName(user?.name);
   }, [user?.name]);
@@ -23,20 +23,23 @@ const Header = () => {
     setModal(true);
   };
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const { theme } = useSelector((state) => state.theme);
+  // const { theme } = useSelector((state) => state.theme);
 
-  const changeTheme = () => {
-    if (theme === 'LIGHT') dispatch(themeActions('DARK'));
-    else dispatch(themeActions('LIGHT'));
-  };
+  // const changeTheme = () => {
+  //   if (theme === 'LIGHT') dispatch(themeActions('DARK'));
+  //   else dispatch(themeActions('LIGHT'));
+  // };
 
   return (
     <>
       <Profile show={modal} onHide={() => setModal(false)} />
       <Navbar
-        className={clsx('navbar header  border-bottom shadow-sm w-100', classes.customHeaderClass)}
+        className={clsx(
+          'navbar header  border-bottom shadow-sm w-100',
+          classes.customHeaderClass
+        )}
         data-bs-theme='light'
         sticky='top'
       >
@@ -48,7 +51,7 @@ const Header = () => {
             >
               <div style={{ display: 'flex', gap: '8px' }}>
                 <SVG
-                  src={logo}
+                  src={ASSETS.logo.productLogo}
                   width={240}
                   height='auto'
                   title='React'

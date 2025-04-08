@@ -1,14 +1,15 @@
+import { ASSETS } from '@/helpers/assets';
+import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
-import google from '../../../public/assets/logo/google.png';
 import { AUTH_FORMAT } from '../../helpers/constants';
 import ButtonComponent from '../ButtonComponent';
 import OTPComponent from '../OTPComponent';
 import classes from './Signup.module.css';
-import clsx from 'clsx';
+import { API_END_POINT } from '@/helpers/config';
 
 const Signup = ({ setAuthFormat }) => {
   const [name, setName] = useState('');
@@ -16,7 +17,7 @@ const Signup = ({ setAuthFormat }) => {
   const [password, setPassword] = useState('');
   const [showOTPComponent, setShowOTPComponent] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [passwordMessage, setPasswordMessage] = useState(null);
+  const [passwordMessage, setPasswordMessage] = useState<string | null>(null);
   const [confirmPasswordMessage, setConfirmPasswordMessage] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
@@ -67,7 +68,7 @@ const Signup = ({ setAuthFormat }) => {
     setShowOTPComponent(true);
   };
 
-  const { theme } = useSelector((state) => state.theme);
+  // const { theme } = useSelector((state) => state.theme);
 
   return (
     <div
@@ -166,7 +167,7 @@ const Signup = ({ setAuthFormat }) => {
               <Form.Control
                 type='password'
                 placeholder='Re-enter Password'
-                className={`${theme === 'DARK' && 'form-control-dark'}`}
+                // className={`${theme === 'DARK' && 'form-control-dark'}`}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 style={{ fontSize: '1rem' }}
               />
@@ -204,12 +205,12 @@ const Signup = ({ setAuthFormat }) => {
             ></div>
           </div>
           <a
-            href='https://to-do-list-api-ddho.onrender.com/api/users/google'
+            href={`${API_END_POINT}api/users/google`}
             className='d-flex justify-content-center align-items-center gap-2 border border-primary rounded bg-white border-1 py-2'
             style={{ textDecoration: 'none', fontSize: '1rem' }}
           >
             <div>
-              <img src={google} alt='' width={20} />
+              <img src={ASSETS.logo.googleLogo} alt='' width={20} />
             </div>
             <div className='tm-font-secondary'>Sign up with Google</div>
           </a>

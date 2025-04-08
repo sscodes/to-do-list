@@ -1,24 +1,17 @@
 import { useEffect, useState } from 'react';
 import { Carousel, Col, Container, Row } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
+// import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import Signin from '../Components/signin/Signin';
 import Signup from '../Components/signup/Signup';
 import SVG from 'react-inlinesvg';
-import onlineOrgainzer from '../../public/assets/illustrations/online-orgainzer.svg';
-import indoorBike from '../../public/assets/illustrations/indoor-bike.svg';
-import workingLate from '../../public/assets/illustrations/working-late.svg';
 import { AUTH_FORMAT } from '../helpers/constants';
+import { ASSETS } from '@/helpers/assets';
 
 const Home = () => {
-  const [index, setIndex] = useState(0);
   const [authFormat, setAuthFormat] = useState(AUTH_FORMAT.SIGN_UP);
-
-  const handleSelect = (selectedIndex) => {
-    setIndex(selectedIndex);
-  };
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const user = {
@@ -30,9 +23,9 @@ const Home = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const { theme } = useSelector((state) => state.theme);
+  // const { theme } = useSelector((state) => state.theme);
 
-  const token = JSON.parse(localStorage.getItem('auth'))?.token;
+  const token = JSON.parse(localStorage.getItem('auth') as string)?.token;
 
   if (token) {
     return <Navigate to={`/home`} />;
@@ -51,8 +44,6 @@ const Home = () => {
           </Col>
           <Col className='d-flex justify-content-center'>
             <Carousel
-              activeIndex={index}
-              onSelect={handleSelect}
               className='h-100 d-flex align-items-center'
               slide={false}
               controls={false}
@@ -60,7 +51,11 @@ const Home = () => {
               keyboard={false}
             >
               <Carousel.Item>
-                <SVG src={onlineOrgainzer} height={470} title='React' />
+                <SVG
+                  src={ASSETS.illustrations.onlineOrganizer}
+                  height={470}
+                  title='React'
+                />
                 <div className='text-black mt-5 text-center'>
                   <h3 className='tm-font-tertiary tm-text-primary fw-bold tm-italics'>
                     Sort, Filter & Focus!
@@ -72,7 +67,11 @@ const Home = () => {
                 </div>
               </Carousel.Item>
               <Carousel.Item>
-                <SVG src={indoorBike} height={470} title='React' />
+                <SVG
+                  src={ASSETS.illustrations.indoorBike}
+                  height={470}
+                  title='React'
+                />
                 <div className='text-black mt-5 text-center'>
                   <h3 className='tm-font-tertiary tm-text-primary fw-bold tm-italics'>
                     Because Every Step Counts!
@@ -84,7 +83,11 @@ const Home = () => {
                 </div>
               </Carousel.Item>
               <Carousel.Item>
-                <SVG src={workingLate} height={470} title='React' />
+                <SVG
+                  src={ASSETS.illustrations.workingLate}
+                  height={470}
+                  title='React'
+                />
                 <div className='text-black mt-5 text-center'>
                   <h3 className='tm-font-primary tm-text-primary fw-bold tm-italics'>
                     Burning the midnight oil? Make it count!

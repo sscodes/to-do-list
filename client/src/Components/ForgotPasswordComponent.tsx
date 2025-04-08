@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { useUpdateUserPassword } from '../services/auth/auth.data';
 import ButtonComponent from './ButtonComponent';
@@ -9,11 +9,10 @@ import ButtonComponent from './ButtonComponent';
 const ForgotPasswordComponent = ({ email }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [passwordMessage, setPasswordMessage] = useState(null);
+  const [passwordMessage, setPasswordMessage] = useState<string | null>(null);
   const [confirmPasswordMessage, setConfirmPasswordMessage] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(true);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const dispatch = useDispatch();
 
   useEffect(() => {
     if (password.length > 0 && password.length < 7)
@@ -62,14 +61,14 @@ const ForgotPasswordComponent = ({ email }) => {
   const notifyError = (error) => toast.error(error, notificationProperties);
   const notifySuccess = (msg) => toast.success(msg, notificationProperties);
   const {
-    mutateAsync: updatepassword,
+    mutateAsync: updatePassword,
     isSuccess,
     isError,
   } = useUpdateUserPassword();
 
   const changePassword = async (e) => {
     e.preventDefault();
-    const res = await updatepassword(email, {
+    const res = await updatePassword(email, {
       password,
     });
 
@@ -82,7 +81,7 @@ const ForgotPasswordComponent = ({ email }) => {
     }
   };
 
-  const { theme } = useSelector((state) => state.theme);
+  // const { theme } = useSelector((state) => state.theme);
 
   return (
     <>
@@ -95,7 +94,7 @@ const ForgotPasswordComponent = ({ email }) => {
             type='password'
             placeholder='Enter Password'
             onChange={(e) => setPassword(e.target.value)}
-            className={`${theme === 'DARK' && 'form-control-dark'}`}
+            // className={`${theme === 'DARK' && 'form-control-dark'}`}
           />
           {passwordMessage && (
             <h6 className='text-danger'>{passwordMessage}</h6>
@@ -109,7 +108,7 @@ const ForgotPasswordComponent = ({ email }) => {
             type='password'
             placeholder='Re-enter Password'
             onChange={(e) => setConfirmPassword(e.target.value)}
-            className={`${theme === 'DARK' && 'form-control-dark'}`}
+            // className={`${theme === 'DARK' && 'form-control-dark'}`}
           />
           {confirmPasswordMessage && (
             <h6 className='text-danger'>Passwords do not match</h6>
