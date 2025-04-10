@@ -25,7 +25,7 @@ const AddTask = () => {
   const token = JSON.parse(localStorage.getItem('auth'))?.token;
 
   const notificationProperties = {
-    position: 'top-center',
+    position: 'top-right',
     autoClose: 2000,
     hideProgressBar: false,
     closeOnClick: true,

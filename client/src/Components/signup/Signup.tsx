@@ -5,7 +5,7 @@ import { Form } from 'react-bootstrap';
 // import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
-import { AUTH_FORMAT } from '../../helpers/constants';
+import { AUTH_FORMAT } from '../../helpers/types';
 import ButtonComponent from '../ButtonComponent';
 import OTPComponent from '../OTPComponent';
 import classes from './Signup.module.css';

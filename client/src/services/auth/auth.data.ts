@@ -9,8 +9,15 @@ export const useCreateUser = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ user }) => {
-      return authServices.createUser(user);
+    mutationFn: async ({ user }) => {
+      const response = await authServices.createUser(user);
+      const data = await response.json();
+      if (response.ok) {
+        localStorage.setItem('auth', JSON.stringify(data));
+      } else if (!response.ok || response.status >= 400) {
+        throw new Error(data.message);
+      }
+      return data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -28,8 +35,16 @@ export const useUpdateUserPassword = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ email, newpassword }) => {
-      return authServices.updateUserPassword(email, newpassword);
+    mutationFn: async ({ email, newpassword }) => {
+      const response = await authServices.updateUserPassword(
+        email,
+        newpassword
+      );
+      const data = await response.json();
+      if (!response.ok || response.status >= 400) {
+        throw new Error(data.message);
+      }
+      return data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries(authKeys.updateUserPassword);
@@ -44,8 +59,13 @@ export const useDeleteUser = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ token, userId }) => {
-      return authServices.deleteUser(token, userId);
+    mutationFn: async ({ token, userId }) => {
+      const response = await authServices.deleteUser(token, userId);
+      const data = await response.json();
+      if (!response.ok || response.status >= 400) {
+        throw new Error(data.message);
+      }
+      return data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries(authKeys.deleteUser);
@@ -77,8 +97,15 @@ export const useLoginUser = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ user }) => {
-      return authServices.loginUser(user);
+    mutationFn: async ({ user }) => {
+      const response = await authServices.loginUser(user);
+      const data = await response.json();
+      if (response.ok) {
+        localStorage.setItem('auth', JSON.stringify(data));
+      } else if (!response.ok || response.status >= 400) {
+        throw new Error(data.message);
+      }
+      return data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries(authKeys.loginUser);

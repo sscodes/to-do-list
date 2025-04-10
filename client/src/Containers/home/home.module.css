@@ -1,0 +1,11 @@
+/* @media (max-width: 1350px) {
+  .carousel {
+    transform: scale(0.75);
+  }
+} */
+
+@media (max-width: 768px) {
+  .carousel {
+    display: none;
+  }
+}

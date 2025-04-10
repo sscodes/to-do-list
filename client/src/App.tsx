@@ -5,7 +5,7 @@ import './App.css';
 import CompletedTasks from './Containers/CompletedTasks';
 import ForgotPasword from './Containers/forgot-password/FogotPassword';
 import Hero from './Containers/Hero';
-import Home from './Containers/Home';
+import Home from './Containers/home/Home';
 import AllTasks from './Containers/PendingTasks';
 import PrivateRoute from './HOC/PrivateRoute';
 import { useSelector } from 'react-redux';
@@ -15,7 +15,7 @@ import Header from './Components/header/Header';
 
 function App() {
   const notificationProperties = {
-    position: 'top-center',
+    position: 'top-right',
     autoClose: 2000,
     hideProgressBar: false,
     closeOnClick: true,

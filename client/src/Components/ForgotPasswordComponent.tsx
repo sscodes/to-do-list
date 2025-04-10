@@ -48,7 +48,7 @@ const ForgotPasswordComponent = ({ email }) => {
   }, [password, confirmPasswordMessage, confirmPassword, passwordMessage]);
 
   const notificationProperties = {
-    position: 'top-center',
+    position: 'top-right',
     autoClose: 2000,
     hideProgressBar: false,
     closeOnClick: true,

@@ -12,8 +12,7 @@ export class AuthService {
         body: JSON.stringify(user),
       }
     );
-    const data = await res.json();
-    return data;
+    return res;
   }
 
   // async readUser(token) {}
@@ -29,8 +28,7 @@ export class AuthService {
         body: JSON.stringify(newpassword),
       }
     );
-    const data = await res.json();
-    return data;
+    return res;
   }
 
   async deleteUser(token, userId) {
@@ -44,8 +42,7 @@ export class AuthService {
         },
       }
     );
-    const data = await res.json();
-    return data;
+    return res;
   }
 
   async loginUser(user) {
@@ -59,8 +56,7 @@ export class AuthService {
         body: JSON.stringify(user),
       }
     );
-    const data = await res.json();
-    return data;
+    return res;
   }
 
   async sendOTPMail(type, email) {

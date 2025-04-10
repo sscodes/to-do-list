@@ -1,30 +1,24 @@
 import { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
+// import { useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import ButtonComponent from './ButtonComponent';
 import { useCreateUser, useSendOTPMail } from '../services/auth/auth.data';
+import { OTP_SRC } from '@/helpers/types';
+import { useNavigate } from 'react-router-dom';
 
 const OTPComponent = ({ setEmailProp, user, type, emailProp }) => {
   const [email, setEmail] = useState('');
-  const [OTP, setOTP] = useState();
+  const [emailInput, setEmailInput] = useState('');
+  const [OTP, setOTP] = useState<string | null>(null);
   const [buttonDisabled, setButtonDisabled] = useState(true);
-  const isAuthenticated = JSON.parse(localStorage.getItem('auth'))?.token
-    ? true
-    : false;
-  console.log(JSON.parse(localStorage.getItem('auth')));
-  const { mutateAsync: createUser } = useCreateUser();
-
-  const { theme } = useSelector((state) => state.theme);
-
-  useEffect(() => {
-    if (email && navigator.onLine) setButtonDisabled(false);
-    else setButtonDisabled(true);
-  }, [email]);
+  const { mutateAsync: createUser } =
+    useCreateUser();
+  const navigate = useNavigate();
+  // const { theme } = useSelector((state) => state.theme);
 
   const notificationProperties = {
-    position: 'top-center',
+    position: "top-right",
     autoClose: 2000,
     hideProgressBar: false,
     closeOnClick: true,
@@ -34,10 +28,18 @@ const OTPComponent = ({ setEmailProp, user, type, emailProp }) => {
     theme: 'colored',
   };
 
-  const notifyError = (error) => toast.error(error, notificationProperties);
-  const notifySuccess = (msg) => toast.success(msg, notificationProperties);
+  const notifyError = (error: string) =>
+    toast.error(error, notificationProperties);
+  const notifySuccess = (msg: string) =>
+    toast.success(msg, notificationProperties);
 
   const { otp, isSuccess, refetch } = useSendOTPMail(type, email);
+
+  useEffect(() => {
+    if ((email && navigator.onLine) || !isSuccess || !OTP?.length)
+      setButtonDisabled(false);
+    else setButtonDisabled(true);
+  }, [email, isSuccess]);
 
   useEffect(() => {
     if (isSuccess) {
@@ -47,66 +49,92 @@ const OTPComponent = ({ setEmailProp, user, type, emailProp }) => {
   }, [isSuccess, otp]);
 
   useEffect(() => {
-    if (type === 'signup') {
+    if (type === OTP_SRC.SIGN_UP) {
       setEmail(emailProp);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const confirmOTP = async (e) => {
+  const confirmOTP = async (e: MouseEvent) => {
     e.preventDefault();
     if (localStorage.getItem('otp') == OTP) {
-      if (type === 'forgotpassword') {
+      if (type === OTP_SRC.FORGOT_PASSWORD) {
         localStorage.clear();
         setEmailProp(email);
       } else {
-        notifySuccess('Email Verified');
-        await createUser({ user });
+        try {
+          await createUser({ user });
+          notifySuccess('Email Verified');
+          navigate('/home');
+        } catch (error: any) {
+          notifyError(error.message);
+        }
       }
     } else notifyError('Wrong OTP entered.');
   };
 
-  if (isAuthenticated) {
-    return <Navigate to={`/home`} />;
-  }
+  const sendOTPMail = (e: MouseEvent) => {
+    e.preventDefault();
+    setEmail(emailInput);
+  };
 
   return (
     <>
-      <Form onSubmit={isSuccess ? confirmOTP : null}>
-        <Form.Group className='mb-3'>
-          <Form.Label
-            className={'tm-font-secondary fw-medium'}
-          >
-            {isSuccess ? 'Enter OTP' : 'Enter Email address'}
-          </Form.Label>
-          <Form.Control
-            type={isSuccess ? 'text' : 'email'}
-            placeholder={isSuccess ? 'Enter OTP' : 'name@example.com'}
-            onChange={(e) =>
-              isSuccess ? setOTP(e.target.value) : setEmail(e.target.value)
-            }
-            className={`${theme === 'DARK' && 'form-control-dark'}`}
-          />
-          <u
-            style={{
-              fontSize: '0.9rem',
-              paddingTop: '0.4rem',
-              cursor: 'pointer',
-            }}
-            onClick={refetch}
-          >
-            {isSuccess && 'Resend OTP'}
-          </u>
-        </Form.Group>
-        <div className='d-grid gap-2'>
-          <ButtonComponent
-            variant={'dark'}
-            name={isSuccess ? 'Confirm OTP' : 'Reset Password'}
-            disabled={buttonDisabled}
-            type={'submit'}
-          />
-        </div>
-      </Form>
+      {isSuccess || type === OTP_SRC.SIGN_UP ? (
+        <Form onSubmit={confirmOTP}>
+          <Form.Group className='mb-3'>
+            <Form.Label className={'tm-font-secondary fw-medium'}>
+              Enter OTP
+            </Form.Label>
+            <Form.Control
+              type={'number'}
+              placeholder={'Enter OTP'}
+              onChange={(e) => setOTP(e.target.value)}
+              // className={`${theme === 'DARK' && 'form-control-dark'}`}
+            />
+            <u
+              style={{
+                fontSize: '0.9rem',
+                paddingTop: '0.4rem',
+                cursor: 'pointer',
+              }}
+              onClick={refetch}
+            >
+              Resend OTP
+            </u>
+          </Form.Group>
+          <div className='d-grid gap-2'>
+            <ButtonComponent
+              variant={'dark'}
+              name={'Confirm OTP'}
+              disabled={buttonDisabled}
+              type={'submit'}
+            />
+          </div>
+        </Form>
+      ) : (
+        <Form onSubmit={sendOTPMail}>
+          <Form.Group className='mb-3'>
+            <Form.Label className={'tm-font-secondary fw-medium'}>
+              {'Enter Email address'}
+            </Form.Label>
+            <Form.Control
+              type={'email'}
+              placeholder={'name@example.com'}
+              onChange={(e) => setEmailInput(e.target.value)}
+              // className={`${theme === 'DARK' && 'form-control-dark'}`}
+            />
+          </Form.Group>
+          <div className='d-grid gap-2'>
+            <ButtonComponent
+              variant={'dark'}
+              name={'Reset Password'}
+              disabled={buttonDisabled}
+              type={'submit'}
+            />
+          </div>
+        </Form>
+      )}
       <ToastContainer />
     </>
   );

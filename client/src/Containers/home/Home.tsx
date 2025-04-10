@@ -3,11 +3,13 @@ import { Carousel, Col, Container, Row } from 'react-bootstrap';
 // import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import Signin from '../Components/signin/Signin';
-import Signup from '../Components/signup/Signup';
+import Signin from '../../Components/signin/Signin';
+import Signup from '../../Components/signup/Signup';
 import SVG from 'react-inlinesvg';
-import { AUTH_FORMAT } from '../helpers/constants';
+import { AUTH_FORMAT } from '../../helpers/types';
 import { ASSETS } from '@/helpers/assets';
+import classes from "./home.module.css";
+import clsx from 'clsx';
 
 const Home = () => {
   const [authFormat, setAuthFormat] = useState(AUTH_FORMAT.SIGN_UP);
@@ -35,16 +37,16 @@ const Home = () => {
     <>
       <Container fluid className='mb-5'>
         <Row className='boxes'>
-          <Col className='d-flex justify-content-center'>
+          <Col xs={12} md={6} className='d-flex justify-content-center'>
             {authFormat === 'up' ? (
               <Signup setAuthFormat={setAuthFormat} />
             ) : (
               <Signin setAuthFormat={setAuthFormat} />
             )}
           </Col>
-          <Col className='d-flex justify-content-center'>
+          <Col md={6} className='d-flex justify-content-center'>
             <Carousel
-              className='h-100 d-flex align-items-center'
+              className={clsx('h-100 d-flex align-items-center', classes.carousel)}
               slide={false}
               controls={false}
               indicators={false}
