@@ -1,8 +1,18 @@
 import Pagination from 'react-bootstrap/Pagination';
 
-const PaginationComponent = ({ count, page, setPage }) => (
+interface PaginationComponentProps {
+  count: number;
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+}
+
+const PaginationComponent = ({
+  count,
+  page,
+  setPage,
+}: PaginationComponentProps) => (
   <div className='d-flex justify-content-center pt-5'>
-    <Pagination size='md'>
+    <Pagination>
       {[...Array(count)].map((_, i) => (
         <Pagination.Item
           className={`pagination-item ${

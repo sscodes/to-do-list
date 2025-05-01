@@ -1,4 +1,5 @@
 import { API_END_POINT } from "@/helpers/config";
+import { ReadTasksResponse } from "@/types/tasks";
 
 export class TaskService {
   async createTask(task, token) {
@@ -14,7 +15,7 @@ export class TaskService {
     return data;
   }
 
-  async readTask(token) {
+  async readTask(token:string): Promise<ReadTasksResponse[]> {
     const res = await fetch(
       `${API_END_POINT}api/tasks`,
       {

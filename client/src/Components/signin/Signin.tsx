@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+// import { useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 import ButtonComponent from '../ButtonComponent';
 import google from '../../../public/assets/logo/google.png';
 import { useLoginUser } from '../../services/auth/auth.data';
@@ -10,36 +10,30 @@ import classes from './Signin.module.css';
 import clsx from 'clsx';
 import { API_END_POINT } from '@/helpers/config';
 import { ToastContainer, toast } from 'react-toastify';
+import { notificationProperties } from '@/utils/formDate';
 
-const Signin = ({ setAuthFormat }) => {
+interface SigninProps {
+  setAuthFormat: React.Dispatch<React.SetStateAction<AUTH_FORMAT>>;
+}
+
+const Signin = ({ setAuthFormat }: SigninProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
   const navigate = useNavigate();
-  const { theme } = useSelector((state) => state.theme);
-  const { mutateAsync: loginUser, isSuccess: isAuthenticated } = useLoginUser();
+  // const { theme } = useSelector((state) => state.theme);
+  const { mutateAsync: loginUser } = useLoginUser();
 
   useEffect(() => {
     if (email && password && navigator.onLine) setButtonDisabled(false);
     else setButtonDisabled(true);
   }, [email, password]);
 
-  const notificationProperties = {
-    position: 'top-right',
-    autoClose: 2000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: 'colored',
-  };
-
   const notifyError = (error: string) =>
     toast.error(error, notificationProperties);
 
-  const signin = async (e: MouseEvent) => {
+  const signin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const user = {
       email,
@@ -64,8 +58,8 @@ const Signin = ({ setAuthFormat }) => {
         <div className='text-center tm-font-primary'>
           <h4
             className={`${
-              theme === 'DARK' ? 'text-light' : 'text-dark'
-            } fw-bold`}
+              'fw-bold' // && theme === 'DARK' ? 'text-light' : 'text-dark'
+            } `}
           >
             Already have an account?{' '}
             <span className='tm-text-primary'>Sign In!</span>
@@ -75,7 +69,7 @@ const Signin = ({ setAuthFormat }) => {
           <Form.Group className='mb-1'>
             <Form.Label
               className={`${
-                theme === 'DARK' ? 'text-light' : 'text-dark'
+                'tm-font-secondary fw-medium' // && theme === 'DARK' ? 'text-light' : 'text-dark'
               } tm-font-secondary fw-medium`}
               style={{ fontSize: '1rem' }}
             >
@@ -86,16 +80,16 @@ const Signin = ({ setAuthFormat }) => {
               placeholder='name@example.com'
               onChange={(e) => setEmail(e.target.value)}
               className={`${
-                theme === 'DARK' && 'form-control-dark'
-              } tm-font-secondary`}
+                'tm-font-secondary' // && theme === 'DARK' && 'form-control-dark'
+              } `}
               style={{ fontSize: '1rem' }}
             />
           </Form.Group>
           <Form.Group className='mb-3'>
             <Form.Label
               className={`${
-                theme === 'DARK' ? 'text-light' : 'text-dark'
-              } tm-font-secondary fw-medium`}
+                'tm-font-secondary fw-medium' // && theme === 'DARK' ? 'text-light' : 'text-dark'
+              } `}
               style={{ fontSize: '1rem' }}
             >
               Password:
@@ -105,8 +99,8 @@ const Signin = ({ setAuthFormat }) => {
               placeholder='Enter Password'
               onChange={(e) => setPassword(e.target.value)}
               className={`${
-                theme === 'DARK' && 'form-control-dark'
-              } tm-font-secondary`}
+                'tm-font-secondary' // && theme === 'DARK' && 'form-control-dark'
+              }`}
               style={{ fontSize: '1rem' }}
             />
             <div className='pt-1'>
@@ -118,8 +112,8 @@ const Signin = ({ setAuthFormat }) => {
                   fontSize: '1rem',
                 }}
                 className={`${
-                  theme === 'DARK' ? 'text-light' : 'text-dark'
-                } tm-font-secondary`}
+                  'tm-font-secondary' // theme === 'DARK' ? 'text-light' : 'text-dark'
+                } `}
               >
                 (Forgot Password?)
               </Link>
@@ -160,9 +154,12 @@ const Signin = ({ setAuthFormat }) => {
         </a>
         <div className='text-center tm-font-secondary'>
           New Here?{' '}
-          <Link onClick={() => setAuthFormat(AUTH_FORMAT.SIGN_UP)}>
+          <u
+            className={clsx(classes.signup, 'text-primary')}
+            onClick={() => setAuthFormat(AUTH_FORMAT.SIGN_UP)}
+          >
             Sign Up!
-          </Link>
+          </u>
         </div>
       </div>
       <ToastContainer />

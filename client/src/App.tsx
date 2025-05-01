@@ -3,34 +3,24 @@ import { Route, Routes } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import './App.css';
 import CompletedTasks from './Containers/CompletedTasks';
-import ForgotPasword from './Containers/forgot-password/FogotPassword';
+import ForgotPassword from './Containers/forgot-password/ForgotPassword';
 import Hero from './Containers/Hero';
 import Home from './Containers/home/Home';
 import AllTasks from './Containers/PendingTasks';
 import PrivateRoute from './HOC/PrivateRoute';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import { useCreateTask } from './services/tasks/tasks.data';
-import Footer from './Components/Footer';
+// import Footer from './Components/Footer';
 import Header from './Components/header/Header';
+import { notificationProperties } from './utils/formDate';
 
 function App() {
-  const notificationProperties = {
-    position: 'top-right',
-    autoClose: 2000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: 'colored',
-  };
+  const notifyError = (error: string) => toast.error(error, notificationProperties);
+  const notifySuccess = (msg: string) => toast.success(msg, notificationProperties);
 
-  const notifyError = (error) => toast.error(error, notificationProperties);
-  const notifySuccess = (error) => toast.success(error, notificationProperties);
+  const token = JSON.parse(localStorage.getItem('auth') as string)?.token;
 
-  const token = JSON.parse(localStorage.getItem('auth'))?.token;
-
-  const { theme } = useSelector((state) => state.theme);
+  // const { theme } = useSelector((state) => state.theme);
 
   const { mutateAsync: createTask } = useCreateTask();
 
@@ -40,7 +30,7 @@ function App() {
       else {
         notifySuccess('You are back online!');
         if (localStorage.getItem('task')) {
-          createTask({ task: JSON.parse(localStorage.getItem('task')), token });
+          createTask({ task: JSON.parse(localStorage.getItem('task') as string), token });
         }
       }
     };
@@ -55,12 +45,13 @@ function App() {
   }, []);
 
   return (
-    <div className={`App ${theme === 'LIGHT' ? 'theme-light' : 'theme-dark'}`}>
+    // <div className={`App ${theme === 'LIGHT' ? 'theme-light' : 'theme-dark'}`}>
+    <div className={`App`}>
       <Header />
       <div className='d-flex align-items-center' style={{ width: '90vw', height: 'calc(100vh - 100px)' }}>
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/forgotpassword' element={<ForgotPasword />} />
+          <Route path='/forgotpassword' element={<ForgotPassword />} />
           <Route
             path='/home'
             element={

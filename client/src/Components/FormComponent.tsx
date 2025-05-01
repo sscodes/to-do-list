@@ -1,78 +1,118 @@
-import React from 'react';
+import * as React from 'react';
 import { Form } from 'react-bootstrap';
 import Calendar from 'react-calendar';
 import { MdDateRange } from 'react-icons/md';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import ButtonComponent from './ButtonComponent';
+import { Value as DateValue } from 'node_modules/react-calendar/dist/esm/shared/types';
 
-const FormComponent = (props) => {
-  const { theme } = useSelector((state) => state.theme);
+interface FormComponentProps {
+  submitTask: (e: React.FormEvent<HTMLFormElement>) => void;
+  border?: boolean;
+  setTitle: React.Dispatch<React.SetStateAction<string>>;
+  title?: string;
+  setDetails: React.Dispatch<React.SetStateAction<string>>;
+  setShowCalender: React.Dispatch<React.SetStateAction<boolean>>;
+  details?: string;
+  dd: string;
+  mm: string;
+  yyyy: string;
+  showCalender?: boolean;
+  setDate: (e: DateValue) => void;
+  buttonTitle: string;
+  disableBtn?: boolean;
+}
+
+const FormComponent = ({
+  submitTask,
+  border = false,
+  setTitle,
+  title = '',
+  setDetails,
+  details = '',
+  setShowCalender,
+  dd,
+  mm,
+  yyyy,
+  showCalender = false,
+  setDate,
+  buttonTitle,
+  disableBtn = false,
+}: FormComponentProps) => {
+  // const { theme } = useSelector((state) => state.theme);
 
   return (
     <div>
-      <Form onSubmit={props.submitTask}>
+      <Form onSubmit={submitTask}>
         <Form.Group className='mb-3'>
           <Form.Label
-            className={`${theme === 'DARK' ? 'text-light' : 'text-dark'} h6`}
+            className={`${
+              'h6' // && theme === 'DARK' ? 'text-light' : 'text-dark'
+            }`}
           >
             Task Title:
           </Form.Label>
           <Form.Control
             type='text'
-            className={`${props.border ? 'border border-dark' : ''} ${
-              theme === 'DARK' && 'form-control-dark'
-            }`}
-            style={{fontSize: '1rem'}}
+            // className={`${border ? 'border border-dark' : ''} ${
+            //   theme === 'DARK' && 'form-control-dark'
+            // }`}
+            className={`${border ? 'border border-dark' : ''}`}
+            style={{ fontSize: '1rem' }}
             placeholder='Add Task'
-            onChange={(e) => props.setTitle(e.target.value)}
-            value={props.title && props.title}
+            onChange={(e) => setTitle(e.target.value)}
+            value={title && title}
           />
         </Form.Group>
         <Form.Group className='mb-3'>
           <Form.Label
-            className={`${theme === 'DARK' ? 'text-light' : 'text-dark'} h6`}
+            className={`${
+              'h6' // && theme === 'DARK' ? 'text-light' : 'text-dark'
+            }`}
           >
             Task Description (optional):
           </Form.Label>
           <Form.Control
             as='textarea'
-            className={`${props.border ? 'border border-dark' : ''} ${
-              theme === 'DARK' && 'form-control-dark'
-            }`}
-            style={{fontSize: '1rem'}}
-            placeholder='Descrbe the task...'
+            // className={`${border ? 'border border-dark' : ''} ${
+            //   theme === 'DARK' && 'form-control-dark'
+            // }`}
+            className={`${border ? 'border border-dark' : ''}`}
+            style={{ fontSize: '1rem' }}
+            placeholder='Describe the task...'
             rows={4}
-            onChange={(e) => props.setDetails(e.target.value)}
-            value={props.details && props.details}
+            onChange={(e) => setDetails(e.target.value)}
+            value={details && details}
           />
         </Form.Group>
         <Form.Group className='mb-3' style={{ position: 'relative' }}>
           <Form.Label
-            className={`${theme === 'DARK' ? 'text-light' : 'text-dark'} h6`}
+            className={`${
+              'h6' // && theme === 'DARK' ? 'text-light' : 'text-dark'
+            }`}
           >
             Set deadline:
           </Form.Label>
           <div
-            className={`${
-              props.border ? 'border border-dark' : ''
-            } date-field ${theme === 'DARK' && 'form-control-dark'}`}
-            onClick={() => props.setShowCalender((e) => !e)}
-            style={{fontSize: '1rem'}}
+            // className={`${
+            //   border ? 'border border-dark' : ''
+            // } date-field ${theme === 'DARK' && 'form-control-dark'}`}
+            className={`${border ? 'border border-dark' : ''} date-field`}
+            onClick={() => setShowCalender((e) => !e)}
+            style={{ fontSize: '1rem' }}
           >
-            {`${props.dd}/${props.mm}/${props.yyyy}`} <MdDateRange />
+            {`${dd}/${mm}/${yyyy}`} <MdDateRange />
           </div>
           <div className='calender'>
-            {props.showCalender && (
-              <Calendar onChange={props.setDate} value={new Date()} />
-            )}
+            {showCalender && <Calendar onChange={setDate} value={new Date()} />}
           </div>
         </Form.Group>
         <div className='d-grid gap-2'>
           <ButtonComponent
             type={'submit'}
             variant={'dark'}
-            name={props.buttonTitle}
-            disabled={props.disableBtn}
+            name={buttonTitle}
+            disabled={disableBtn}
           />
         </div>
       </Form>

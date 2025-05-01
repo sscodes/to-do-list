@@ -53,7 +53,6 @@ const Header = () => {
                 <SVG
                   src={ASSETS.logo.productLogo}
                   width={240}
-                  height='auto'
                   title='React'
                 />
               </div>

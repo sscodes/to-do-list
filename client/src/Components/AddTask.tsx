@@ -1,16 +1,18 @@
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import 'react-calendar/dist/Calendar.css';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import { useCreateTask } from '../services/tasks/tasks.data';
 import FormComponent from './FormComponent';
+import { notificationProperties } from '@/utils/formDate';
+import { Value as DateValue } from 'node_modules/react-calendar/dist/esm/shared/types';
 
 const AddTask = () => {
   const [online, setOnline] = useState(navigator.onLine);
   const [showCalender, setShowCalender] = useState(false);
   const [title, setTitle] = useState('');
   const [details, setDetails] = useState('');
-  const [deadline, setDeadline] = useState(null);
+  const [deadline, setDeadline] = useState<DateValue>(null);
   const [dd, setdd] = useState('dd');
   const [mm, setmm] = useState('mm');
   const [yyyy, setyyyy] = useState('yyyy');
@@ -21,25 +23,15 @@ const AddTask = () => {
     else setDisableBtn(true);
   }, [title, deadline]);
 
-  const user = JSON.parse(localStorage.getItem('auth'));
-  const token = JSON.parse(localStorage.getItem('auth'))?.token;
+  const user = JSON.parse(localStorage.getItem('auth') as string);
+  const token = JSON.parse(localStorage.getItem('auth') as string)?.token;
 
-  const notificationProperties = {
-    position: 'top-right',
-    autoClose: 2000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: 'colored',
-  };
-
-  const notifySuccess = (msg) => toast.success(msg, notificationProperties);
+  const notifySuccess = (msg: string) =>
+    toast.success(msg, notificationProperties);
 
   const { mutateAsync: createTask } = useCreateTask();
 
-  const submitTask = async (e) => {
+  const submitTask = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const task = {
       user: user._id,
@@ -53,7 +45,7 @@ const AddTask = () => {
       localStorage.setItem('task', JSON.stringify(task));
       notifySuccess('Task saved! It will be uploaded once we go online.');
     }
-    e.target.reset();
+    (e.target as HTMLFormElement).reset();
   };
 
   useEffect(() => {
@@ -71,20 +63,27 @@ const AddTask = () => {
     };
   }, []);
 
-  const { theme } = useSelector((state) => state.theme);
+  // const { theme } = useSelector((state) => state.theme);
 
-  const setDate = (e) => {
-    setDeadline(e);
-    const date = new Date(e);
-    setdd(date.getDate().toString().padStart(2, '0'));
-    setmm((date.getMonth() + 1).toString().padStart(2, '0'));
-    setyyyy(date.getFullYear());
-    setShowCalender(false);
+  const setDate = (value: DateValue) => {
+    setDeadline(value);
+    if (value) {
+      const selectedDate = Array.isArray(value) ? value[0] : value;
+      setDeadline(selectedDate);
+      if (selectedDate) {
+        setdd(selectedDate?.getDate().toString().padStart(2, '0'));
+        setmm((selectedDate?.getMonth() + 1).toString().padStart(2, '0'));
+        setyyyy(selectedDate?.getFullYear().toString());
+      }
+      setShowCalender(false);
+    }
   };
 
   return (
     <div>
-      <h4 className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}>
+      <h4
+      // className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}
+      >
         Add a task:
       </h4>
       <FormComponent

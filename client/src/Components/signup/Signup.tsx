@@ -1,17 +1,20 @@
 import { ASSETS } from '@/helpers/assets';
 import clsx from 'clsx';
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
 // import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { API_END_POINT } from '@/helpers/config';
 import 'react-toastify/dist/ReactToastify.css';
-import { AUTH_FORMAT } from '../../helpers/types';
+import { AUTH_FORMAT, OTP_SRC } from '../../helpers/types';
 import ButtonComponent from '../ButtonComponent';
 import OTPComponent from '../OTPComponent';
 import classes from './Signup.module.css';
-import { API_END_POINT } from '@/helpers/config';
 
-const Signup = ({ setAuthFormat }) => {
+interface SignupProps {
+  setAuthFormat: React.Dispatch<React.SetStateAction<AUTH_FORMAT>>;
+}
+
+const Signup = ({ setAuthFormat }: SignupProps) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -63,7 +66,7 @@ const Signup = ({ setAuthFormat }) => {
     passwordMessage,
   ]);
 
-  const signup = (e) => {
+  const signup = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setShowOTPComponent(true);
   };
@@ -78,7 +81,7 @@ const Signup = ({ setAuthFormat }) => {
       )}
     >
       {showOTPComponent ? (
-        <div xs={6} className='d-flex align-items-center'>
+        <div className='d-flex align-items-center'>
           <div className='w-100'>
             <div className='tm-font-primary'>
               <h4 className={'fw-bold'}>Enter OTP</h4>
@@ -93,7 +96,7 @@ const Signup = ({ setAuthFormat }) => {
                   email,
                   password,
                 }}
-                type={'signup'}
+                type={OTP_SRC.SIGN_UP}
                 emailProp={email}
               />
             </div>
@@ -216,9 +219,12 @@ const Signup = ({ setAuthFormat }) => {
           </a>
           <div className='text-center tm-font-secondary'>
             Already, have an account?{' '}
-            <Link onClick={() => setAuthFormat(AUTH_FORMAT.SIGN_IN)}>
+            <u
+              className={clsx(classes.signin, 'text-primary')}
+              onClick={() => setAuthFormat(AUTH_FORMAT.SIGN_IN)}
+            >
               Sign In!
-            </Link>
+            </u>
           </div>
         </>
       )}

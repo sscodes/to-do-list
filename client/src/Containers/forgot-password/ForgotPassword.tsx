@@ -1,20 +1,21 @@
 import { useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import SVG from 'react-inlinesvg';
 import ForgotPasswordComponent from '../../Components/ForgotPasswordComponent';
 import OTPComponent from '../../Components/OTPComponent';
 import forgotPassword from '../../../public/assets/illustrations/forgot-password.svg';
-import classes from './FogotPassword.module.css';
+import classes from './ForgotPassword.module.css';
 import clsx from 'clsx';
+import { OTP_SRC } from '@/helpers/types';
 
-const FogotPassword = () => {
-  const [email, setEmail] = useState();
+const ForgotPassword = () => {
+  const [email, setEmail] = useState('');
 
-  const { theme } = useSelector((state) => state.theme);
+  // const { theme } = useSelector((state) => state.theme);
 
-  const token = JSON.parse(localStorage.getItem('auth'))?.token;
+  const token = JSON.parse(localStorage.getItem('auth') as string)?.token;
 
   if (token) {
     return <Navigate to={`/home`} />;
@@ -35,7 +36,10 @@ const FogotPassword = () => {
               {email ? (
                 <ForgotPasswordComponent email={email} />
               ) : (
-                <OTPComponent setEmailProp={setEmail} type={'forgotpassword'} />
+                <OTPComponent
+                  setEmailProp={setEmail}
+                  type={OTP_SRC.FORGOT_PASSWORD}
+                />
               )}
             </div>
           </div>
@@ -48,4 +52,4 @@ const FogotPassword = () => {
   );
 };
 
-export default FogotPassword;
+export default ForgotPassword;

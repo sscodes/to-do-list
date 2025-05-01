@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
 // import { useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
@@ -6,34 +6,35 @@ import ButtonComponent from './ButtonComponent';
 import { useCreateUser, useSendOTPMail } from '../services/auth/auth.data';
 import { OTP_SRC } from '@/helpers/types';
 import { useNavigate } from 'react-router-dom';
+import { notificationProperties } from '@/utils/formDate';
 
-const OTPComponent = ({ setEmailProp, user, type, emailProp }) => {
+interface OTPComponent {
+  setEmailProp?: React.Dispatch<React.SetStateAction<string>>;
+  user?: { name: string; email: string; password: string };
+  type: OTP_SRC;
+  emailProp?: string;
+}
+
+const OTPComponent = ({
+  setEmailProp,
+  user,
+  type,
+  emailProp,
+}: OTPComponent) => {
   const [email, setEmail] = useState('');
   const [emailInput, setEmailInput] = useState('');
   const [OTP, setOTP] = useState<string | null>(null);
   const [buttonDisabled, setButtonDisabled] = useState(true);
-  const { mutateAsync: createUser } =
-    useCreateUser();
+  const { mutateAsync: createUser } = useCreateUser();
   const navigate = useNavigate();
   // const { theme } = useSelector((state) => state.theme);
-
-  const notificationProperties = {
-    position: "top-right",
-    autoClose: 2000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: 'colored',
-  };
 
   const notifyError = (error: string) =>
     toast.error(error, notificationProperties);
   const notifySuccess = (msg: string) =>
     toast.success(msg, notificationProperties);
 
-  const { otp, isSuccess, refetch } = useSendOTPMail(type, email);
+  const { otp, isSuccess, refetch } = useSendOTPMail({ type, email });
 
   useEffect(() => {
     if ((email && navigator.onLine) || !isSuccess || !OTP?.length)
@@ -49,16 +50,16 @@ const OTPComponent = ({ setEmailProp, user, type, emailProp }) => {
   }, [isSuccess, otp]);
 
   useEffect(() => {
-    if (type === OTP_SRC.SIGN_UP) {
+    if (type === OTP_SRC.SIGN_UP && emailProp) {
       setEmail(emailProp);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const confirmOTP = async (e: MouseEvent) => {
+  const confirmOTP = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (localStorage.getItem('otp') == OTP) {
-      if (type === OTP_SRC.FORGOT_PASSWORD) {
+      if (type === OTP_SRC.FORGOT_PASSWORD && setEmailProp) {
         localStorage.clear();
         setEmailProp(email);
       } else {
@@ -73,7 +74,7 @@ const OTPComponent = ({ setEmailProp, user, type, emailProp }) => {
     } else notifyError('Wrong OTP entered.');
   };
 
-  const sendOTPMail = (e: MouseEvent) => {
+  const sendOTPMail = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setEmail(emailInput);
   };
@@ -98,7 +99,7 @@ const OTPComponent = ({ setEmailProp, user, type, emailProp }) => {
                 paddingTop: '0.4rem',
                 cursor: 'pointer',
               }}
-              onClick={refetch}
+              onClick={() => refetch()}
             >
               Resend OTP
             </u>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import ButtonComponent from '../Components/ButtonComponent';
@@ -10,13 +10,16 @@ import PaginationComponent from '../Components/PaginationComponent';
 import SearchTask from '../Components/SearchTask';
 import Task from '../Components/Task';
 import { useReadTask } from '../services/tasks/tasks.data';
+import { ReadTasksResponse } from '@/types/tasks';
 
 const PendingTasks = () => {
   const [searchedText, setSearchedText] = useState('');
-  const [tasksOnFilter, setTasksOnFilter] = useState([]);
+  const [tasksOnFilter, setTasksOnFilter] = useState<
+    ReadTasksResponse[] | null
+  >();
   const [page, setPage] = useState(0);
-  const [tasks, setTasks] = useState([]);
-  const token = JSON.parse(localStorage.getItem('auth'))?.token;
+  const [tasks, setTasks] = useState<ReadTasksResponse[] | null>();
+  const token = JSON.parse(localStorage.getItem('auth') as string)?.token;
 
   const {
     tasks: allTasks,
@@ -42,7 +45,7 @@ const PendingTasks = () => {
 
   const navigate = useNavigate();
 
-  const { theme } = useSelector((state) => state.theme);
+  // const { theme } = useSelector((state) => state.theme);
 
   return (
     <>
@@ -60,13 +63,13 @@ const PendingTasks = () => {
             </div>
           </Row>
           <Row>
-            {tasksOnFilter.length === 0 && searchedText.length !== 0 && (
+            {tasksOnFilter?.length === 0 && searchedText.length !== 0 && (
               <div className='d-flex justify-content-center task-not-found'>
                 <div className='border-2 border-black'>
                   <h1
-                    className={`${
-                      theme === 'DARK' ? 'text-light' : 'text-dark'
-                    }`}
+                  // className={`${
+                  //   theme === 'DARK' ? 'text-light' : 'text-dark'
+                  // }`}
                   >
                     No such task found...
                   </h1>
@@ -78,34 +81,33 @@ const PendingTasks = () => {
                 </div>
               </div>
             )}
-            {tasksOnFilter.length === 0 && searchedText.length === 0
-              ? tasks.slice(page * 8, (page + 1) * 8).map((task) => (
+            {tasksOnFilter?.length === 0 && searchedText.length === 0
+              ? tasks?.slice(page * 8, (page + 1) * 8).map((task) => (
                   <Col className='py-2' xs={12} sm={4} lg={3} key={task._id}>
                     <Task
                       id={task._id}
                       title={task.taskName}
                       details={task.taskDetail}
                       deadline={task.deadline}
-                      variant='danger'
                       done={task.done}
                     />
                   </Col>
                 ))
-              : tasksOnFilter.map((task) => (
+              : tasksOnFilter?.map((task) => (
                   <Col className='py-2' xs={12} sm={4} lg={3} key={task._id}>
                     <Task
                       id={task._id}
                       title={task.taskName}
                       details={task.taskDetail}
                       deadline={task.deadline}
-                      variant='danger'
                       done={task.done}
                     />
                   </Col>
                 ))}
           </Row>
-          {tasksOnFilter.length === 0 &&
+          {tasksOnFilter?.length === 0 &&
             searchedText.length === 0 &&
+            !!tasks?.length &&
             Math.ceil(tasks.length / 8) > 1 && (
               <PaginationComponent
                 count={Math.ceil(tasks.length / 8)}

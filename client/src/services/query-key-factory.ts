@@ -1,15 +1,13 @@
-const taskKeys = {
+export const taskKeys = {
   all: ['tasks'],
+  readTasks: () => [...taskKeys.all, 'readTasks'],
 };
-taskKeys.readTasks = [...taskKeys.all, 'readTasks'];
 
-const authKeys = {
-  all: ['users']
-}
-authKeys.createUser = [...authKeys.all, 'createUser'];
-authKeys.deleteUser = [...authKeys.all, 'deleteUser'];
-authKeys.loginUser = [...authKeys.all, 'loginUser'];
-authKeys.updateUserPassword = [...authKeys.all, 'updateUserPassword'];
-authKeys.sendOTPMail = [...authKeys.all, 'send-otp-mail'];
-
-export { taskKeys, authKeys };
+export const authKeys = {
+  all: ['users'],
+  createUser: () => [...authKeys.all, 'createUser'],
+  deleteUser: () => [...authKeys.all, 'deleteUser'],
+  loginUser: () => [...authKeys.all, 'loginUser'],
+  updateUserPassword: () => [...authKeys.all, 'updateUserPassword'],
+  sendOTPMail: () => [...authKeys.all, 'send-otp-mail'],
+};

@@ -1,6 +1,20 @@
 import { Button } from 'react-bootstrap';
 
-const ButtonComponent = ({ variant, name, type, disabled, onClick }) => {
+interface ButtonComponentProps {
+  variant?: string;
+  name: string;
+  type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+}
+
+const ButtonComponent = ({
+  variant,
+  name,
+  type = 'submit',
+  disabled = false,
+  onClick,
+}: ButtonComponentProps) => {
   return (
     <Button
       type={type}

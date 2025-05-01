@@ -1,31 +1,67 @@
-import React from 'react';
+import * as React from 'react';
 import ModalComponent from '../../HOC/ModalComponent';
 import { Modal } from 'react-bootstrap';
 import FormComponent from '../FormComponent';
-import { useSelector } from 'react-redux';
+import { Value as DateValue } from 'node_modules/react-calendar/dist/esm/shared/types';
+// import { useSelector } from 'react-redux';
 
-const EditModal = (props) => {
-  const { theme } = useSelector((state) => state.theme);
+interface EditModalProps {
+  editTaskModal: boolean;
+  setEditTaskModal: React.Dispatch<React.SetStateAction<boolean>>;
+  changeTask: (e: React.FormEvent<HTMLFormElement>) => void;
+  title: string;
+  details: string;
+  setTitle: React.Dispatch<React.SetStateAction<string>>;
+  setDetails: React.Dispatch<React.SetStateAction<string>>;
+  setDate: (e: DateValue) => void;
+  showCalender: boolean;
+  setShowCalender: React.Dispatch<React.SetStateAction<boolean>>;
+  dd: string;
+  mm: string;
+  yyyy: string;
+  disableBtn: boolean;
+}
+
+const EditModal = ({
+  editTaskModal,
+  setEditTaskModal,
+  changeTask,
+  title,
+  details,
+  setTitle,
+  setDetails,
+  setDate,
+  showCalender,
+  setShowCalender,
+  dd,
+  mm,
+  yyyy,
+  disableBtn,
+}: EditModalProps) => {
+  // const { theme } = useSelector((state) => state.theme);
+  const handleHide = () => {
+    setEditTaskModal(false);
+  };
   return (
-    <ModalComponent show={props.editTaskModal} onHide={props.setEditTaskModal}>
+    <ModalComponent show={editTaskModal} onHide={handleHide}>
       <Modal.Body
-        className={`update-modal-body ${theme === 'DARK' && 'task-body-dark'}`}
+      // className={`update-modal-body ${theme === 'DARK' && 'task-body-dark'}`}
       >
         <FormComponent
-          submitTask={props.changeTask}
-          title={props.title}
-          details={props.details}
-          setTitle={props.setTitle}
-          setDetails={props.setDetails}
-          setDate={props.setDate}
-          showCalender={props.showCalender}
-          setShowCalender={props.setShowCalender}
-          dd={props.dd}
-          mm={props.mm}
-          yyyy={props.yyyy}
+          submitTask={changeTask}
+          title={title}
+          details={details}
+          setTitle={setTitle}
+          setDetails={setDetails}
+          setDate={setDate}
+          showCalender={showCalender}
+          setShowCalender={setShowCalender}
+          dd={dd}
+          mm={mm}
+          yyyy={yyyy}
           buttonTitle='Update Task'
-          border={props.true}
-          disableBtn={props.disableBtn}
+          border={true}
+          disableBtn={disableBtn}
         />
       </Modal.Body>
     </ModalComponent>

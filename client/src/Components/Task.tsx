@@ -1,24 +1,47 @@
-import { useEffect, useState } from 'react';
+import {
+  FormEvent,
+  JSXElementConstructor,
+  ReactElement,
+  ReactNode,
+  useEffect,
+  useState,
+} from 'react';
 import { Card, Col, Form, Row } from 'react-bootstrap';
 import { BiSolidEditAlt } from 'react-icons/bi';
 import { MdDelete } from 'react-icons/md';
-import { useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
+// import { useSelector } from 'react-redux';
+import { ToastContentProps, toast } from 'react-toastify';
 import '../Style/Checkbox.css';
-import { formatDate } from '../utils/formDate';
+import { formatDate, notificationProperties } from '../utils/formDate';
 import DeleteModal from './Modals/DeleteModal';
 import EditModal from './Modals/EditModal';
 import TaskDetails from './Modals/TaskDetails';
 import { useUpdateTask } from '../services/tasks/tasks.data';
+import { TaskChanges } from '@/types/tasks';
+import { Value as DateValue } from 'node_modules/react-calendar/dist/esm/shared/types';
 
-const Task = (props) => {
+interface TaskProps {
+  id: string;
+  title: string;
+  details: string;
+  deadline: DateValue;
+  done: boolean;
+}
+
+const Task = ({
+  id,
+  title: titleProp,
+  details: detailsProp,
+  deadline: deadlineProp,
+  done,
+}: TaskProps) => {
   const [online, setOnline] = useState(navigator.onLine);
   const [deleteTaskModal, setDeleteTaskModal] = useState(false);
   const [editTaskModal, setEditTaskModal] = useState(false);
   const [showTaskModal, setShowTaskModal] = useState(false);
-  const [title, setTitle] = useState(props.title);
-  const [details, setDetails] = useState(props.details);
-  const [deadline, setDeadline] = useState('');
+  const [title, setTitle] = useState(titleProp);
+  const [details, setDetails] = useState(detailsProp);
+  const [deadline, setDeadline] = useState<DateValue>();
   const [showCalender, setShowCalender] = useState(false);
   const [dd, setdd] = useState('dd');
   const [mm, setmm] = useState('mm');
@@ -47,61 +70,64 @@ const Task = (props) => {
 
   const { mutateAsync: updateTask } = useUpdateTask();
 
-  const token = JSON.parse(localStorage.getItem('auth'))?.token;
+  const token = JSON.parse(localStorage.getItem('auth') as string)?.token;
 
-  const changeDoneStatus = async (e) => {
+  const changeDoneStatus = async () => {
     setShowTaskModal(false);
     const change = {
-      done: !props.done,
+      done: !done,
     };
-    await updateTask({ change, token, id: props.id });
+    await updateTask({ change, token, id: id });
   };
 
-  const changeTask = (e) => {
+  const changeTask = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const change = {};
+    const change: TaskChanges = {};
     if (title.length > 0) change.taskName = title;
     if (details.length > 0) change.taskDetail = details;
-    if (deadline.length > 0) change.deadline = deadline;
-    if (online) updateTask({ change, token, id: props.id });
+    if (!!deadline) change.deadline = deadline;
+    if (online) updateTask({ change, token, id: id });
     else notifyError("Can't make changes when offline.");
-    e.target.reset();
+    (e.target as HTMLFormElement).reset();
     setEditTaskModal(false);
   };
 
-  const setDate = (e) => {
-    setDeadline(e);
-    const date = new Date(e);
-    setdd(date.getDate().toString().padStart(2, '0'));
-    setmm((date.getMonth() + 1).toString().padStart(2, '0'));
-    setyyyy(date.getFullYear());
-    setShowCalender(false);
+  const setDate = (value: DateValue) => {
+    setDeadline(value);
+    if (value) {
+      const selectedDate = Array.isArray(value) ? value[0] : value;
+      setDeadline(selectedDate);
+      if (selectedDate) {
+        setdd(selectedDate?.getDate().toString().padStart(2, '0'));
+        setmm((selectedDate?.getMonth() + 1).toString().padStart(2, '0'));
+        setyyyy(selectedDate?.getFullYear().toString());
+      }
+      setShowCalender(false);
+    }
   };
 
-  const notificationProperties = {
-    position: 'top-right',
-    autoClose: 2000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: 'colored',
-  };
+  const notifyError = (
+    error:
+      | string
+      | number
+      | boolean
+      | ReactElement<any, string | JSXElementConstructor<any>>
+      | Iterable<ReactNode>
+      | ((props: ToastContentProps<unknown>) => ReactNode)
+      | null
+      | undefined
+  ) => toast.error(error, notificationProperties);
 
-  const notifyError = (error) => toast.error(error, notificationProperties);
-
-  const { theme } = useSelector((state) => state.theme);
+  // const { theme } = useSelector((state) => state.theme);
 
   return (
     <>
       <TaskDetails
         show={showTaskModal}
         onHide={setShowTaskModal}
-        title={props.title}
-        details={props.details}
-        deadline={props.deadline}
-        done={props.done}
+        title={titleProp}
+        details={detailsProp}
+        deadline={deadlineProp}
       />
       <EditModal
         editTaskModal={editTaskModal}
@@ -122,22 +148,24 @@ const Task = (props) => {
       <DeleteModal
         setDeleteTaskModal={setDeleteTaskModal}
         deleteTaskModal={deleteTaskModal}
-        title={props.title}
-        deadline={props.deadline}
-        id={props.id}
+        title={titleProp}
+        deadline={deadlineProp}
+        id={id}
       />
       <Card
         className='card-styling'
         onClick={() => setShowTaskModal((e) => !e)}
       >
-        <Card.Header className={`${theme === 'DARK' && 'task-header-dark'}`}>
+        <Card.Header
+        // className={`${theme === 'DARK' && 'task-header-dark'}`}
+        >
           <Row>
-            {!props.done ? (
+            {!done ? (
               <>
                 <Col xs={9} className='h4'>
-                  {props.title.length > 11
-                    ? props.title.slice(0, 11) + '...'
-                    : props.title}
+                  {titleProp.length > 11
+                    ? titleProp.slice(0, 11) + '...'
+                    : titleProp}
                 </Col>
                 <Col xs={1}>
                   <BiSolidEditAlt
@@ -161,9 +189,9 @@ const Task = (props) => {
             ) : (
               <>
                 <Col xs={10} className='h4'>
-                  {props.title.length > 11
-                    ? props.title.slice(0, 11) + '...'
-                    : props.title}
+                  {titleProp.length > 11
+                    ? titleProp.slice(0, 11) + '...'
+                    : titleProp}
                 </Col>
                 <Col xs={2}>
                   <MdDelete
@@ -179,27 +207,27 @@ const Task = (props) => {
           </Row>
         </Card.Header>
         <Card.Body
-          className={`${theme === 'DARK' && 'task-body-dark task-body-border'}`}
+        // className={`${theme === 'DARK' && 'task-body-dark task-body-border'}`}
         >
           <Card.Text style={{ fontSize: '1.2rem' }}>
-            {props.details.length > 24
-              ? props.details.slice(0, 24) + '...'
-              : props.details}
+            {detailsProp.length > 24
+              ? detailsProp.slice(0, 24) + '...'
+              : detailsProp}
           </Card.Text>
           <b className='h6'>Deadline:</b>{' '}
-          <span className='h6'>{formatDate(props.deadline)}</span>
+          <span className='h6'>{formatDate(deadlineProp)}</span>
           <Row>
             <Col className='text-center'>
               <Row className='d-block align-middle align-items-center mt-4 border py-1 border rounded border-dark text-dark'>
                 <Form.Check
                   type='checkbox'
                   id='default-checkbox'
-                  defaultChecked={props.done}
+                  defaultChecked={done}
                   onChange={changeDoneStatus}
                   className='d-inline'
                 />
                 <div className='d-inline mt-5 fs-6 fs-lg-5'>
-                  Mark as {props.done ? `pending` : `done`}
+                  Mark as {done ? `pending` : `done`}
                 </div>
               </Row>
             </Col>

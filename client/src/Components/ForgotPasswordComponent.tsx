@@ -1,12 +1,17 @@
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
 // import { useDispatch, useSelector } from 'react-redux';
 // import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { useUpdateUserPassword } from '../services/auth/auth.data';
 import ButtonComponent from './ButtonComponent';
+import { notificationProperties } from '@/utils/formDate';
 
-const ForgotPasswordComponent = ({ email }) => {
+interface ForgotPasswordComponentProps {
+  email: string;
+}
+
+const ForgotPasswordComponent = ({ email }: ForgotPasswordComponentProps) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordMessage, setPasswordMessage] = useState<string | null>(null);
@@ -47,30 +52,19 @@ const ForgotPasswordComponent = ({ email }) => {
     else setButtonDisabled(true);
   }, [password, confirmPasswordMessage, confirmPassword, passwordMessage]);
 
-  const notificationProperties = {
-    position: 'top-right',
-    autoClose: 2000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: 'colored',
-  };
-
-  const notifyError = (error) => toast.error(error, notificationProperties);
-  const notifySuccess = (msg) => toast.success(msg, notificationProperties);
+  const notifyError = (error: string) =>
+    toast.error(error, notificationProperties);
+  const notifySuccess = (msg: string) =>
+    toast.success(msg, notificationProperties);
   const {
     mutateAsync: updatePassword,
     isSuccess,
     isError,
   } = useUpdateUserPassword();
 
-  const changePassword = async (e) => {
+  const changePassword = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = await updatePassword(email, {
-      password,
-    });
+    const res = await updatePassword({ email, newPassword: password });
 
     if (isSuccess) {
       notifySuccess(res);

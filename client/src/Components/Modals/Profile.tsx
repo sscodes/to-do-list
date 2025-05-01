@@ -4,24 +4,29 @@ import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { Pie } from 'react-chartjs-2';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import ModalComponent from '../../HOC/ModalComponent';
 import { useReadTask } from '../../services/tasks/tasks.data';
 import { useDeleteUser } from '../../services/auth/auth.data';
 
-const Profile = ({ show, onHide }) => {
+interface ProfileProps {
+  show: boolean;
+  onHide: () => void;
+}
+
+const Profile = ({ show, onHide }: ProfileProps) => {
   Chart.register(ArcElement);
-  const [doneTasks, setDoneTasks] = useState();
-  const [pendingTasks, setPendingTasks] = useState();
+  const [doneTasks, setDoneTasks] = useState<number | undefined>();
+  const [pendingTasks, setPendingTasks] = useState<number | undefined>();
   const [name, setName] = useState('');
 
-  const user = JSON.parse(localStorage.getItem('auth'));
+  const user = JSON.parse(localStorage.getItem('auth') as string);
 
   const { mutateAsync: deleteUser, isSuccess: isDeleteUserSuccess } =
     useDeleteUser();
 
-  const token = JSON.parse(localStorage.getItem('auth'))?.token;
+  const token = JSON.parse(localStorage.getItem('auth') as string)?.token;
   const {
     tasks,
     isPending: isGetTasksPending,
@@ -31,7 +36,7 @@ const Profile = ({ show, onHide }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isGetTasksPending && !isGetTasksError) {
+    if (!isGetTasksPending && !isGetTasksError && tasks) {
       setDoneTasks(
         tasks.length > 0 ? tasks.filter((task) => task.done).length : undefined
       );
@@ -74,12 +79,12 @@ const Profile = ({ show, onHide }) => {
       await deleteUser({ token, userId: user?._id });
   };
 
-  const { theme } = useSelector((state) => state.theme);
+  // const { theme } = useSelector((state) => state.theme);
 
   return (
     <ModalComponent show={show} onHide={onHide}>
       <Modal.Header
-        className={`${theme === 'DARK' && 'task-header-dark'}`}
+        // className={`${theme === 'DARK' && 'task-header-dark'}`}
         closeButton
       >
         <Modal.Title id='contained-modal-title-vcenter'>
@@ -93,7 +98,7 @@ const Profile = ({ show, onHide }) => {
           justifyContent: 'center',
           textAlign: 'center',
         }}
-        className={`${theme === 'DARK' && 'task-body-dark'}`}
+        // className={`${theme === 'DARK' && 'task-body-dark'}`}
       >
         <div
           style={{
@@ -111,7 +116,7 @@ const Profile = ({ show, onHide }) => {
           ) : (
             <div>
               <h5
-                className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}
+              // className={`${theme === 'DARK' ? 'text-light' : 'text-dark'}`}
               >
                 No tasks added.
               </h5>
@@ -122,7 +127,9 @@ const Profile = ({ show, onHide }) => {
           )}
         </div>
       </Modal.Body>
-      <Modal.Footer className={`${theme === 'DARK' && 'task-header-dark'}`}>
+      <Modal.Footer
+      // className={`${theme === 'DARK' && 'task-header-dark'}`}
+      >
         <Button onClick={logout} variant='dark'>
           Logout
         </Button>
