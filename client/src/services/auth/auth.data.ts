@@ -13,7 +13,7 @@ export const useCreateUser = () => {
     mutationFn: async ({
       user,
     }: {
-      user: { name: string; email: string; password: string } | undefined;
+      user: { name: string; email: string; password: string };
     }) => {
       const response = await authServices.createUser(user);
       const data = await response.json();

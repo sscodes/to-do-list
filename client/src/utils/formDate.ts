@@ -1,4 +1,3 @@
-import { Theme, ToastPosition } from 'react-toastify';
 import { Value as DateValue } from 'node_modules/react-calendar/dist/esm/shared/types';
 
 export function formatDate(date: DateValue) {
@@ -12,9 +11,3 @@ export function formatDate(date: DateValue) {
     return formattedDate;
   }
 }
-
-export const notificationProperties = {
-  position: 'top-right' as ToastPosition,
-  autoClose: 2000,
-  theme: 'colored' as Theme,
-};

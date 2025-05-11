@@ -21,9 +21,9 @@ export const useCreateTask = () => {
         deadline: DateValue;
         done: boolean;
       };
-      token: any;
+      token: string;
     }) => {
-      return taskServices.createTask(task, token);
+      return taskServices.createTask({task, token});
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: taskKeys.readTasks() });
@@ -61,7 +61,7 @@ export const useUpdateTask = () => {
       token: string;
       id: string;
     }) => {
-      return taskServices.updateTask(change, token, id);
+      return taskServices.updateTask({change, token, id});
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: taskKeys.readTasks() });
@@ -77,7 +77,7 @@ export const useDeleteTask = () => {
 
   return useMutation({
     mutationFn: ({ token, id }: { token: string; id: string }) => {
-      return taskServices.deleteTask(token, id);
+      return taskServices.deleteTask({token, id});
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: taskKeys.readTasks() });

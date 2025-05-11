@@ -1,23 +1,21 @@
-import { API_END_POINT } from "@/helpers/config";
+import { API_END_POINT } from '@/helpers/config';
+import { OTP_SRC } from '@/helpers/types';
 
 export class AuthService {
-  async createUser(user) {
-    const res = await fetch(
-      `${API_END_POINT}api/users/signup`,
-      {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify(user),
-      }
-    );
+  async createUser(user: { name: string; email: string; password: string }) {
+    const res = await fetch(`${API_END_POINT}api/users/signup`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(user),
+    });
     return res;
   }
 
   // async readUser(token) {}
 
-  async updateUserPassword(email, newpassword) {
+  async updateUserPassword(email: string, newPassword: string) {
     const res = await fetch(
       `${API_END_POINT}api/users/updatepassword/${email}`,
       {
@@ -25,13 +23,13 @@ export class AuthService {
         headers: {
           'content-type': 'application/json',
         },
-        body: JSON.stringify(newpassword),
+        body: JSON.stringify(newPassword),
       }
     );
     return res;
   }
 
-  async deleteUser(token, userId) {
+  async deleteUser(token: string, userId: string) {
     const res = await fetch(
       `http://localhost:7000/api/users/deleteuser/${userId}`,
       {
@@ -45,21 +43,18 @@ export class AuthService {
     return res;
   }
 
-  async loginUser(user) {
-    const res = await fetch(
-      `${API_END_POINT}api/users/signin`,
-      {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify(user),
-      }
-    );
+  async loginUser(user: { email: string; password: string }) {
+    const res = await fetch(`${API_END_POINT}api/users/signin`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(user),
+    });
     return res;
   }
 
-  async sendOTPMail(type, email) {
+  async sendOTPMail(type: OTP_SRC, email: string) {
     const res = await fetch(
       `${API_END_POINT}api/mails/${type}/sendOTP/${email}`
     );
