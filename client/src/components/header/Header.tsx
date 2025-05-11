@@ -1,0 +1,78 @@
+import { useEffect, useState } from 'react';
+import { Container, Navbar } from 'react-bootstrap';
+// import { MdDarkMode, MdLightMode } from 'react-icons/md';
+// import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+// import { themeActions } from '../../actions/themeActions';
+import { CgProfile } from 'react-icons/cg';
+import SVG from 'react-inlinesvg';
+import classes from './Header.module.css';
+import clsx from 'clsx';
+import { ASSETS } from '@/helpers/assets';
+import { ProfileModal } from '@/modules/tasks/components/profile-modal/ProfileModal';
+
+const Header = () => {
+  const [name, setName] = useState('');
+  const [modal, setModal] = useState(false);
+  const user = JSON.parse(localStorage.getItem('auth') as string);
+  useEffect(() => {
+    setName(user?.name);
+  }, [user?.name]);
+
+  const showProfile = () => {
+    setModal(true);
+  };
+
+  // const dispatch = useDispatch();
+
+  // const { theme } = useSelector((state) => state.theme);
+
+  // const changeTheme = () => {
+  //   if (theme === 'LIGHT') dispatch(themeActions('DARK'));
+  //   else dispatch(themeActions('LIGHT'));
+  // };
+
+  return (
+    <>
+      <ProfileModal show={modal} onHide={() => setModal(false)} />
+      <Navbar
+        className={clsx(
+          'navbar header  border-bottom shadow-sm w-100',
+          classes.customHeaderClass
+        )}
+        data-bs-theme='light'
+        sticky='top'
+      >
+        <Container className='header-contents'>
+          <Navbar.Brand>
+            <Link
+              to='/'
+              style={{ textDecoration: 'none', color: 'whitesmoke' }}
+            >
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <SVG src={ASSETS.logo.productLogo} width={240} title='React' />
+              </div>
+            </Link>
+          </Navbar.Brand>
+          <Navbar.Toggle />
+          {name?.length && (
+            <Navbar.Collapse className='justify-content-end'>
+              <Navbar.Text className='ThemeIcon'>
+                <CgProfile onClick={showProfile} />
+              </Navbar.Text>
+            </Navbar.Collapse>
+          )}
+          {/* <div className='ThemeIcon'>
+            {theme === 'DARK' ? (
+              <MdLightMode onClick={changeTheme} />
+            ) : (
+              <MdDarkMode onClick={changeTheme} />
+            )}
+          </div> */}
+        </Container>
+      </Navbar>
+    </>
+  );
+};
+
+export default Header;
